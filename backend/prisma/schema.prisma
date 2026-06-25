@@ -1,0 +1,40 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Turma {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  serie     String
+  anoLetivo Int
+  alunos    Aluno[]
+
+  @@map("turmas")
+}
+
+model Aluno {
+  id         Int          @id @default(autoincrement())
+  nome       String
+  matricula  String       @unique
+  turmaId    Int
+  turma      Turma        @relation(fields: [turmaId], references: [id], onDelete: Cascade)
+  frequencias Frequencia[]
+
+  @@map("alunos")
+}
+
+model Frequencia {
+  id       Int      @id @default(autoincrement())
+  alunoId  Int
+  aluno    Aluno    @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+  data     DateTime @db.Date
+  presente Boolean
+
+  @@unique([alunoId, data])
+  @@map("frequencias")
+}
