@@ -7,6 +7,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  senha     String
+  role      String   // "ADMIN" ou "MONITORA"
+  escolaId  Int
+  escola    Escola   @relation(fields: [escolaId], references: [id], onDelete: Cascade)
+
+  @@map("usuarios")
+}
+
 model Turma {
   id        Int      @id @default(autoincrement())
   nome      String
