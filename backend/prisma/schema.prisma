@@ -7,6 +7,16 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  senha     String
+  role      String   // "ADMIN" ou "MONITORA"
+
+  @@map("usuarios")
+}
+
 model Turma {
   id        Int      @id @default(autoincrement())
   nome      String
