@@ -1,10 +1,10 @@
 import UsuarioService from "../services/usuarioService.js";
 
-
 class UsuarioController {
+
     async create(req, res, next) {
         try {
-            const novoUsuario = await UsuarioService.create(req.body);
+            const novoUsuario = await UsuarioService.register(req.body);
             return res.status(201).json({nome: novoUsuario.nome, role: novoUsuario.role});
         } catch (error) {
             next(error);
@@ -21,7 +21,12 @@ class UsuarioController {
     }
 
     async login(req, res, next) {
-        // bah guri
+        try {
+            const login = await UsuarioService.login(req.body);
+            return res.status(201).json({token: login});
+        } catch (error) {
+            next(error);
+        }
     }
 
     async update(req, res, next) {
