@@ -1,14 +1,13 @@
-import UsuarioRepository from '../repositories/usuarioRepository.js';
+import UserRepository from '../repositories/userRepository.js';
 import bcrypt from 'bcrypt';
-import JwtService from '../services/jwtService.js'
+import JwtService from '../services/jwtService.js';
 
-class UsuarioService {
+class UserService {
 
   async register(data) {
+
     if (!data.nome || !data.email || !data.senha) {
-      const error = new Error(
-        'Todos os campos (nome, email e senha) são obrigatórios.'
-      );
+      const error = new Error('Todos os campos (nome, email e senha) são obrigatórios.');
       error.statusCode = 400;
       throw error;
     }
@@ -18,71 +17,76 @@ class UsuarioService {
 
     data.senha = await bcrypt.hash(data.senha, 10);
 
-    return UsuarioRepository.create(data);
+    return UserRepository.create(data);
+
   }
 
-   async login(data) {
+  async login(data) {
     
     if (!data.email || !data.senha) {
-      const error = new Error(
-        'Os campos (email e senha) são obrigatórios.'
-      );
+      const error = new Error('Os campos (email e senha) são obrigatórios.');
       error.statusCode = 400;
       throw error;
     }
 
-    const usuario = await UsuarioRepository.findByEmail(data.email);
+    const user = await UserRepository.findByEmail(data.email);
 
-    if(!usuario){
+    if(!user){
       const error = new Error('E-mail inválido');
       error.statusCode = 404;
       throw error;
     }
 
-    const validarSenha = await bcrypt.compare(data.senha, usuario.senha)
+    const validatePassword = await bcrypt.compare(data.senha, user.senha);
 
-    if(!validarSenha){
+    if(!validatePassword){
       const error = new Error('Senha inválida');
       error.statusCode = 404;
       throw error;
     }
 
-    return JwtService.gerarToken(usuario);
+    return JwtService.generateToken(user);
 
   }
 
   async findAll(){
-    return UsuarioRepository.findAll();
+    return UserRepository.findAll();
   }
 
   async findById(id) {
-    const usuario = await UsuarioRepository.findById(Number(id));
-    if(!usuario){
+
+    const user = await UserRepository.findById(Number(id));
+
+    if(!user){
       const error = new Error('Usuario não encontrado');
       error.statusCode = 404;
       throw error;
     }
-    return usuario
+    return user;
   }
 
   async findByEmail(email) {
-    const usuario = await UsuarioRepository.findByEmail(email);
-    if(!usuario){
+
+    const user = await UserRepository.findByEmail(email);
+
+    if(!user){
       const error = new Error('Usuario não encontrado');
       error.statusCode = 404;
       throw error;
     }
+
+    return user;
   }
 
   async update(id, data) {
     await this.findById(id);
-    return UsuarioRepository.update(Number(id), data);
+    return UserRepository.update(Number(id), data);
   }
 
   async delete(id) {
     await this.findById(id);
-    return UsuarioRepository.delete(Number(id));
+    return UserRepository.delete(Number(id));
   }
 }
 
-export default new UsuarioService();
+export default new UserService();

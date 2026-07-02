@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken'
 
 class JwtService {
 
-    #chaveSecreta = crypto.randomBytes(32).toString("hex");
+    #secretKey = crypto.randomBytes(32).toString("hex");
 
-    async gerarToken(data) {
+    generateToken(data) {
 
         const user = {
             id: data.id,
@@ -14,9 +14,26 @@ class JwtService {
             role: data.role
         };
 
-        const token = jwt.sign(user, this.#chaveSecreta);
+        const token = jwt.sign(user, this.#secretKey, {expiresIn: '12h'});
 
         return token;
+    }
+
+    verifyToken(token) {
+
+        try {
+            
+            return jwt.verify(token, this.#secretKey);
+
+        } catch {
+
+            const error = new Error('Token inválido');
+            error.statusCode = 401;
+            throw error;
+            
+        }
+
+
     }
 
 }

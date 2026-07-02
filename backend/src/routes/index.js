@@ -3,14 +3,15 @@ import turmaRoutes from './turmaRoutes.js';
 import alunoRoutes from './alunoRoutes.js';
 import frequenciaRoutes from './frequenciaRoutes.js';
 import relatorioRoutes from './relatorioRoutes.js';
-import usuarioRoutes from './usuarioRoutes.js';
+import userRoutes from './userRoutes.js';
+import { authVerification } from '../middlewares/auth.js'
 
 const router = Router();
 
-router.use('/turmas', turmaRoutes);
-router.use('/alunos', alunoRoutes);
-router.use('/frequencias', frequenciaRoutes);
-router.use('/relatorios', relatorioRoutes);
-router.use('/usuarios', usuarioRoutes);
+router.use('/turmas', authVerification, turmaRoutes);
+router.use('/alunos', authVerification, alunoRoutes);
+router.use('/frequencias', authVerification, frequenciaRoutes);
+router.use('/relatorios', authVerification, relatorioRoutes);
+router.use('/users', userRoutes);
 
 export default router;

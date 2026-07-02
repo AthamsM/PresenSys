@@ -1,6 +1,6 @@
 import prisma from "../config/database.js";
 
-class UsuarioRepository {
+class UserRepository {
     async create(data){
         return prisma.usuario.create({data});
     }
@@ -27,4 +27,4 @@ class UsuarioRepository {
 
 }
 
-export default new UsuarioRepository();
+export default new UserRepository();
