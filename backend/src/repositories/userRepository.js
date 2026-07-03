@@ -1,6 +1,6 @@
 import prisma from "../config/database.js";
 
-class UsuarioRepository {
+class UserRepository {
     async create(data){
         return prisma.usuario.create({data});
     }
@@ -13,6 +13,10 @@ class UsuarioRepository {
         return prisma.usuario.findUnique({ where: {id} });
     }
 
+    async findByEmail(email){
+        return prisma.usuario.findUnique({ where: { email } });
+    }
+
     async update(id, data) {
         return prisma.usuario.update({ where: { id}, data });
     }
@@ -23,4 +27,4 @@ class UsuarioRepository {
 
 }
 
-export default new UsuarioRepository();
+export default new UserRepository();
