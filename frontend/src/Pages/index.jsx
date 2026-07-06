@@ -1,13 +1,27 @@
 import Template from "../Layout/Template";
-import Turmas from "../Pages/Turmas/index";
-import Attendance from "../Pages/Attendance/index";
+import Turmas from "./Turmas/index";
+import Attendance from "./Attendance";
 import Login from "./Login";
-import Relatorios from "./Relatorios/index";
+import Relatorios from "./Relatorios";
+import Page404 from "./404"
+
+// Cores
+//
+// #263238
+// #FFFFFC
+// #EBEBEB
+// #90CAF9
+// #155DFC
+//
 
 // A depender da pagina, colocar tag entre template, tipo, <Template> <Home/> </Template>
 const Pages = [
     {
-        path : "/",
+        path : "/*",
+        component : <Page404/>
+    },
+    {
+        path : "/login",
         component : <Login/>
     },
     {
