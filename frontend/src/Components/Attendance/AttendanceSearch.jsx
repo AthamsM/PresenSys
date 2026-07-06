@@ -6,7 +6,7 @@ export function AttendanceSearch({
     return (
         <div className="relative mt-6">
             <img
-                src="/loupe.png"
+                src="icons/loupe.svg"
                 alt="Buscar"
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
             />
