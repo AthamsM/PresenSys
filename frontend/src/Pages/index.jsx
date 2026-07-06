@@ -11,23 +11,18 @@ const Pages = [
         component : <Login/>
     },
     {
-        path : "/turmas",
+        path : "/classes",
         component : <Template><Turmas/></Template>
     },
     {
         path: "/attendance",
-        component: (
-            <Template><Attendance/></Template>
-        )
+        component: <Template><Attendance/></Template>
+       
     },
     {
-        path : "/relatorios",
+        path : "/reports",
         component : <Template><Relatorios/></Template>
     },
-    {
-        path : "/*",
-        component : <Login/>
-    }
 ]
 
 export default Pages
