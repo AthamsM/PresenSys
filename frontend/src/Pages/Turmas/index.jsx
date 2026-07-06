@@ -11,7 +11,7 @@ export default function Turmas(){
   // e fazer a rota de chamadas
 
   return(
-    <div className="ml-20 mt-10">
+    <div className="ml-10 mt-5">
       <h1 className="text-2xl font-bold">Turmas</h1>
       <p>Todas as turmas</p>
 

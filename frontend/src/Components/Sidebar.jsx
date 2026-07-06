@@ -41,7 +41,7 @@ export default function Sidebar(){
   return(
     <aside className=" border-r border-gray-400 h-screen ">
       <div className=" p-2 flex border-b mb-2 border-gray-400">
-        <img src={user} alt="" className="w-10 mr-2 object-cover"/>
+        <img src={user} alt="" className="w-10 h-10 mr-2 object-cover"/>
         <div className="text-gray-800">
           <h3 className="text-[12px] font-bold">Presença Escolar</h3>
           <h4 className="text-[10px]">EMEF Jardim Estrela</h4>
