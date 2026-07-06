@@ -1,5 +1,4 @@
 import { useState } from "react";
-import alunos from "../../../assets/alunos.png"
 import { useNavigate } from "react-router-dom";
 
 export default function Turmas(){
@@ -26,7 +25,7 @@ export default function Turmas(){
               <div className="p-5 rounded-2xl">
                 <div className="flex justify-between mb-5">
                   <span className="text-sm flex">
-                  <img src={alunos} alt="" className="w-5 mr-1"/>
+                  <img src="icons/user.svg" alt="" className="w-5 mr-1"/>
                     30
                   </span>
                   <span className="bg-amber-200 rounded-xl px-2 text-sm">90% presença</span>
