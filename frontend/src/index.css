@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@theme {
+
+    --font-blokan: "blokan", sans-serif;
+
+}
+
+@font-face {
+    font-family: "blokan";
+    src: url("fonts/blokan.otf") format("opentype");
+}
