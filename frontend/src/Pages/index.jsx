@@ -1,5 +1,5 @@
 import Template from "../Layout/Template";
-import Classes from "./Classes/index";
+import Turmas from "./Turmas/index";
 import Attendance from "./Attendance";
 import Login from "./Login";
 import Relatorios from "./Relatorios";
@@ -26,7 +26,7 @@ const Pages = [
     },
     {
         path : "/classes",
-        component : <Template><Classes/></Template>
+        component : <Template><Turmas/></Template>
     },
     {
         path: "/attendance",
