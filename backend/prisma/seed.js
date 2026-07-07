@@ -3,86 +3,86 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Limpando banco...');
+  console.log('trunck db...');
 
-  await prisma.frequencia.deleteMany();
-  await prisma.aluno.deleteMany();
-  await prisma.turma.deleteMany();
+  await prisma.attendance.deleteMany();
+  await prisma.student.deleteMany();
+  await prisma.class.deleteMany();
 
-  const series = ['1º Ano', '2º Ano', '3º Ano'];
-  const nomesTurmas = ['A', 'B'];
+  const grades = ['1º Ano', '2º Ano', '3º Ano'];
+  const nameClasses = ['A', 'B'];
 
-  const turmasCriadas = [];
+  const classCreated = [];
 
   // Criacao das turmas
-  for (const serie of series) {
-    for (const nomeTurma of nomesTurmas) {
-      const turma = await prisma.turma.create({
+  for (const grade of grades) {
+    for (const nameClass of nameClasses) {
+      const clasS = await prisma.class.create({
         data: {
-          nome: nomeTurma,
-          serie,
-          anoLetivo: 2026,
+          name: nameClass,
+          grade,
+          schoolYear: 2026,
         },
       });
 
-      turmasCriadas.push(turma);
+      classCreated.push(clasS);
     }
   }
 
-  console.log(`${turmasCriadas.length} turmas criadas`);
+  console.log(`${classCreated.length} Created Class`);
 
   // Criacao dos alunos
-  let contadorMatricula = 1;
+  let contEnrollments = 1;
 
-  for (const turma of turmasCriadas) {
-    const alunos = [];
+  for (const clasS of classCreated) {
+    const students = [];
 
     for (let i = 1; i <= 10; i++) {
-      alunos.push({
-        nome: `Aluno ${turma.nome} ${i}`,
-        matricula: `2026${String(contadorMatricula).padStart(5, '0')}`,
-        turmaId: turma.id,
+      students.push({
+        name: `Aluno ${clasS.name} ${i}`,
+        enrollment: `2026${String(contEnrollments).padStart(5, '0')}`,
+        classId: clasS.id,
       });
 
-      contadorMatricula++;
+      contEnrollments++;
     }
 
-    await prisma.aluno.createMany({
-      data: alunos,
+    await prisma.student.createMany({
+      data: students,
     });
   }
 
-  console.log('Alunos criados');
+  console.log('create student');
 
   // Frequencias
-  const alunos = await prisma.aluno.findMany();
+  const students = await prisma.student.findMany();
 
-  const dataInicio = new Date('2026-02-02');
-  const quantidadeDias = 30;
+  const startDate = new Date('2026-02-02');
+  const numberDays = 30;
 
-  for (let dia = 0; dia < quantidadeDias; dia++) {
-    const data = new Date(dataInicio);
-    data.setDate(dataInicio.getDate() + dia);
+  for (let day = 0; day < numberDays; day++) {
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + day);
 
     // Ignora sábado e domingo
-    if (data.getDay() === 0 || data.getDay() === 6) {
+    if (date.getDay() === 0 || date.getDay() === 6) {
       continue;
     }
 
-    const frequencias = alunos.map((aluno) => ({
-      alunoId: aluno.id,
-      data,
+    const attendance = students.map((student) => ({
+      studentId: student.id,
+      date,
       // 90% de chance de presença
-      presente: Math.random() > 0.10,
+      present: Math.random() > 0.10,
     }));
 
-    await prisma.frequencia.createMany({
-      data: frequencias,
+    await prisma.attendance.createMany({
+      data: attendance,
     });
   }
 
-  console.log('Frequências criadas');
-  console.log('Seed finalizada com sucesso!');
+  console.log('Create attendance');
+  console.log('Seed finalized whith success');
 }
 
 main()

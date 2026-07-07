@@ -7,44 +7,44 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Usuario {
-  id        Int      @id @default(autoincrement())
-  nome      String
-  email     String   @unique
-  senha     String
-  role      String   // "ADMIN" ou "MONITORA"
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     String // "ADMIN" or "MONITOR"
 
-  @@map("usuarios")
+  @@map("users")
 }
 
-model Turma {
-  id        Int      @id @default(autoincrement())
-  nome      String
-  serie     String
-  anoLetivo Int
-  alunos    Aluno[]
+model Class {
+  id         Int       @id @default(autoincrement())
+  name       String
+  grade      String
+  schoolYear Int
+  students   Student[]
 
-  @@map("turmas")
+  @@map("classes")
 }
 
-model Aluno {
-  id         Int          @id @default(autoincrement())
-  nome       String
-  matricula  String       @unique
-  turmaId    Int
-  turma      Turma        @relation(fields: [turmaId], references: [id], onDelete: Cascade)
-  frequencias Frequencia[]
+model Student {
+  id          Int          @id @default(autoincrement())
+  name        String
+  enrollment  String       @unique
+  classId     Int
+  class       Class        @relation(fields: [classId], references: [id], onDelete: Cascade)
+  attendance  Attendance[]
 
-  @@map("alunos")
+  @@map("students")
 }
 
-model Frequencia {
-  id       Int      @id @default(autoincrement())
-  alunoId  Int
-  aluno    Aluno    @relation(fields: [alunoId], references: [id], onDelete: Cascade)
-  data     DateTime @db.Date
-  presente Boolean
+model Attendance {
+  id         Int      @id @default(autoincrement())
+  studentId  Int
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  date       DateTime @db.Date
+  present    Boolean
 
-  @@unique([alunoId, data])
-  @@map("frequencias")
+  @@unique([studentId, date])
+  @@map("attendance")
 }
