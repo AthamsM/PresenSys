@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import API from "../../Controller/Api.jsx";
 
-export default function Turmas(){
+export default function Classes(){
 
   const navigate = useNavigate();
-  const [turmas, setTurmas] = useState([]);
+  const [classes, setClasses] = useState([]);
 
   useEffect(()=>{
 
     API.get("/turmas").then((res)=>{
       console.log(res.data);
-      setTurmas(res.data);
+      setClasses(res.data);
     }).catch((err)=>{
       
       console.log(err);
@@ -28,7 +28,7 @@ export default function Turmas(){
 
       <div className="gap-5 mt-5 grid grid-cols-3 mr-10">
         {
-          turmas.map((e,index)=>(
+          classes.map((e,index)=>(
             <div key={index} className="border rounded-2xl min-w-60 border-gray-400">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
                 <p className="text-sm">Manhã - Prof. {e.nome}</p>
