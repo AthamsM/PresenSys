@@ -4,10 +4,15 @@ import { AttendanceStats } from "../../Components/Attendance/AttendanceStats";
 import { AttendanceSearch } from "../../Components/Attendance/AttendanceSearch";
 import { AttendanceActions } from "../../Components/Attendance/AttendanceActions";
 import { StudentCard } from "../../Components/Attendance/StudentCard";
+import { useSearchParams } from "react-router-dom";
 
 export default function AttendancePage() {
     const [students, setStudents] = useState([]);
     const [search, setSearch] = useState("");
+
+    //o ID da turma tá vindo pela url
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id"); //o valor que vai buscar no banco da turma
 
     useEffect(() =>{
         loadStudents();
