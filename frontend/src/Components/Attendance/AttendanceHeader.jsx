@@ -4,7 +4,7 @@ export function AttendanceHeader() {
         <div>
             <button className="flex items-center gap-2 text-gray-500">
                 <img
-                    src="/back-arrow.png"
+                    src="icons/back-arrow.svg"
                     alt="Voltar"
                     className="w-4 h-4"
                 />
