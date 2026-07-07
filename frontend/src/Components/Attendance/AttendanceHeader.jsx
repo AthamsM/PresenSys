@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 
 export function AttendanceHeader() {
+  const navigate = useNavigate();
     return (
         <div>
-            <button className="flex items-center gap-2 text-gray-500">
+            <button className="flex items-center gap-2 text-gray-500"
+              onClick={()=> navigate("/classes")}>
                 <img
                     src="icons/back-arrow.svg"
                     alt="Voltar"
