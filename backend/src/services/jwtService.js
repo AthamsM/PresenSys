@@ -9,7 +9,7 @@ class JwtService {
 
         const user = {
             id: data.id,
-            nome: data.nome,
+            name: data.name,
             email: data.email,
             role: data.role
         };

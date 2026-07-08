@@ -12,7 +12,7 @@ class RelatorioService {
       id: item.id,
       name: item.name,
       registration: item.registration,
-      serie: item.serie,
+      grade: item.grade,
       class: item.class,
       foul: item.foul
     }));
@@ -29,15 +29,15 @@ class RelatorioService {
       id: item.id,
       name: item.name,
       registration: item.registration,
-      serie: item.serie,
+      grade: item.grade,
       class: item.class,
       foul: item.foul
     }));
   }
 
-  async getFoulSerie(serie, startDate, endDate) {
-    const values = await ReportRepository.getFoulSerie(
-      serie,
+  async getFoulGrade(grade, startDate, endDate) {
+    const values = await ReportRepository.getFoulGrade(
+      grade,
       startDate,
       endDate
     );
@@ -46,15 +46,15 @@ class RelatorioService {
       id: item.id,
       name: item.name,
       registration: item.registration,
-      serie: item.serie,
+      grade: item.grade,
       class: item.class,
-      fol: item.foul
+      foul: item.foul
     }));
   }
 
- async getFoulSerieInClass(serie, className, startDate, endDate) {
-    const values = await ReportRepository.getFoulSerieInClass(
-      serie,
+ async getFoulGradeInClass(grade, className, startDate, endDate) {
+    const values = await ReportRepository.getFoulGradeInClass(
+      grade,
       className,
       startDate,
       endDate
@@ -64,7 +64,7 @@ class RelatorioService {
       id: item.id,
       name: item.name,
       registration: item.registration,
-      serie: item.serie,
+      grade: item.grade,
       class: item.class,
       foul: item.foul
     }));
@@ -81,7 +81,7 @@ class RelatorioService {
       id: values.id,
       name: values.name,
       registration: values.registration,
-      serie: values.serie,
+      grade: values.grade,
       class: values.class,
       totalfoul: values.totalfoul,
       foul: values.foul

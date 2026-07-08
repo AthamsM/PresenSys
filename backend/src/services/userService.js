@@ -6,8 +6,8 @@ class UserService {
 
   async register(data) {
 
-    if (!data.nome || !data.email || !data.senha) {
-      const error = new Error('Todos os campos (nome, email e senha) são obrigatórios.');
+    if (!data.name || !data.email || !data.password) {
+      const error = new Error('Todos os campos (name, email e password) são obrigatórios.');
       error.statusCode = 400;
       throw error;
     }
@@ -15,7 +15,7 @@ class UserService {
       data.role = 'MONITORA';
     }
 
-    data.senha = await bcrypt.hash(data.senha, 10);
+    data.password = await bcrypt.hash(data.password, 10);
 
     return UserRepository.create(data);
 
@@ -23,8 +23,8 @@ class UserService {
 
   async login(data) {
     
-    if (!data.email || !data.senha) {
-      const error = new Error('Os campos (email e senha) são obrigatórios.');
+    if (!data.email || !data.password) {
+      const error = new Error('Os campos (email e password) são obrigatórios.');
       error.statusCode = 400;
       throw error;
     }
@@ -37,10 +37,10 @@ class UserService {
       throw error;
     }
 
-    const validatePassword = await bcrypt.compare(data.senha, user.senha);
+    const validatePassword = await bcrypt.compare(data.password, user.password);
 
     if(!validatePassword){
-      const error = new Error('Senha inválida');
+      const error = new Error('password inválida');
       error.statusCode = 404;
       throw error;
     }
@@ -80,6 +80,7 @@ class UserService {
 
   async update(id, data) {
     await this.findById(id);
+    data.password = await bcrypt.hash(data.password, 10);
     return UserRepository.update(Number(id), data);
   }
 
