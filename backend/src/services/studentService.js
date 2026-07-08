@@ -1,5 +1,5 @@
 import StudentRepository from '../repositories/studentRepository.js';
-import ClassRepository from '../repositories/turmaRepository.js';
+import ClassRepository from '../repositories/classRepository.js';
 
 class StudentService {
   async create(data) {
