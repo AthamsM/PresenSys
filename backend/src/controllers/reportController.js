@@ -33,12 +33,12 @@ class ReportController {
     }
   }
 
-  async getFoulSerie(req, res, next) {
+  async getFoulGrade(req, res, next) {
     try {
-      const { serie, startDate, endDate } = req.query;
+      const { grade, startDate, endDate } = req.query;
 
-      const result = await ReportService.getFoulSerie(
-        serie,
+      const result = await ReportService.getFoulGrade(
+        grade,
         startDate,
         endDate
       );
@@ -65,12 +65,12 @@ class ReportController {
     }
   }
 
-  async getFoulSerieInClass(req, res, next) {
+  async getFoulGradeInClass(req, res, next) {
     try {
-      const { serie, className, startDate, endDate } = req.query;
+      const { grade, className, startDate, endDate } = req.query;
 
-      const result = await ReportService.getFoulSerieInClass(
-        serie,
+      const result = await ReportService.getFoulGradeInClass(
+        grade,
         className,
         startDate,
         endDate

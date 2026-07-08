@@ -6,26 +6,26 @@ class ReportRepository {
     const filterDate = {};
 
     if (startDate && endDate) {
-      filterDate.data = {
+      filterDate.date = {
         gte: new Date(startDate),
         lte: new Date(endDate)
       };
     }
 
-    const students = await prisma.aluno.findMany({
+    const students = await prisma.student.findMany({
       select: {
         id: true,
-        nome: true,
-        matricula: true,
-        turma: {
+        name: true,
+        enrollment: true,
+        class: {
           select: {
-            nome: true,
-            serie: true
+            name: true,
+            grade: true
           }
         },
-        frequencias: {
+        attendance: {
           where: {
-            presente: false,
+            present: false,
             ...filterDate
           },
           select: {
@@ -37,11 +37,11 @@ class ReportRepository {
 
     return students.map(student => ({
       id: student.id,
-      name: student.nome,
-      registration: student.matricula,
-      serie: student.turma.serie,
-      class: student.turma.nome,
-      foul: student.frequencias.length
+      name: student.name,
+      registration: student.enrollment,
+      grade: student.class.grade,
+      class: student.class.name,
+      foul: student.attendance.length
     }));
   }
 
@@ -49,31 +49,31 @@ class ReportRepository {
     const filterDate = {};
 
     if (startDate && endDate) {
-      filterDate.data = {
+      filterDate.date = {
         gte: new Date(startDate),
         lte: new Date(endDate)
       };
     }
 
-    const students = await prisma.aluno.findMany({
+    const students = await prisma.student.findMany({
       where: {
-        turma: {
-          nome: className
+        class: {
+          name: className
         }
       },
       select: {
         id: true,
-        nome: true,
-        matricula: true,
-        turma: {
+        name: true,
+        enrollment: true,
+        class: {
           select: {
-            nome: true,
-            serie: true
+            name: true,
+            grade: true
           }
         },
-        frequencias: {
+        attendance: {
           where: {
-            presente: false,
+            present: false,
             ...filterDate
           },
           select: {
@@ -85,43 +85,43 @@ class ReportRepository {
 
     return students.map(student => ({
       id: student.id,
-      name: student.nome,
-      registration: student.matricula,
-      serie: student.turma.serie,
-      class: student.turma.nome,
-      foul: student.frequencias.length
+      name: student.name,
+      registration: student.enrollment,
+      grade: student.class.grade,
+      class: student.class.name,
+      foul: student.attendance.length
     }));
   }
 
-async getFoulSerie(serie, startDate, endDate) {
+async getFoulGrade(grade, startDate, endDate) {
     const filterDate = {};
 
     if (startDate && endDate) {
-      filterDate.data = {
+      filterDate.date = {
         gte: new Date(startDate),
         lte: new Date(endDate)
       };
     }
 
-    const students = await prisma.aluno.findMany({
+    const students = await prisma.student.findMany({
       where: {
-        turma: {
-          serie: serie
+        class: {
+          grade: grade
         }
       },
       select: {
         id: true,
-        nome: true,
-        matricula: true,
-        turma: {
+        name: true,
+        enrollment: true,
+        class: {
           select: {
-            nome: true,
-            serie: true
+            name: true,
+            grade: true
           }
         },
-        frequencias: {
+        attendance: {
           where: {
-            presente: false,
+            present: false,
             ...filterDate
           },
           select: {
@@ -133,43 +133,43 @@ async getFoulSerie(serie, startDate, endDate) {
 
     return students.map(student => ({
       id: student.id,
-      name: student.nome,
-      registration: student.matricula,
-      serie: student.turma.serie,
-      class: student.turma.nome,
-      foul: student.frequencias.length
+      name: student.name,
+      registration: student.enrollment,
+      grade: student.class.grade,
+      class: student.class.name,
+      foul: student.attendance.length
     }));
   }
-  async getFoulSerieInClass(serie, className, startDate, endDate) {
+  async getFoulGradeInClass(grade, className, startDate, endDate) {
     const filterDate = {};
 
     if (startDate && endDate) {
-      filterDate.data = {
+      filterDate.date = {
         gte: new Date(startDate),
         lte: new Date(endDate)
       };
     }
 
-    const students = await prisma.aluno.findMany({
+    const students = await prisma.student.findMany({
       where: {
-        turma: {
-          serie: serie,
-          nome: className
+        class: {
+          grade: grade,
+          name: className
         }
       },
       select: {
         id: true,
-        nome: true,
-        matricula: true,
-        turma: {
+        name: true,
+        enrollment: true,
+        class: {
           select: {
-            nome: true,
-            serie: true
+            name: true,
+            grade: true
           }
         },
-        frequencias: {
+        attendance: {
           where: {
-            presente: false,
+            present: false,
             ...filterDate
           },
           select: {
@@ -181,11 +181,11 @@ async getFoulSerie(serie, startDate, endDate) {
 
     return students.map(student => ({
       id: student.id,
-      name: student.nome,
-      registration: student.matricula,
-      serie: student.turma.serie,
-      class: student.turma.nome,
-      foul: student.frequencias.length
+      name: student.name,
+      registration: student.enrollment,
+      grade: student.class.grade,
+      class: student.class.name,
+      foul: student.attendance.length
     }));
   }
 
@@ -193,36 +193,36 @@ async getFoulSerie(serie, startDate, endDate) {
   const filterDate = {};
 
   if (startDate && endDate) {
-    filterDate.data = {
+    filterDate.date = {
       gte: new Date(startDate),
       lte: new Date(endDate)
     };
   }
 
-  const student = await prisma.aluno.findUnique({
+  const student = await prisma.student.findUnique({
     where: {
       id: id
     },
     select: {
       id: true,
-      nome: true,
-      matricula: true,
-      turma: {
+      name: true,
+      enrollment: true,
+      class: {
         select: {
-          nome: true,
-          serie: true
+          name: true,
+          grade: true
         }
       },
-      frequencias: {
+      attendance: {
         where: {
-          presente: false,
+          present: false,
           ...filterDate
         },
         select: {
-          data: true
+          date: true
         },
         orderBy: {
-          data: 'asc'
+          date: 'asc'
         }
       }
     }
@@ -234,13 +234,13 @@ async getFoulSerie(serie, startDate, endDate) {
 
   return {
     id: student.id,
-    name: student.nome,
-    registration: student.matricula,
-    serie: student.turma.serie,
-    class: student.turma.nome,
-    totalFoul: student.frequencias.length,
-    foul: student.frequencias.map(f => ({
-      data: f.data
+    name: student.name,
+    registration: student.enrollment,
+    grade: student.class.grade,
+    class: student.class.name,
+    totalFoul: student.attendance.length,
+    foul: student.attendance.map(f => ({
+      date: f.date
     }))
   };
 }
