@@ -12,6 +12,10 @@ import Page404 from "./404"
 // #EBEBEB
 // #90CAF9
 // #155DFC
+// #155DDD
+// #347D39
+// #3A8C40
+// #C10007
 //
 
 // A depender da pagina, colocar tag entre template, tipo, <Template> <Home/> </Template>
@@ -19,6 +23,10 @@ const Pages = [
     {
         path : "/*",
         component : <Page404/>
+    },
+    {
+        path : "/",
+        component : <Login/>
     },
     {
         path : "/login",

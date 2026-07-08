@@ -14,7 +14,7 @@ function Page404() {
 
                 <div className="flex items-center gap-x-[1rem]">
 
-                    <img src="images/robot2.svg" alt="robot" className="w-[12rem]"></img>
+                    <img src="images/robot.svg" alt="robot" className="w-[12rem]"></img>
 
                     <h1 className="font-blokan text-[12rem] text-[#90CAF9] leading-none">404</h1> 
 
@@ -25,7 +25,7 @@ function Page404() {
             </div>
 
             <div>
-                <Button onClick={() => navigate("/classes")} className="bg-[#155DFC] hover:bg-[#90CAF9] active:bg-[#155DFC] rounded-md font-bold text-[1rem] text-[#EBEBEB] uppercase hover:text-[#263238] active:text-[#EBEBEB]">Voltar ao painel</Button>
+                <Button onClick={() => navigate("/classes")} className="bg-[#155DDD] hover:bg-[#90CAF9] active:bg-[#155DDD] rounded-md font-bold text-[1rem] text-[#EBEBEB] uppercase hover:text-[#263238] active:text-[#EBEBEB]">Voltar ao painel</Button>
             </div>
 
         </div>
