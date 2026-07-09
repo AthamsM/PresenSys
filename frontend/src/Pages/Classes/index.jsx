@@ -10,7 +10,7 @@ export default function Classes(){
 
   useEffect(()=>{
 
-    API.get("/turmas").then((res)=>{
+    API.get("/class").then((res)=>{
       console.log(res.data);
       setClasses(res.data);
     }).catch((err)=>{
@@ -26,10 +26,10 @@ export default function Classes(){
       <h1 className="text-2xl font-bold">Turmas</h1>
       <p>Todas as turmas</p>
 
-      <div className="gap-5 mt-5 grid grid-cols-3 mr-10">
+      <div className="gap-5 mt-5 grid w-xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mr-10">
         {
           classes.map((e,index)=>(
-            <div key={index} className="border rounded-2xl min-w-60 border-gray-400">
+            <div key={index} className="border rounded-2xl border-gray-400">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
                 <p className="text-sm">Manhã - Prof. {e.nome}</p>
                 <h2 className="text-xl font-bold">{e.serie} {e.nome}</h2>
