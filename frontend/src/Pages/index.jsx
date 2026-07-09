@@ -2,7 +2,7 @@ import Template from "../Layout/Template";
 import Classes from "./Classes/index";
 import Attendance from "./Attendance";
 import Login from "./Login";
-import Relatorios from "./Relatorios";
+import Relatorios from "./Report";
 import Page404 from "./404"
 
 // Cores
