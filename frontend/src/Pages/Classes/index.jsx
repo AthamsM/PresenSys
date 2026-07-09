@@ -31,16 +31,14 @@ export default function Classes(){
           classes.map((e,index)=>(
             <div key={index} className="border rounded-2xl border-gray-400">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
-                <p className="text-sm">Manhã - Prof. {e.nome}</p>
-                <h2 className="text-xl font-bold">{e.serie} {e.nome}</h2>
+                <h2 className="text-xl font-bold">{e.grade} {e.name}</h2>
               </div>
               <div className="p-5 rounded-2xl">
                 <div className="flex justify-between mb-5">
                   <span className="text-sm flex">
                   <img src="icons/user.svg" alt="" className="w-5 mr-1"/>
-                    {e._count.alunos}
+                    {e._count.students} Alunos
                   </span>
-                  <span className="bg-amber-200 rounded-xl px-2 text-sm">90% presença</span>
                 </div>
                 <button className="bg-blue-600 hover:bg-blue-400 text-white p-2 w-full rounded-2xl font-bold" onClick={()=>navigate(`/attendance?id=${e.id}`)}>Abrir chamada</button>
               </div>
