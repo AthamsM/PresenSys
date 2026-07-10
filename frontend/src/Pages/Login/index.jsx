@@ -72,7 +72,7 @@ function Login (){
 
             </form>
 
-            <div><Toaster/></div>
+            <Toaster/>
 
         </main>
 
