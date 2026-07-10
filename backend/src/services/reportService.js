@@ -3,19 +3,43 @@ import ReportRepository from '../repositories/reportRepository.js';
 class RelatorioService {
 
   async getFoulAll(startDate, endDate) {
+
     const values = await ReportRepository.getFoulAll(
       startDate,
       endDate
     );
 
-    return values.map(item => ({
-      id: item.id,
-      name: item.name,
-      registration: item.registration,
-      grade: item.grade,
-      class: item.class,
-      foul: item.foul
-    }));
+    const foulsStudent = await Promise.all(
+      values.map(async (item) => {
+
+        const fouls = await ReportRepository.getFoulStudent(
+          item.id,
+          startDate,
+          endDate
+        );
+
+        return {
+          id: item.id,
+          name: item.name,
+          registration: item.registration,
+          grade: item.grade,
+          class: item.class,
+          foul: fouls.foul
+        };
+      })
+    );
+
+    return {
+      data: values.map(item => ({
+        id: item.id,
+        name: item.name,
+        registration: item.registration,
+        grade: item.grade,
+        class: item.class,
+        foul: item.foul
+      })),
+      foulsStudent
+    };
   }
 
   async getFoulClass(className, startDate, endDate) {
@@ -25,14 +49,37 @@ class RelatorioService {
       endDate
     );
 
-    return values.map(item => ({
-      id: item.id,
-      name: item.name,
-      registration: item.registration,
-      grade: item.grade,
-      class: item.class,
-      foul: item.foul
-    }));
+    const foulsStudent = await Promise.all(
+      values.map(async (item) => {
+
+        const fouls = await ReportRepository.getFoulStudent(
+          item.id,
+          startDate,
+          endDate
+        );
+
+        return {
+          id: item.id,
+          name: item.name,
+          registration: item.registration,
+          grade: item.grade,
+          class: item.class,
+          foul: fouls.foul
+        };
+      })
+    );
+
+    return {
+      data: values.map(item => ({
+        id: item.id,
+        name: item.name,
+        registration: item.registration,
+        grade: item.grade,
+        class: item.class,
+        foul: item.foul
+      })),
+      foulsStudent
+    };
   }
 
   async getFoulGrade(grade, startDate, endDate) {
@@ -42,14 +89,37 @@ class RelatorioService {
       endDate
     );
 
-    return values.map(item => ({
-      id: item.id,
-      name: item.name,
-      registration: item.registration,
-      grade: item.grade,
-      class: item.class,
-      foul: item.foul
-    }));
+    const foulsStudent = await Promise.all(
+      values.map(async (item) => {
+
+        const fouls = await ReportRepository.getFoulStudent(
+          item.id,
+          startDate,
+          endDate
+        );
+
+        return {
+          id: item.id,
+          name: item.name,
+          registration: item.registration,
+          grade: item.grade,
+          class: item.class,
+          foul: fouls.foul
+        };
+      })
+    );
+
+    return {
+      data: values.map(item => ({
+        id: item.id,
+        name: item.name,
+        registration: item.registration,
+        grade: item.grade,
+        class: item.class,
+        foul: item.foul
+      })),
+      foulsStudent
+    };
   }
 
  async getFoulGradeInClass(grade, className, startDate, endDate) {
@@ -60,14 +130,37 @@ class RelatorioService {
       endDate
     );
 
-    return values.map(item => ({
-      id: item.id,
-      name: item.name,
-      registration: item.registration,
-      grade: item.grade,
-      class: item.class,
-      foul: item.foul
-    }));
+    const foulsStudent = await Promise.all(
+      values.map(async (item) => {
+
+        const fouls = await ReportRepository.getFoulStudent(
+          item.id,
+          startDate,
+          endDate
+        );
+
+        return {
+          id: item.id,
+          name: item.name,
+          registration: item.registration,
+          grade: item.grade,
+          class: item.class,
+          foul: fouls.foul
+        };
+      })
+    );
+
+    return {
+      data: values.map(item => ({
+        id: item.id,
+        name: item.name,
+        registration: item.registration,
+        grade: item.grade,
+        class: item.class,
+        foul: item.foul
+      })),
+      foulsStudent
+    };
   }
   
   async getFoulStudent(id, startDate, endDate) {
