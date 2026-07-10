@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../Controller/Api";
 import Button from "../../Components/Button";
+import { converterJsonParaCsvEDownload } from "../../Utils/reportsCSV";
 
 function Report() {
-
-  const [file, setFile] = useState("pdf");
 
   const [filter, setFilter] = useState({
     grade: "",
@@ -15,7 +14,8 @@ function Report() {
   });
 
   const [datas, setDatas] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [studentsFouls, setStudentsFouls] = useState([]); // Para modal de todas as faltas do aluno
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -47,7 +47,8 @@ function Report() {
         }
       });
 
-      setDatas(data);
+      setDatas(data.data);
+      setStudentsFouls(data.foulsStudent);
     } catch (err) {
       console.log(err);
     }
@@ -75,6 +76,13 @@ function Report() {
     findClass();
   }, []);
 
+  const [file, setFile] = useState("pdf");
+
+  async function generateReportsCSV() {
+    alert("Calma lá Paizão");
+    //converterJsonParaCsvEDownload(datas, `relatorio_${filter.startDate}_${filter.endDate}.csv`);
+  }
+
   return (
     <div className="mx-10 my-10">
 
@@ -82,15 +90,8 @@ function Report() {
       <div className="flex justify-between items-center">
         <p>Acompanhe faltas por meio de filtros</p>
 
-        <div className="flex gap-2">
-          <button onClick={() => setFile('xlsx')}
-            className={file === 'xlsx' ? 'bg-blue-500 px-4 py-1 rounded-xl text-white' : 'border border-gray-400 px-4 py-1 rounded-xl'}>
-            Excel
-          </button>
-          <button onClick={() => setFile('pdf')}
-            className={file === 'pdf' ? 'bg-blue-500 px-4 py-1 rounded-xl text-white' : 'border border-gray-400 px-4 py-1 rounded-xl'}>
-            PDF
-          </button>
+        <div className="flex items-end">
+          <Button disabled={datas.length === 0} onClick={generateReportsCSV} type="submit" className=" bg-[#155DDD] hover:bg-[#155DDD] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Gerar CSV</Button>
         </div>
       </div>
 
