@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../Controller/Api";
 import Button from "../../Components/Button";
-import { converterJsonParaCsvEDownload } from "../../Utils/reportsCSV";
+import Modal from "../../Components/Modal";
+import { formatDate } from "../../Utils/formatDate"
+//import { converterJsonParaCsvEDownload } from "../../Utils/reportsCSV";
 
 function Report() {
 
@@ -16,6 +18,8 @@ function Report() {
   const [datas, setDatas] = useState([]);
   const [studentsFouls, setStudentsFouls] = useState([]); // Para modal de todas as faltas do aluno
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState([]);
 
   const navigate = useNavigate();
 
@@ -70,6 +74,19 @@ function Report() {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  function closeModal(open) {
+
+    setOpenModal(open);
+
+  }
+
+  function setStudent(id) {
+
+    setSelectedStudent(studentsFouls.find(studentsFouls => studentsFouls.id == id));
+    console.log("SSSS -->>", selectedStudent);
+
   }
 
   useEffect(() => {
@@ -138,8 +155,8 @@ function Report() {
 
           <div className="py-3 block md:hidden space-y-3">
             {datas.map((e) => (
-              <div key={e.id} className="border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col gap-1.5">
-                <div className="flex justify-between items-center border-b border-gray-200 pb-1.5 mb-1.5">
+              <div key={e.id} className="border border-gray-200  rounded-xl p-4 shadow-sm flex flex-col gap-1.5">
+                <div className="flex justify-between items-center border-b border-gray-300 pb-1.5 mb-1.5">
                   <span className="text-xs font-bold text-gray-500 uppercase">Aluno</span>
                   <span className="text-sm font-semibold text-gray-800">{e.name}</span>
                 </div>
@@ -157,6 +174,16 @@ function Report() {
                     {e.foul} faltas
                   </span>
                 </div>
+
+                <div className="mt-[0.5rem]">
+
+                  {console.log("SSS -->>", selectedStudent)}
+                  {e.foul > 0 &&
+
+                    <Button onClick={() => {setStudent(e.id); setOpenModal(true);}} className="w-full py-[0.2rem] px-[0.4rem] bg-[#155DDD] hover:bg-[#1768F7] active:bg-[#155DDD] rounded-xl font-bold text-[0.9rem] text-[#EBEBEB] uppercase cursor-pointer transition delay-25 duration-25 ease-in-out">Ver faltas</Button>
+
+                  }
+                </div>
               </div>
             ))}
           </div>
@@ -164,23 +191,95 @@ function Report() {
           <table className="hidden md:table table-auto w-full text-base text-left border-separate border-spacing-y-3">
             <thead className="text-base text-gray-700 uppercase sticky top-0 z-10">
               <tr>
-                <th className="py-4 px-3 bg-white font-bold rounded-l-xl" scope="col">Série</th>
+                <th className="py-4 px-3 bg-white font-bold" scope="col">Série</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Turma</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Alunos</th>
-                <th className="py-4 px-3 bg-white font-bold rounded-r-xl" scope="col">Faltas</th>
+                <th className="py-4 px-3 bg-white font-bold" scope="col">Faltas</th>
+                <th className="py-4 px-3 bg-white font-bold" scope="col"></th>
               </tr>
             </thead>
             <tbody>
               {datas.map((e) => (
                 <tr key={e.id}>
-                  <td className=" py-4 px-3 border-b border-gray-200">{e.grade}</td>
-                  <td className=" py-4 px-3 border-b border-gray-200">{e.class}</td>
-                  <td className=" py-4 px-3 border-b border-gray-200">{e.name}</td>
-                  <td className=" py-4 px-3 border-b border-gray-200">{e.foul}</td>
+                  <td className="py-4 px-3 border-b border-gray-200">{e.grade}</td>
+                  <td className="py-4 px-3 border-b border-gray-200">{e.class}</td>
+                  <td className="py-4 px-3 border-b border-gray-200">{e.name}</td>
+                  <td className="py-4 px-3 border-b border-gray-200">{e.foul}</td>
+                  <td className="py-4 px-3 border-b border-gray-200 text-center">
+                    {e.foul > 0 &&
+
+                      <Button onClick={() => {setStudent(e.id); setOpenModal(true);}} className="bg-[#155DDD] hover:bg-[#1768F7] active:bg-[#155DDD] rounded-xl font-bold text-[1rem] text-[#EBEBEB] uppercase cursor-pointer transition delay-25 duration-25 ease-in-out">Ver faltas</Button>
+
+                    }
+                  </td>
+                
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <Modal open={openModal} setOpen={closeModal}>
+                      
+            <div className="min-w-[75vw] max-h-[82.5vw] lg:max-h-[33vw] lg:min-w-[30vw] flex flex-col gap-y-[0.5rem]">
+
+              <div className="flex justify-between items-center">
+
+                <img src="icons/report.svg" alt="report-icon" className="w-[1.9rem]"/>
+
+                <h1 className="font-bold text-[1.2rem] sm:text-[1.5rem]">Relatório de Faltas</h1>
+
+                <Button onClick={() => (setOpenModal(false))} className="py-[0.2rem] px-[0.4rem] bg-[#C10007] hover:bg-[#DB0008] active:bg-[#C10007] rounded-xl cursor-pointer transition delay-25 duration-25 ease-in-out">
+                  <img src="icons/x.svg" alt="x" className="w-[1.5rem]"/>
+                </Button>
+
+              </div>
+
+              <div className="p-[0.5rem] flex flex-col items-start border-t-2 border-[#364153]">
+
+                <h1>Nome: {selectedStudent?.name}</h1>
+                <h1>Turma: {selectedStudent?.grade} {selectedStudent?.class}</h1>
+                <h1>Número da matrícula: {selectedStudent?.registration}</h1>
+
+              </div>
+
+              <h1 className="flex justify-center border-y-2 border-[#99A1Af] text-[#263238] font-bold ">Dias faltados</h1>
+              
+              <div className="overflow-auto">
+                <table className="w-full text-center table-auto [counter-reset:linha] border-collapse border-[0.063rem] border-[#99A1Af]">
+
+                  <thead>
+
+                    <tr className="border-b-[0.063rem] border-[#99A1Af] text-[#263238]">
+
+                      <th>N°</th>
+                      <th>Data</th>
+
+                    </tr>
+
+                  </thead>
+
+                  {selectedStudent?.foul?.map((foul) => (
+
+                    <tbody key={foul.date}>
+
+                      <tr className="[counter-increment:linha] border-b-[0.063rem] border-[#99A1Af]">
+
+                        <td className="before:content-[counter(linha)]"></td>
+                        <td>{formatDate(foul.date).split(",")[0]}</td>
+
+                      </tr>
+
+                    </tbody>
+
+                  ))}
+
+                </table>
+              </div>
+                    
+            </div>
+
+          </Modal>
+
 
         </div>
       )}

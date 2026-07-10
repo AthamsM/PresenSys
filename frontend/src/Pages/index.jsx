@@ -8,14 +8,20 @@ import Page404 from "./404"
 // Cores
 //
 // #263238
+// #364153
 // #FFFFFC
+// #E5E7EB
 // #EBEBEB
+// #99A1Af
+// #82B6E0
 // #90CAF9
+// #1768F7
 // #155DFC
 // #155DDD
 // #347D39
 // #3A8C40
 // #C10007
+// #DB0008
 //
 
 // A depender da pagina, colocar tag entre template, tipo, <Template> <Home/> </Template>
