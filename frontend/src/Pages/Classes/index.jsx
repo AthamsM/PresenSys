@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import API from "../../Controller/Api.jsx";
+import Button from "../../Components/Button.jsx"
 
 export default function Classes(){
 
@@ -11,7 +12,7 @@ export default function Classes(){
   useEffect(()=>{
 
     API.get("/class").then((res)=>{
-      console.log(res.data);
+      //console.log(res.data);
       setClasses(res.data);
     }).catch((err)=>{
       
@@ -22,11 +23,11 @@ export default function Classes(){
   },[]);
 
   return(
-    <div className="ml-10 mt-5">
+    <div className="ml-0 sm:ml-10 mr-5 sm:mr-10 mt-5">
       <h1 className="text-2xl font-bold">Turmas</h1>
       <p>Todas as turmas</p>
 
-      <div className="gap-5 mt-5 grid w-xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mr-10">
+      <div className="gap-5 mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[500px] overflow-y-auto">
         {
           classes.map((e,index)=>(
             <div key={index} className="border rounded-2xl border-gray-400">
@@ -40,7 +41,7 @@ export default function Classes(){
                     {e._count.students} Alunos
                   </span>
                 </div>
-                <button className="bg-blue-600 hover:bg-blue-400 text-white p-2 w-full rounded-2xl font-bold" onClick={()=>navigate(`/attendance?id=${e.id}`)}>Abrir chamada</button>
+                <Button className="bg-blue-600 hover:bg-blue-400 text-white p-2 w-full rounded-2xl font-bold" onClick={()=>navigate(`/attendance?id=${e.id}`)}>Abrir chamada</Button>
               </div>
             </div>
           ))

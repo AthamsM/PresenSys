@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Sidebar(){
+
+
+export default function Sidebar(props){
   const navigate = useNavigate();
   const tamanhoIcons = "w-5";
   const opcoes = [
@@ -32,7 +34,8 @@ export default function Sidebar(){
   // fazer a integração com o back ainda
   // para mudar o icone e descrição
   return(
-    <aside className=" border-r border-gray-400 h-screen ">
+    <aside className=" border-r border-gray-400 bg-white absolute h-screen sm:static z-2">
+
       <div className=" p-2 flex items-center border-b mb-2 border-gray-400">
         <img src="icons/user-full.svg" alt="" className="w-10 h-10 mr-2 object-cover"/>
         <div className="text-gray-800">
