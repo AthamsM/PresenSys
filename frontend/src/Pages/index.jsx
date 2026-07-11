@@ -13,6 +13,7 @@ import Page404 from "./404"
 // #E5E7EB
 // #EBEBEB
 // #99A1Af
+// #DBEAFE
 // #82B6E0
 // #90CAF9
 // #1768F7
