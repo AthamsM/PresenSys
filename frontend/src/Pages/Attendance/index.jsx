@@ -5,6 +5,8 @@ import { AttendanceSearch } from "../../Components/Attendance/AttendanceSearch";
 import { AttendanceActions } from "../../Components/Attendance/AttendanceActions";
 import { StudentCard } from "../../Components/Attendance/StudentCard";
 import { useSearchParams } from "react-router-dom";
+import API from "../../Controller/Api";
+
 
 export default function AttendancePage() {
     const [students, setStudents] = useState([]);
@@ -14,39 +16,49 @@ export default function AttendancePage() {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id"); //o valor que vai buscar no banco da turma
 
-    useEffect(() =>{
-        loadStudents();
-    }, []);
+    useEffect(() => {
+        if (id) {
+            loadStudents(id);
+        }
+    }, [id]);
 
-    async function loadStudents() {
+    async function loadStudents(classId) {
         try {
-            // Substituir depois pela API
-            const data = [
-                {
-                    id: 1,
-                    name: "Bruno Almeida",
-                    present: false,
-                },
-                {
-                    id: 2, 
-                    name: "Carla Mendes",
-                    present: false,
-                },
-                {
-                    id: 3,
-                    name: "Daniel Ferreira",
-                    present: false,
-                },
-                {
-                    id: 4, 
-                    name: "Eduarda Lima",
-                    present: false,
-                },
-            ];
 
-            setStudents(data);
-        }   catch (error) {
+            const response = await API.get(`/class/${classId}`);
+
+            const students = response.data.students.map(student => ({
+                id: student.id,
+                name: student.name,
+                present: false,
+            }));
+
+           setStudents(students);
+
+        } catch (error) {
             console.error(error);
+        }
+    }
+
+    async function saveAttendance() {
+        try {
+            const data = {
+                date: new Date().toISOString().split("T")[0],
+                attendance: students.map((student) => ({
+                    studentId: student.id,
+                    present: student.present,
+                })),
+
+            };
+
+            console.log("Enviando frequência:", data); // teste 
+
+            const response = await API.post("/attendances/", data); 
+
+            alert("Frequência salva com sucesso!");
+
+        } catch (error) {
+            console.error("Erro ao salvar frequência:", error);
         }
     }
 
@@ -125,11 +137,17 @@ export default function AttendancePage() {
                 )}
 
             </div>
+            
+            <button
+                onClick={saveAttendance}
+                className="mt-4 w-full rounded-xl bg-green-300 py-4 font-medium hover:bg-green-400">
+                Salvar chamada
+            </button>
 
         </div>
     );                        
 } 
-    
+
 
 
 
