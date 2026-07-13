@@ -4,6 +4,7 @@ import Attendance from "./Attendance";
 import Login from "./Login";
 import Relatorios from "./Report";
 import Page404 from "./404"
+import Dashboard from "./Dashboard";
 
 // Cores
 //
@@ -41,7 +42,7 @@ const Pages = [
     },
     {
         path : "/classes",
-        component : <Template><Classes/></Template>
+        component : <Template><Classes height = "h-[450px]"/></Template>
     },
     {
         path: "/attendance",
@@ -52,6 +53,10 @@ const Pages = [
         path : "/reports",
         component : <Template><Relatorios/></Template>
     },
+    {
+      path : "/dashboard",
+      component : <Template><Dashboard/></Template>
+    }
 ]
 
 export default Pages
