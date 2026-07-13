@@ -10,7 +10,7 @@ export default function Sidebar(props){
             nome: "Painel",
             icon: "icons/dashboard.svg",
             ativo: false,
-            rota: "/dashboards"
+            rota: "/dashboard"
         },
         {
             nome: "Turmas",
@@ -31,8 +31,6 @@ export default function Sidebar(props){
             rota: "/configs"
         }
   ]
-  // fazer a integração com o back ainda
-  // para mudar o icone e descrição
   return(
     <aside className=" border-r border-gray-400 bg-white absolute h-screen sm:static z-2">
 
