@@ -42,7 +42,7 @@ const Pages = [
     },
     {
         path : "/classes",
-        component : <Template><Classes altura = "h-[450px]"/></Template>
+        component : <Template><Classes height = "h-[450px]"/></Template>
     },
     {
         path: "/attendance",

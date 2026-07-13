@@ -27,7 +27,7 @@ export default function Classes(props){
       <h1 className="text-2xl font-bold">Turmas</h1>
       <p>Todas as turmas</p>
 
-      <div className={`gap-5 mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ${props.altura} overflow-y-auto`}>
+      <div className={`gap-5 mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ${props.height} overflow-y-auto`}>
         {
           classes.map((e,index)=>{
             const classYear = e.grade.split("º");

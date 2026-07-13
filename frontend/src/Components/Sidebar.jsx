@@ -1,35 +1,33 @@
 import { useNavigate } from "react-router-dom";
 
-
-
 export default function Sidebar(props){
   const navigate = useNavigate();
-  const tamanhoIcons = "w-5";
-  const opcoes = [
+  const iconsSize = "w-5";
+  const options = [
     {
-            nome: "Painel",
+            name: "Painel",
             icon: "icons/dashboard.svg",
-            ativo: false,
-            rota: "/dashboard"
+            active: false,
+            route: "/dashboard"
         },
         {
-            nome: "Turmas",
+            name: "Turmas",
             icon: "icons/class.svg",
-            ativo: true,
-            rota: "/classes"
+            active: true,
+            route: "/classes"
         },
         {
-            nome: "Relatórios",
+            name: "Relatórios",
             icon: "icons/report.svg",
-            ativo: false,
-            rota: "/reports"
+            active: false,
+            route: "/reports"
         },
-        {
-            nome: "Configurações",
-            icon: "icons/setting.svg",
-            ativo: false,
-            rota: "/configs"
-        }
+        // {
+        //     name: "Configurações",
+        //     icon: "icons/setting.svg",
+        //     active: false,
+        //     route: "/configs"
+        // }
   ]
   return(
     <aside className=" border-r border-gray-400 bg-white absolute h-screen sm:static z-2">
@@ -45,12 +43,11 @@ export default function Sidebar(props){
       <h2 className="text-xs ml-2 text-gray-600 mb-2">Menu</h2>
       <div className="">
         {
-          opcoes.map((e,index)=>(
+          options.map((e,index)=>(
             
-            <button className="w-full pl-2 py-1 flex gap-3 items-center hover:bg-blue-100" onClick={() => navigate(e.rota)}
-             key={index}>
+            <button className="w-full pl-2 py-1 flex gap-3 items-center hover:bg-blue-100" onClick={() => navigate(e.route)} key={index}>
               <img src={e.icon} alt="" className="w-4 h-4"/>
-              <p>{e.nome}</p>
+              <p>{e.name}</p>
               
             </button>
           ))

@@ -68,7 +68,7 @@ export default function Dashboard(){
   },
   {
     "title":"Frequência média",
-    "value":totalFouls==0 ? "100%" : (totalFouls/totalStudents*obterDiasUteisPassados())*100,
+    "value":totalFouls==0 ? "100%" : (totalFouls/totalStudents*getPreviousBusinessDays())*100,
     "image":"../../../public/icons/trend-up.svg",
   }];
   const filters = [
@@ -78,26 +78,26 @@ export default function Dashboard(){
       "3º Ano",
     ];
   
-  function obterDiasUteisPassados() {
-    const hoje = new Date();
-    const anoAtual = hoje.getFullYear();
-    const mesAtual = hoje.getMonth(); // 0 = Janeiro, 1 = Fevereiro, etc.
-    const diaAtual = hoje.getDate();
+  function getPreviousBusinessDays() {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth(); // 0 = Janeiro, 1 = Fevereiro, etc.
+    const currentDay = today.getDate();
 
-    let diasUteis = 0;
+    let businessDays = 0;
 
-    // Loop do dia 1 até o dia de hoje
-    for (let dia = 1; dia <= diaAtual; dia++) {
-      const dataAnalise = new Date(anoAtual, mesAtual, dia);
-      const diaDaSemana = dataAnalise.getDay();
+    // Loop do dia 1 até o dia de today
+    for (let day = 1; day <= currentDay; day++) {
+      const dataAnalysis = new Date(currentYear, currentMonth, day);
+      const dayWeek = dataAnalysis.getDay();
 
       // 0 = Domingo, 6 = Sábado
       // Se NÃO for sábado e NÃO for domingo, é dia útil
-      if (diaDaSemana !== 0 && diaDaSemana !== 6) {
-        diasUteis++;
+      if (dayWeek !== 0 && dayWeek !== 6) {
+        businessDays++;
       }
     }
-    return diasUteis;
+    return businessDays;
   }
   
   const [selectedFilter, setSelectedFilter] = useState("0") //0 é igual a todos os anos
@@ -111,7 +111,7 @@ export default function Dashboard(){
       <div className="mb-3">
         <h1 className="text-2xl font-bold text-blue-900">Visão geral das turmas durante o mês</h1>
       </div>
-      <div className="gap-3 flex overflow-x-scroll h-[120px] w-[320px] sm:w-[400px] md:w-[600px] lg:w-[800px]">
+      <div className="gap-3 flex overflow-x-auto h-[120px] w-[320px] sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px]">
         {
           cards.map((e, index)=>(
             <Card image={e.image} title={e.title} value={e.value} key={index}> 
@@ -125,15 +125,13 @@ export default function Dashboard(){
           {
             filters.map((e, index)=>(
               <button key={index} className={`border p-1 px-2 rounded-2xl ${selectedFilter == index ? "bg-blue-500 text-white hover:bg-blue-700" : "bg-white hover:bg-gray-300"}`} onClick={() => changeFilter(index)}>
-                {
-                  e
-                }
+                {e}
               </button>
             ))
           }
         </div>
       </div>
-      <Classes altura={"h-[400px]"} filter={selectedFilter}/>
+      <Classes height={"h-[400px]"} filter={selectedFilter}/>
     </div>
   );
 }
