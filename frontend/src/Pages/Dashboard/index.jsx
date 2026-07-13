@@ -111,7 +111,7 @@ export default function Dashboard(){
       <div className="mb-3">
         <h1 className="text-2xl font-bold text-blue-900">Visão geral das turmas durante o mês</h1>
       </div>
-      <div className="gap-3 flex overflow-x-scroll h-[120px] w-[320px] sm:w-[400px] md:w-[600px] lg:w-[800px]">
+      <div className="gap-3 flex overflow-x-scroll h-[120px] w-[320px] sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px]">
         {
           cards.map((e, index)=>(
             <Card image={e.image} title={e.title} value={e.value} key={index}> 
