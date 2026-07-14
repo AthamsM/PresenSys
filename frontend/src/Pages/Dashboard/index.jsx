@@ -68,7 +68,7 @@ export default function Dashboard(){
   },
   {
     "title":"Frequência média",
-    "value":totalFouls==0 ? "100%" : (totalFouls/totalStudents*getPreviousBusinessDays())*100,
+    "value":totalFouls==0 ? "100%" : ((100-(totalFouls/(totalStudents*getPreviousBusinessDays()))*100)).toFixed(1)+"%",
     "image":"../../../public/icons/trend-up.svg",
   }];
   const filters = [
@@ -111,7 +111,7 @@ export default function Dashboard(){
       <div className="mb-3">
         <h1 className="text-2xl font-bold text-blue-900">Visão geral das turmas durante o mês</h1>
       </div>
-      <div className="gap-3 flex overflow-x-scroll h-[120px] w-[320px] sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px]">
+      <div className="gap-3 flex overflow-x-auto h-[120px] w-[320px] sm:w-[400px] md:w-[600px] lg:w-[800px] xl:w-[1000px]">
         {
           cards.map((e, index)=>(
             <Card image={e.image} title={e.title} value={e.value} key={index}> 

@@ -37,7 +37,7 @@ export default function Classes(props){
             const classYear = e.grade.split("º");
             if(props.filter == "0" || props.filter == classYear[0] || props.filter == null){
             return(
-            <div key={index} className="border rounded-2xl border-gray-400 h-[200px]">
+            <div key={index} className="border border-gray-200 shadow-sm shadow-gray-300 rounded-2xl  h-[200px]">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
                 <h2 className="text-xl font-bold">{e.grade} {e.name}</h2>
               </div>
