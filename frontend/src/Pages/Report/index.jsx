@@ -4,7 +4,8 @@ import API from "../../Controller/Api";
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
 import { formatDate } from "../../Utils/formatDate"
-//import { converterJsonParaCsvEDownload } from "../../Utils/reportsCSV";
+import { reportsCSV } from "../../Utils/reportsCSV";
+import {toast, Toaster } from "react-hot-toast";
 
 function Report() {
 
@@ -26,10 +27,12 @@ function Report() {
   async function findReports() {
     let rota = "/reports/foul-all";
     if (!filter.startDate || !filter.endDate) {
-      return alert("Preencha o intervalo.");
+      toast.error(<b>Preencha o intervalo de data!!</b>, {id: "filterError", duration: 2500, style: { borderRadius: "0.375rem"} });
+      return;
     }
     if (filter.startDate > filter.endDate) {
-      return alert("A data inicial não pode ser maior que a final.");
+      toast.error(<b>A data inicial não pode ser maior que a final!!</b>, {id: "filterError", duration: 2500, style: { borderRadius: "0.375rem"} });
+      return;
     }
     setLoading(true);
 
@@ -85,7 +88,6 @@ function Report() {
   function setStudent(id) {
 
     setSelectedStudent(studentsFouls.find(studentsFouls => studentsFouls.id == id));
-    console.log("SSSS -->>", selectedStudent);
 
   }
 
@@ -96,8 +98,8 @@ function Report() {
   const [file, setFile] = useState("pdf");
 
   async function generateReportsCSV() {
-    alert("Calma lá Paizão");
-    //converterJsonParaCsvEDownload(datas, `relatorio_${filter.startDate}_${filter.endDate}.csv`);
+    
+    reportsCSV(datas, `relatorio_${filter.startDate}_${filter.endDate}.csv`);
   }
 
   return (
@@ -105,18 +107,18 @@ function Report() {
 
       <h1 className="text-2xl font-bold">Relatórios</h1>
       <div className="flex justify-between items-center">
-        <p>Acompanhe faltas por meio de filtros</p>
+        <p className="sm:text-base text-xs">Acompanhe faltas por meio de filtros</p>
 
-        <div className="flex items-end">
-          <Button disabled={datas.length === 0} onClick={generateReportsCSV} type="submit" className=" bg-[#155DDD] hover:bg-[#155DDD] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Gerar CSV</Button>
+        <div className="flex items-end px-2">
+          <Button disabled={datas.length === 0} onClick={generateReportsCSV} type="submit" className=" bg-[#155DDD] hover:bg-[#155DDD] active:bg-[#133069] rounded-xl font-bold text-xs sm:text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Gerar CSV</Button>
         </div>
       </div>
 
-      <div className="border border-gray-400 rounded-xl mt-5 p-5 w-full grid grid-cols-1 justify-start sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className=" bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl mt-5 p-5 w-full grid grid-cols-2 justify-start lg:grid-cols-5 gap-3">
         <div className="flex flex-col gap-1">
           <h3>Ano</h3>
-          <select name="ano" id="ano" className="border border-gray-400 rounded-xl p-1" onChange={(e) => setFilter({ ...filter, grade: e.target.value })}>
-            <option value="">Selecione um Ano</option>
+          <select name="ano" id="ano" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-1 text-xs sm:text-base" onChange={(e) => setFilter({ ...filter, grade: e.target.value })}>
+            <option value="">Todos</option>
             {classGrade.map((gradeClass, index) => (
               <option key={index} value={gradeClass}>
                 {gradeClass}
@@ -126,8 +128,8 @@ function Report() {
         </div>
         <div className="flex flex-col gap-1">
           <h3>Turma</h3>
-          <select name="turma" id="turma" className="border border-gray-400 rounded-xl p-1" onChange={(e) => setFilter({ ...filter, class: e.target.value })}>
-            <option value="">Selecione uma turma</option>
+          <select name="turma" id="turma" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, class: e.target.value })}>
+            <option value="">Todos</option>
             {className.map((nameClass, index) => (
               <option key={index} value={nameClass}>
                 {nameClass}
@@ -137,21 +139,21 @@ function Report() {
         </div>
         <div className="flex flex-col gap-1">
           <h3>Data inicial</h3>
-          <input type="date" name="inicial" id="inicial" className="border border-gray-400 rounded-xl p-1" onChange={(e) => setFilter({ ...filter, startDate: e.target.value })}>
+          <input type="date" name="inicial" id="inicial" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, startDate: e.target.value })}>
           </input>
         </div>
         <div className="flex flex-col gap-1">
           <h3>Data final</h3>
-          <input type="date" name="final" id="final" className="border border-gray-400 rounded-xl p-1" onChange={(e) => setFilter({ ...filter, endDate: e.target.value })}>
+          <input type="date" name="final" id="final" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, endDate: e.target.value })}>
           </input>
         </div>
-        <div className="flex items-end">
+        <div className="flex items-end justify-end lg:justify-start col-span-2 lg:col-span-1">
           <Button onClick={findReports} disabled={loading} type="submit" className=" bg-[#155DDD] hover:bg-[#155DDD] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Buscar</Button>
         </div>
       </div>
 
       {datas.length !== 0 && (
-        <div className="border border-gray-400 rounded-xl px-3 mt-5 h-[calc(100vh-330px)] overflow-y-auto">
+        <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl px-3 mt-5 h-`[calc(100vh-330px)] `overflow-y-auto">
 
           <div className="py-3 block md:hidden space-y-3">
             {datas.map((e) => (
@@ -176,8 +178,6 @@ function Report() {
                 </div>
 
                 <div className="mt-[0.5rem]">
-
-                  {console.log("SSS -->>", selectedStudent)}
                   {e.foul > 0 &&
 
                     <Button onClick={() => {setStudent(e.id); setOpenModal(true);}} className="w-full py-[0.2rem] px-[0.4rem] bg-[#155DDD] hover:bg-[#1768F7] active:bg-[#155DDD] rounded-xl font-bold text-[0.9rem] text-[#EBEBEB] uppercase cursor-pointer transition delay-25 duration-25 ease-in-out">Ver faltas</Button>
@@ -188,7 +188,7 @@ function Report() {
             ))}
           </div>
 
-          <table className="hidden md:table table-auto w-full text-base text-left border-separate border-spacing-y-3">
+          <table className="bg-[#FFFFFC]  hidden md:table table-auto w-full text-base text-left border-separate border-spacing-y-3">
             <thead className="text-base text-gray-700 uppercase sticky top-0 z-10">
               <tr>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Série</th>
@@ -208,7 +208,7 @@ function Report() {
                   <td className="py-4 px-3 border-b border-gray-200 text-center">
                     {e.foul > 0 &&
 
-                      <Button onClick={() => {setStudent(e.id); setOpenModal(true);}} className="bg-[#155DDD] hover:bg-[#1768F7] active:bg-[#155DDD] rounded-xl font-bold text-[1rem] text-[#EBEBEB] uppercase cursor-pointer transition delay-25 duration-25 ease-in-out">Ver faltas</Button>
+                      <Button onClick={() => {setStudent(e.id); setOpenModal(true);}} className="bg-[#155DDD] hover:bg-[#1768F7] active:bg-[#155DDD] rounded-xl font-bold text-sm text-[#EBEBEB] uppercase cursor-pointer transition delay-25 duration-25 ease-in-out">Ver faltas</Button>
 
                     }
                   </td>
@@ -284,6 +284,7 @@ function Report() {
         </div>
       )}
 
+    <div><Toaster/></div>
     </div>
   )
 }
