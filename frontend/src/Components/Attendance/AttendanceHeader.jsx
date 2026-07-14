@@ -19,7 +19,7 @@ export function AttendanceHeader() {
             </h1>
 
             <p className="text-gray-500">
-                Sábado, 04 de Julho de 2026
+                {`${new Date().toLocaleDateString('pt-BR', { weekday: 'long' }).split('-')[0].replace(/^\w/, c => c.toUpperCase())},${new Date().getDate()} de ${new Date().toLocaleDateString('pt-BR', { month: 'long' }).replace(/^\w/, c => c.toUpperCase())} de ${new Date().getFullYear()}`}
             </p>
         </div>
     );

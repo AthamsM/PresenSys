@@ -6,6 +6,7 @@ import { AttendanceActions } from "../../Components/Attendance/AttendanceActions
 import { StudentCard } from "../../Components/Attendance/StudentCard";
 import { useSearchParams } from "react-router-dom";
 import API from "../../Controller/Api";
+import {toast, Toaster } from "react-hot-toast";
 
 
 export default function AttendancePage() {
@@ -51,11 +52,9 @@ export default function AttendancePage() {
 
             };
 
-            console.log("Enviando frequência:", data); // teste 
-
             const response = await API.post("/attendances/", data); 
 
-            alert("Frequência salva com sucesso!");
+            toast.success (<b>Frequência salva com sucesso!!</b>, {id: "saveAttendance", duration: 2500, style: { borderRadius: "0.375rem"} });
 
         } catch (error) {
             console.error("Erro ao salvar frequência:", error);
@@ -143,7 +142,7 @@ export default function AttendancePage() {
                 className="mt-4 w-full rounded-xl bg-green-300 py-4 font-medium hover:bg-green-400">
                 Salvar chamada
             </button>
-
+            <div><Toaster/></div>
         </div>
     );                        
 } 
