@@ -120,11 +120,11 @@ export default function Dashboard(){
         }
       </div>
       <div>
-        <h1 className="text-2xl font-bold">Turmas</h1>
+        <h1 className="text-2xl font-bold mt-2 mb-2">Turmas</h1>
         <div className="flex gap-3">
           {
             filters.map((e, index)=>(
-              <button key={index} className={`border p-1 px-2 rounded-2xl ${selectedFilter == index ? "bg-blue-500 text-white hover:bg-blue-700" : "bg-white hover:bg-gray-300"}`} onClick={() => changeFilter(index)}>
+              <button key={index} className={`border border-gray-200 shadow-sm shadow-gray-300 p-1 px-2 rounded-2xl ${selectedFilter == index ? "bg-blue-500 text-white hover:bg-blue-700" : "bg-white hover:bg-gray-300"}`} onClick={() => changeFilter(index)}>
                 {e}
               </button>
             ))

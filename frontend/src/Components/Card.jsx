@@ -1,7 +1,7 @@
 export default function Card(props){
 
   return(
-    <div className="flex border rounded-2xl min-w-[200px] h-[100px] py-5 px-4 border-gray-400">
+    <div className="flex border border-gray-200 shadow-sm shadow-gray-300 rounded-2xl min-w-[200px] h-[100px] py-5 px-4 border-gray-400">
       <img src={props.image} alt="" className="w-10 h-10 mr-5 "/>
       <div className="text-center">
         <p className="text-sm">{props.title}</p>
