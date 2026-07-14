@@ -27,7 +27,7 @@ function Template( {children} ){
     
   }
   return(
-      <div className="">
+      <div className=" bg-[#f9fbfc]">
         <div className="flex grid-cols-2 w-screen">
           {
             ativarSide &&

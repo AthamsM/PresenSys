@@ -30,7 +30,7 @@ export default function Classes(){
       <div className="gap-5 mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[500px] overflow-y-auto">
         {
           classes.map((e,index)=>(
-            <div key={index} className="border rounded-2xl border-gray-400">
+            <div key={index} className="border rounded-2xl border-gray-300">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
                 <h2 className="text-xl font-bold">{e.grade} {e.name}</h2>
               </div>

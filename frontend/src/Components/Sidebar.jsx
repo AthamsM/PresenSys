@@ -34,13 +34,13 @@ export default function Sidebar(props){
   // fazer a integração com o back ainda
   // para mudar o icone e descrição
   return(
-    <aside className=" border-r border-gray-400 bg-white absolute h-screen sm:static z-2">
+    <aside className=" border-r border-gray-300 bg-white absolute h-screen sm:static z-2">
 
-      <div className=" p-2 flex items-center border-b mb-2 border-gray-400">
+      <div className=" p-2 flex items-center border-b mb-2 border-gray-300 ">
         <img src="icons/user-full.svg" alt="" className="w-10 h-10 mr-2 object-cover"/>
         <div className="text-gray-800">
           <h3 className="text-[12px] font-bold">Presença Escolar</h3>
-          <h4 className="text-[10px]">EMEF Jardim Estrela</h4>
+          <h4 className="text-[10px]">ETE Urbano Gomes</h4>
         </div>
       </div>
 
