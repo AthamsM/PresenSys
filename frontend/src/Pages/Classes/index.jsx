@@ -24,16 +24,20 @@ export default function Classes(props){
 
   return(
     <div className="mt-5">
-      <h1 className="text-2xl font-bold">Turmas</h1>
-      <p>Todas as turmas</p>
-
+      { props.filter == null && (
+        <>
+          <h1 className="text-2xl font-bold">Turmas</h1>
+          <p>Todas as turmas</p>
+        </>
+      )}
+      
       <div className={`gap-5 mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ${props.altura} overflow-y-auto`}>
         {
           classes.map((e,index)=>{
             const classYear = e.grade.split("º");
             if(props.filter == "0" || props.filter == classYear[0] || props.filter == null){
             return(
-            <div key={index} className="border rounded-2xl border-gray-400">
+            <div key={index} className="border rounded-2xl border-gray-400 h-[200px]">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
                 <h2 className="text-xl font-bold">{e.grade} {e.name}</h2>
               </div>
