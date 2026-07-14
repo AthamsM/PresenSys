@@ -5,7 +5,7 @@ import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
 import { formatDate } from "../../Utils/formatDate"
 import { reportsCSV } from "../../Utils/reportsCSV";
-import {toast, Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 function Report() {
 
@@ -27,11 +27,11 @@ function Report() {
   async function findReports() {
     let rota = "/reports/foul-all";
     if (!filter.startDate || !filter.endDate) {
-      toast.error(<b>Preencha o intervalo de data!!</b>, {id: "filterError", duration: 2500, style: { borderRadius: "0.375rem"} });
+      toast.error(<b>Preencha o intervalo de data!!</b>, { id: "filterError", duration: 2500, style: { borderRadius: "0.375rem" } });
       return;
     }
     if (filter.startDate > filter.endDate) {
-      toast.error(<b>A data inicial não pode ser maior que a final!!</b>, {id: "filterError", duration: 2500, style: { borderRadius: "0.375rem"} });
+      toast.error(<b>A data inicial não pode ser maior que a final!!</b>, { id: "filterError", duration: 2500, style: { borderRadius: "0.375rem" } });
       return;
     }
     setLoading(true);
@@ -98,7 +98,7 @@ function Report() {
   const [file, setFile] = useState("pdf");
 
   async function generateReportsCSV() {
-    
+
     reportsCSV(datas, `relatorio_${filter.startDate}_${filter.endDate}.csv`);
   }
 
@@ -110,7 +110,7 @@ function Report() {
         <p className="sm:text-base text-xs">Acompanhe faltas por meio de filtros</p>
 
         <div className="flex items-end px-2">
-          <Button disabled={datas.length === 0} onClick={generateReportsCSV} type="submit" className=" bg-[#155DDD] hover:bg-[#155DDD] active:bg-[#133069] rounded-xl font-bold text-xs sm:text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Gerar CSV</Button>
+          <Button disabled={datas.length === 0} onClick={generateReportsCSV} type="submit" className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-xs sm:text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Gerar CSV</Button>
         </div>
       </div>
 
@@ -148,12 +148,12 @@ function Report() {
           </input>
         </div>
         <div className="flex items-end justify-end lg:justify-start col-span-2 lg:col-span-1">
-          <Button onClick={findReports} disabled={loading} type="submit" className=" bg-[#155DDD] hover:bg-[#155DDD] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Buscar</Button>
+          <Button onClick={findReports} disabled={loading} type="submit" className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Buscar</Button>
         </div>
       </div>
 
       {datas.length !== 0 && (
-        <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl px-3 mt-5 h-`[calc(100vh-330px)] `overflow-y-auto">
+        <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl px-3 mt-5 h-[calc(100vh-330px)] overflow-y-auto">
 
           <div className="py-3 block md:hidden space-y-3">
             {datas.map((e) => (
@@ -178,24 +178,20 @@ function Report() {
                 </div>
 
                 <div className="mt-[0.5rem]">
-                  {e.foul > 0 &&
-
-                    <Button onClick={() => {setStudent(e.id); setOpenModal(true);}} className="w-full py-[0.2rem] px-[0.4rem] bg-[#155DDD] hover:bg-[#1768F7] active:bg-[#155DDD] rounded-xl font-bold text-[0.9rem] text-[#EBEBEB] uppercase cursor-pointer transition delay-25 duration-25 ease-in-out">Ver faltas</Button>
-
-                  }
+                  <Button disabled={e.foul == 0} onClick={() => { setStudent(e.id); setOpenModal(true); }} className="w-full bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Detalhes</Button>
                 </div>
               </div>
             ))}
           </div>
 
-          <table className="bg-[#FFFFFC]  hidden md:table table-auto w-full text-base text-left border-separate border-spacing-y-3">
+          <table className="bg-[#FFFFFC]  hidden md:table table-auto w-full text-base text-center border-separate border-spacing-y-3">
             <thead className="text-base text-gray-700 uppercase sticky top-0 z-10">
               <tr>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Série</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Turma</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Alunos</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Faltas</th>
-                <th className="py-4 px-3 bg-white font-bold" scope="col"></th>
+                <th className="py-4 px-3 bg-white font-bold" scope="col">Detalhes</th>
               </tr>
             </thead>
             <tbody>
@@ -205,31 +201,27 @@ function Report() {
                   <td className="py-4 px-3 border-b border-gray-200">{e.class}</td>
                   <td className="py-4 px-3 border-b border-gray-200">{e.name}</td>
                   <td className="py-4 px-3 border-b border-gray-200">{e.foul}</td>
-                  <td className="py-4 px-3 border-b border-gray-200 text-center">
-                    {e.foul > 0 &&
-
-                      <Button onClick={() => {setStudent(e.id); setOpenModal(true);}} className="bg-[#155DDD] hover:bg-[#1768F7] active:bg-[#155DDD] rounded-xl font-bold text-sm text-[#EBEBEB] uppercase cursor-pointer transition delay-25 duration-25 ease-in-out">Ver faltas</Button>
-
-                    }
+                  <td className="py-4 px-3 border-b border-gray-200">
+                    <Button disabled={e.foul == 0} onClick={() => { setStudent(e.id); setOpenModal(true); }} className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 transition delay-50 duration-50 ease-in-out">Detalhes</Button>
                   </td>
-                
+
                 </tr>
               ))}
             </tbody>
           </table>
 
           <Modal open={openModal} setOpen={closeModal}>
-                      
+
             <div className="min-w-[75vw] max-h-[82.5vw] lg:max-h-[33vw] lg:min-w-[30vw] flex flex-col gap-y-[0.5rem]">
 
               <div className="flex justify-between items-center">
 
-                <img src="icons/report.svg" alt="report-icon" className="w-[1.9rem]"/>
+                <img src="icons/report.svg" alt="report-icon" className="w-[1.9rem]" />
 
                 <h1 className="font-bold text-[1.2rem] sm:text-[1.5rem]">Relatório de Faltas</h1>
 
                 <Button onClick={() => (setOpenModal(false))} className="py-[0.2rem] px-[0.4rem] bg-[#C10007] hover:bg-[#DB0008] active:bg-[#C10007] rounded-xl cursor-pointer transition delay-25 duration-25 ease-in-out">
-                  <img src="icons/x.svg" alt="x" className="w-[1.5rem]"/>
+                  <img src="icons/x.svg" alt="x" className="w-[1.5rem]" />
                 </Button>
 
               </div>
@@ -243,7 +235,7 @@ function Report() {
               </div>
 
               <h1 className="flex justify-center border-y-2 border-[#99A1Af] text-[#263238] font-bold ">Dias faltados</h1>
-              
+
               <div className="overflow-auto">
                 <table className="w-full text-center table-auto [counter-reset:linha] border-collapse border-[0.063rem] border-[#99A1Af]">
 
@@ -275,7 +267,7 @@ function Report() {
 
                 </table>
               </div>
-                    
+
             </div>
 
           </Modal>
@@ -284,7 +276,7 @@ function Report() {
         </div>
       )}
 
-    <div><Toaster/></div>
+      <div><Toaster /></div>
     </div>
   )
 }
