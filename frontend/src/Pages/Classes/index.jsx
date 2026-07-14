@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import API from "../../Controller/Api.jsx";
 import Button from "../../Components/Button.jsx"
 
-export default function Classes(){
+export default function Classes(props){
 
   const navigate = useNavigate();
   const [classes, setClasses] = useState([]);
@@ -18,19 +18,22 @@ export default function Classes(){
       
       console.log(err);
     });
-    //tem que terminar as informações para preencher o card abaixo
+
   
   },[]);
 
   return(
-    <div className="ml-0 sm:ml-10 mr-5 sm:mr-10 mt-5">
+    <div className="mt-5">
       <h1 className="text-2xl font-bold">Turmas</h1>
       <p>Todas as turmas</p>
 
-      <div className="gap-5 mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[500px] overflow-y-auto">
+      <div className={`gap-5 mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ${props.height} overflow-y-auto`}>
         {
-          classes.map((e,index)=>(
-            <div key={index} className="border rounded-2xl border-gray-300">
+          classes.map((e,index)=>{
+            const classYear = e.grade.split("º");
+            if(props.filter == "0" || props.filter == classYear[0] || props.filter == null){
+            return(
+            <div key={index} className="border rounded-2xl border-gray-400">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
                 <h2 className="text-xl font-bold">{e.grade} {e.name}</h2>
               </div>
@@ -44,7 +47,8 @@ export default function Classes(){
                 <Button className="bg-blue-600 hover:bg-blue-400 text-white p-2 w-full rounded-2xl font-bold" onClick={()=>navigate(`/attendance?id=${e.id}`)}>Abrir chamada</Button>
               </div>
             </div>
-          ))
+            )}
+          })
         }
       </div>
     </div>

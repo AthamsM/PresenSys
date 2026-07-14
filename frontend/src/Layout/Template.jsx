@@ -4,11 +4,11 @@ import Sidebar from "../Components/Sidebar";
 
 function Template( {children} ){
 
-  const [ativarSide, setAtivarSide] = useState(false)
+  const [activateSide, setActivateSide] = useState(false)
   
 
-  const alterarSide = () => {
-    setAtivarSide(!ativarSide);
+  const changeSide = () => {
+    setActivateSide(!activateSide);
     const width = window.innerWidth;
     if(width <= 640){
       setBackgroundGray(!backgroundGray);
@@ -16,30 +16,30 @@ function Template( {children} ){
   }
   const [backgroundGray, setBackgroundGray] = useState(false);
 
-  const tirarSidebar = (id) => {
+  const removeSide = (id) => {
     const width = window.innerWidth;
     if(width <= 640){
       if(id !== "sidebar"){
-        setAtivarSide(false);
+        setActivateSide(false);
         setBackgroundGray(false);
       }
     }
     
   }
   return(
-      <div className=" bg-[#f9fbfc]">
-        <div className="flex grid-cols-2 w-screen">
+      <div className="h-screen bg-[#f9fbfc]">
+        <div className="flex grid-cols-2">
           {
-            ativarSide &&
+            activateSide &&
             <Sidebar/>
           }
           
-          <div className={`flex-1 h-screen `} onClick={(e)=>tirarSidebar(e.target.id)}>
+          <div className={`flex-1 `} onClick={(e)=>removeSide(e.target.id)}>
             { backgroundGray &&
               <div className={` absolute h-screen w-screen opacity-50 bg-gray-700 z-1`} ></div>
             } 
-            <Navbar alterar={alterarSide}/>
-            <div className={`ml-5 mt-5 h-[300px]`}>
+            <Navbar alter={changeSide}/>
+            <div className={`ml-5 mt-5 mr-10 h-[300px]`}>
               {children} 
             </div>
             
