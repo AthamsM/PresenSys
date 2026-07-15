@@ -54,22 +54,22 @@ export default function Dashboard(){
   const cards = [{
     "title":"Turmas",
     "value":classes.length,
-    "image":"../../../public/icons/class.svg",
+    "image":"icons/class.svg",
   },
   {
     "title":"Alunos",
     "value":totalStudents,
-    "image":"../../../public/icons/user.svg",
+    "image":"icons/user.svg",
   },
   {
     "title":"Faltas do mês",
     "value":totalFouls,
-    "image":"../../../public/icons/calendar.svg",
+    "image":"icons/calendar.svg",
   },
   {
     "title":"Frequência média",
     "value":totalFouls==0 ? "100%" : ((100-(totalFouls/(totalStudents*getPreviousBusinessDays()))*100)).toFixed(1)+"%",
-    "image":"../../../public/icons/trend-up.svg",
+    "image":"icons/trend-up.svg",
   }];
   const filters = [
       "Todos os anos",
