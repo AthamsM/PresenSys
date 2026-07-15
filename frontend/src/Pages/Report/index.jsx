@@ -148,7 +148,7 @@ function Report() {
           </input>
         </div>
         <div className="flex items-end justify-end lg:justify-start col-span-2 lg:col-span-1">
-          <Button onClick={findReports} disabled={loading} type="submit" className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Buscar</Button>
+          <Button onClick={findReports} disabled={loading} type="submit" className="p-[0.40rem] bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Buscar</Button>
         </div>
       </div>
 
@@ -210,7 +210,7 @@ function Report() {
             </tbody>
           </table>
 
-          <Modal open={openModal} setOpen={closeModal}>
+          <Modal open={openModal} setOpen={closeModal} className="bg-[#F9FBFC] animate-scale-in-center border border-gray-200 shadow-sm shadow-gray-300 rounded-xl">
 
             <div className="min-w-[75vw] max-h-[82.5vw] lg:max-h-[33vw] lg:min-w-[30vw] flex flex-col gap-y-[0.5rem]">
 
@@ -226,7 +226,7 @@ function Report() {
 
               </div>
 
-              <div className="p-[0.5rem] flex flex-col items-start border-t-2 border-[#364153]">
+              <div className="p-[0.5rem] flex flex-col items-start border-t-2 border-[#99A1Af]">
 
                 <h1>Nome: {selectedStudent?.name}</h1>
                 <h1>Turma: {selectedStudent?.grade} {selectedStudent?.class}</h1>

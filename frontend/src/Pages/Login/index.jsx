@@ -60,7 +60,7 @@ function Login (){
 
             <div className="h-full w-full bg-[url(images/login-background.png)] bg-cover bg-center bg-no-repeat scale-110 blur-[0.25rem] fixed z-0"></div>
 
-            <form onSubmit={handleSubmit(submitLogin)} className="p-[2rem] lg:p-[3rem] flex flex-col lg:flex-row justify-center items-center gap-x-[4rem] bg-[#DBEAFE]/90 backdrop-blur-sm rounded-2xl shadow-[#263238]/80 shadow-2xl z-10">
+            <form onSubmit={handleSubmit(submitLogin)} className="p-[2rem] lg:p-[3rem] flex flex-col lg:flex-row justify-center items-center gap-x-[4rem] bg-[#DBEAFE]/90 backdrop-blur-sm border border-[#DBEAFE]/50 shadow-sm shadow-[#DBEAFE]/50 rounded-4xl z-10">
 
                 <img src="images/logo.svg" alt="logo" className="w-[16rem] lg:w-[24rem]"/>
 

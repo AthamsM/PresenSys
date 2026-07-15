@@ -14,12 +14,15 @@ import Dashboard from "./Dashboard";
 // #E5E7EB
 // #EBEBEB
 // #99A1Af
+// #F9FBFC
 // #DBEAFE
 // #82B6E0
 // #90CAF9
 // #1768F7
 // #155DFC
 // #155DDD
+// #0A5DE4
+// #023580
 // #347D39
 // #3A8C40
 // #C10007

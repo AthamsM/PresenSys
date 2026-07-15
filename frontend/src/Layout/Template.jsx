@@ -27,7 +27,7 @@ function Template( {children} ){
     
   }
   return(
-      <div className="h-screen bg-[#f9fbfc]">
+      <div className="h-screen bg-[#F9FBFC]">
         <div className="flex grid-cols-2">
           {
             activateSide &&
