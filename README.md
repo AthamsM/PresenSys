@@ -44,4 +44,8 @@ Acesse a pasta do frontend:
 cd ./frontend
 ```
 
-Não tem nada ainda paizão :b
+1. Instalar dependência:
+
+```bash
+npm install
+```

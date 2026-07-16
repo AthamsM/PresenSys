@@ -3,53 +3,86 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Iniciando a população do banco de dados...');
+  console.log('trunck db...');
 
-  // 1. Limpa dados antigos para não duplicar se rodar duas vezes
-  await prisma.frequencia.deleteMany({});
-  await prisma.aluno.deleteMany({});
-  await prisma.turma.deleteMany({});
+  await prisma.attendance.deleteMany();
+  await prisma.student.deleteMany();
+  await prisma.class.deleteMany();
 
-  // 2. Criação das Turmas
-  const turmaA = await prisma.turma.create({
-    data: {
-      nome: 'A',
-      serie: '6º Ano',
-      anoLetivo: 2026,
-    },
-  });
+  const grades = ['1º Ano', '2º Ano', '3º Ano'];
+  const nameClasses = ['A', 'B'];
 
-  const turmaB = await prisma.turma.create({
-    data: {
-      nome: 'B',
-      serie: '7º Ano',
-      anoLetivo: 2026,
-    },
-  });
+  const classCreated = [];
 
-  console.log('Turmas criadas com sucesso!');
+  // Criacao das turmas
+  for (const grade of grades) {
+    for (const nameClass of nameClasses) {
+      const clasS = await prisma.class.create({
+        data: {
+          name: nameClass,
+          grade,
+          schoolYear: 2026,
+        },
+      });
 
-  // 3. Criação dos Alunos para o 6º Ano A
-  await prisma.aluno.createMany({
-    data: [
-      { nome: 'Athams Menezes', matricula: '20260001', turmaId: turmaA.id },
-      { nome: 'Manuel Silva', matricula: '20260002', turmaId: turmaA.id },
-      { nome: 'Carlos Eduardo', matricula: '20260003', turmaId: turmaA.id },
-      { nome: 'Ana Beatriz', matricula: '20260004', turmaId: turmaA.id },
-    ],
-  });
+      classCreated.push(clasS);
+    }
+  }
 
-  // 4. Criação dos Alunos para o 7º Ano B
-  await prisma.aluno.createMany({
-    data: [
-      { nome: 'Mariana Costa', matricula: '20260005', turmaId: turmaB.id },
-      { nome: 'Pedro Henrique', matricula: '20260006', turmaId: turmaB.id },
-      { nome: 'Julia Souza', matricula: '20260007', turmaId: turmaB.id },
-    ],
-  });
+  console.log(`${classCreated.length} Created Class`);
 
-  console.log('Alunos inseridos com sucesso!');
-  console.log('Banco de dados pronto para testes!');
+  // Criacao dos alunos
+  let contEnrollments = 1;
+
+  for (const clasS of classCreated) {
+    const students = [];
+
+    for (let i = 1; i <= 10; i++) {
+      students.push({
+        name: `Aluno ${clasS.name} ${i}`,
+        enrollment: `2026${String(contEnrollments).padStart(5, '0')}`,
+        classId: clasS.id,
+      });
+
+      contEnrollments++;
+    }
+
+    await prisma.student.createMany({
+      data: students,
+    });
+  }
+
+  console.log('create student');
+
+  // Frequencias
+  const students = await prisma.student.findMany();
+
+  const startDate = new Date('2026-02-02');
+  const numberDays = 30;
+
+  for (let day = 0; day < numberDays; day++) {
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + day);
+
+    // Ignora sábado e domingo
+    if (date.getDay() === 0 || date.getDay() === 6) {
+      continue;
+    }
+
+    const attendance = students.map((student) => ({
+      studentId: student.id,
+      date,
+      // 90% de chance de presença
+      present: Math.random() > 0.10,
+    }));
+
+    await prisma.attendance.createMany({
+      data: attendance,
+    });
+  }
+
+  console.log('Create attendance');
+  console.log('Seed finalized whith success');
 }
 
 main()

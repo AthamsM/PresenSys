@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+@theme {
+
+    --font-blokan: "blokan", sans-serif;
+    --font-more-sugar: "more-sugar", sans-serif;
+
+    @keyframes scale-in-center {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+  }
+
+}
+
+.animate-scale-in-center {
+	animation: scale-in-center 0.15s cubic-bezier(0.680, -0.550, 0.265, 1.550) both;
+}
+
+@font-face {
+    font-family: "blokan";
+    src: url("fonts/blokan.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "more-sugar";
+    src: url("fonts/more-sugar.otf") format("opentype");
+}
