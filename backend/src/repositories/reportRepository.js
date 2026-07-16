@@ -1,8 +1,7 @@
-import prisma from '../config/database.js';
 
 class ReportRepository {
 
-  async getFoulAll(startDate, endDate) {
+  async getFoulAll(startDate, endDate, prisma) {
     const filterDate = {};
 
     if (startDate && endDate) {
@@ -45,7 +44,7 @@ class ReportRepository {
     }));
   }
 
-  async getFoulClass(className, startDate, endDate) {
+  async getFoulClass(className, startDate, endDate, prisma) {
     const filterDate = {};
 
     if (startDate && endDate) {
@@ -93,7 +92,7 @@ class ReportRepository {
     }));
   }
 
-async getFoulGrade(grade, startDate, endDate) {
+async getFoulGrade(grade, startDate, endDate, prisma) {
     const filterDate = {};
 
     if (startDate && endDate) {
@@ -140,7 +139,7 @@ async getFoulGrade(grade, startDate, endDate) {
       foul: student.attendance.length
     }));
   }
-  async getFoulGradeInClass(grade, className, startDate, endDate) {
+  async getFoulGradeInClass(grade, className, startDate, endDate, prisma) {
     const filterDate = {};
 
     if (startDate && endDate) {
@@ -189,7 +188,7 @@ async getFoulGrade(grade, startDate, endDate) {
     }));
   }
 
-  async getFoulStudent(id, startDate, endDate) {
+  async getFoulStudent(id, startDate, endDate, prisma) {
   const filterDate = {};
 
   if (startDate && endDate) {

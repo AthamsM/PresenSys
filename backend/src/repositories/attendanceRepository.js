@@ -1,8 +1,6 @@
-import prisma from '../config/database.js';
-
 class AttendanceRepository {
 
-  async registerInBatch(register) {
+  async registerInBatch(register, prisma) {
     return prisma.$transaction(
       register.map((reg) =>
         prisma.attendance.upsert({

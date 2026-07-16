@@ -17,11 +17,11 @@ class UserService {
 
     data.password = await bcrypt.hash(data.password, 10);
 
-    return UserRepository.create(data);
+    return UserRepository.create(data, prisma);
 
   }
 
-  async login(data) {
+  async login(data, prisma) {
     
     if (!data.email || !data.password) {
       const error = new Error('Os campos (email e password) são obrigatórios.');
@@ -29,7 +29,8 @@ class UserService {
       throw error;
     }
 
-    const user = await UserRepository.findByEmail(data.email);
+    const user = await UserRepository.findByEmail(data.email, prisma);
+    console.log(user.email);
 
     if(!user){
       const error = new Error('E-mail inválido');
@@ -45,17 +46,17 @@ class UserService {
       throw error;
     }
 
-    return JwtService.generateToken(user);
+    return JwtService.generateToken(user, data.school);
 
   }
 
-  async findAll(){
-    return UserRepository.findAll();
+  async findAll(prisma){
+    return UserRepository.findAll(prisma);
   }
 
-  async findById(id) {
+  async findById(id, prisma) {
 
-    const user = await UserRepository.findById(Number(id));
+    const user = await UserRepository.findById(Number(id), prisma);
 
     if(!user){
       const error = new Error('Usuario não encontrado');
@@ -65,9 +66,9 @@ class UserService {
     return user;
   }
 
-  async findByEmail(email) {
+  async findByEmail(email, prisma) {
 
-    const user = await UserRepository.findByEmail(email);
+    const user = await UserRepository.findByEmail(email, prisma);
 
     if(!user){
       const error = new Error('Usuario não encontrado');
@@ -78,15 +79,15 @@ class UserService {
     return user;
   }
 
-  async update(id, data) {
-    await this.findById(id);
+  async update(id, data, prisma) {
+    await this.findById(id, prisma);
     data.password = await bcrypt.hash(data.password, 10);
-    return UserRepository.update(Number(id), data);
+    return UserRepository.update(Number(id), data, prisma);
   }
 
-  async delete(id) {
-    await this.findById(id);
-    return UserRepository.delete(Number(id));
+  async delete(id, prisma) {
+    await this.findById(id, prisma);
+    return UserRepository.delete(Number(id), prisma);
   }
 }
 

@@ -2,11 +2,12 @@ import ReportRepository from '../repositories/reportRepository.js';
 
 class RelatorioService {
 
-  async getFoulAll(startDate, endDate) {
+  async getFoulAll(startDate, endDate, prisma) {
 
     const values = await ReportRepository.getFoulAll(
       startDate,
-      endDate
+      endDate,
+      prisma
     );
 
     const foulsStudent = await Promise.all(
@@ -15,7 +16,8 @@ class RelatorioService {
         const fouls = await ReportRepository.getFoulStudent(
           item.id,
           startDate,
-          endDate
+          endDate,
+          prisma
         );
 
         return {
@@ -42,11 +44,12 @@ class RelatorioService {
     };
   }
 
-  async getFoulClass(className, startDate, endDate) {
+  async getFoulClass(className, startDate, endDate, prisma) {
     const values = await ReportRepository.getFoulClass(
       className,
       startDate,
-      endDate
+      endDate,
+      prisma
     );
 
     const foulsStudent = await Promise.all(
@@ -55,7 +58,8 @@ class RelatorioService {
         const fouls = await ReportRepository.getFoulStudent(
           item.id,
           startDate,
-          endDate
+          endDate,
+          prisma
         );
 
         return {
@@ -82,11 +86,12 @@ class RelatorioService {
     };
   }
 
-  async getFoulGrade(grade, startDate, endDate) {
+  async getFoulGrade(grade, startDate, endDate, prisma) {
     const values = await ReportRepository.getFoulGrade(
       grade,
       startDate,
-      endDate
+      endDate,
+      prisma
     );
 
     const foulsStudent = await Promise.all(
@@ -95,7 +100,8 @@ class RelatorioService {
         const fouls = await ReportRepository.getFoulStudent(
           item.id,
           startDate,
-          endDate
+          endDate,
+          prisma
         );
 
         return {
@@ -122,12 +128,13 @@ class RelatorioService {
     };
   }
 
- async getFoulGradeInClass(grade, className, startDate, endDate) {
+ async getFoulGradeInClass(grade, className, startDate, endDate, prisma) {
     const values = await ReportRepository.getFoulGradeInClass(
       grade,
       className,
       startDate,
-      endDate
+      endDate,
+      prisma
     );
 
     const foulsStudent = await Promise.all(
@@ -136,7 +143,8 @@ class RelatorioService {
         const fouls = await ReportRepository.getFoulStudent(
           item.id,
           startDate,
-          endDate
+          endDate,
+          prisma
         );
 
         return {
@@ -163,11 +171,12 @@ class RelatorioService {
     };
   }
   
-  async getFoulStudent(id, startDate, endDate) {
+  async getFoulStudent(id, startDate, endDate, prisma) {
     const values = await ReportRepository.getFoulStudent(
       Number(id),
       startDate,
-      endDate
+      endDate,
+      prisma
     );
 
     return ({

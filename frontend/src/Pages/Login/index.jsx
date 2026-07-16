@@ -32,6 +32,7 @@ function Login (){
 
                 "email": data.email,
                 "password": data.password,
+                "school": data.school
 
             };
 
@@ -110,6 +111,21 @@ function Login (){
                             />
                             
 
+                        </div>
+
+                        <div>
+                            <h1 className="font-semibold mb-1 ">Escola</h1>
+
+                            <div className="relative">
+
+                                <img src="icons/school-solid.svg" alt="School" className="absolute left-1 top-1/2 -translate-y-1/2 w-6 pointer-events-none"/>
+
+                                <select {...register("school")} defaultValue="public" required className="w-full h-[2.5rem] px-[2.7rem] bg-[#FFFFFC] rounded-xl border border-2 border-[#263238]/50 outline-[#263238] focus:ring-2 ring-[#263238]/80">
+                                    <option value="public">ETE Urbano</option>
+                                    <option value="EREM_AURA_SAMPAIO">EREM Aura</option>
+                                </select>
+
+                            </div>
                         </div>
 
                     </div>

@@ -122,7 +122,7 @@ export default function AttendancePage() {
                 onMarkAll={markAllPresent}
             />
 
-            <div className="mt-6 rounded-xl border bg-white">
+            <div className="mt-6 rounded-xl border bg-white h-96 overflow-y-auto ">
 
                 {filterStudents.map(
                     (student, index) => (

@@ -1,3 +1,4 @@
+import { getPrisma } from "../config/database.js";
 import UserService from "../services/userService.js";
 
 class UserController {
@@ -13,7 +14,7 @@ class UserController {
 
     async findAll(req, res, next) {
         try {
-            const users = await UserService.findAll();
+            const users = await UserService.findAll(req.prisma);
             return res.status(200).json(
                 users.map(user => ({
                 id: user.id,
@@ -28,8 +29,9 @@ class UserController {
 
     async login(req, res, next) {
         try {
-            const login = await UserService.login(req.body);
-            return res.status(201).json({token: login});
+            const prisma = getPrisma(req.body.school);
+            const token = await UserService.login(req.body, prisma);
+            return res.status(201).json({ token: token});
         } catch (error) {
             next(error);
         }
@@ -37,7 +39,7 @@ class UserController {
 
     async update(req, res, next) {
         try {
-            const userUpdated = await UserService.update(req.params.id, req.body);
+            const userUpdated = await UserService.update(req.params.id, req.body, req.prisma);
             return res.status(200).json({name: userUpdated.name, email: userUpdated.email, role: userUpdated.role});
         } catch (error) {
             next(error);

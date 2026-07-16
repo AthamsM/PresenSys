@@ -8,7 +8,8 @@ class ReportController {
 
       const result = await ReportService.getFoulAll(
         startDate,
-        endDate
+        endDate,
+        req.prisma
       );
 
       return res.status(200).json(result);
@@ -24,7 +25,8 @@ class ReportController {
       const result = await ReportService.getFoulClass(
         className,
         startDate,
-        endDate
+        endDate,
+        req.prisma
       );
 
       return res.status(200).json(result);
@@ -40,7 +42,8 @@ class ReportController {
       const result = await ReportService.getFoulGrade(
         grade,
         startDate,
-        endDate
+        endDate,
+        req.prisma
       );
 
       return res.status(200).json(result);
@@ -56,7 +59,8 @@ class ReportController {
       const result = await ReportService.getFoulStudent(
         id,
         startDate,
-        endDate
+        endDate,
+        req.prisma
       );
 
       return res.status(200).json(result);
@@ -73,7 +77,8 @@ class ReportController {
         grade,
         className,
         startDate,
-        endDate
+        endDate,
+        req.prisma
       );
 
       return res.status(200).json(result);

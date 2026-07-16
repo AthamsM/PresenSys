@@ -1,27 +1,25 @@
-import prisma from '../config/database.js';
-
 class StudentRepository {
-  async create(data) {
+  async create(data, prisma) {
     return prisma.student.create({ data });
   }
 
-  async findAll() {
+  async findAll(prisma) {
     return prisma.student.findMany({ include: { class: true } });
   }
 
-  async findById(id) {
+  async findById(id, prisma) {
     return prisma.student.findUnique({ where: { id }, include: { class: true } });
   }
 
-  async findByEnrollment(enrollment) {
+  async findByEnrollment(enrollment, prisma) {
     return prisma.student.findUnique({ where: { enrollment } });
   }
 
-  async update(id, data) {
+  async update(id, data, prisma) {
     return prisma.student.update({ where: { id }, data });
   }
 
-  async delete(id) {
+  async delete(id, prisma) {
     return prisma.student.delete({ where: { id } });
   }
 }

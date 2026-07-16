@@ -1,7 +1,20 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient({
-  log: ['query', 'info', 'warn', 'error'],
-});
+const clients = new Map();
 
-export default prisma;
+export function getPrisma(schema) {
+
+    if (!clients.has(schema)) {
+
+        const url =
+            `postgresql://postgres:1801@localhost:5432/frequencia_escolar?schema=${schema}`;
+
+        clients.set(schema, new PrismaClient({
+            datasources: {
+                db: { url }
+            }
+        }));
+    }
+
+    return clients.get(schema);
+}

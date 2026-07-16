@@ -1,7 +1,7 @@
 import AttendanceRepository from '../repositories/attendanceRepository.js';
 
 class AttendanceService {
-  async register(date, attendance) {
+  async register(date, attendance, prisma) {
     if (!date || !Array.isArray(attendance) || attendance.length === 0) {
       const error = new Error('Dados da frequencia inválidos.');
       error.statusCode = 400;
@@ -17,7 +17,7 @@ class AttendanceService {
 
     // O repositório utiliza Upsert garantindo que se já existir para o aluno na date, ele atualiza,
     // evitando duplicidade e permitindo correções da chamada do dia.
-    return AttendanceRepository.registerInBatch(registerFormatted);
+    return AttendanceRepository.registerInBatch(registerFormatted, prisma);
   }
 }
 

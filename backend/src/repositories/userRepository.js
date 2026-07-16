@@ -1,27 +1,27 @@
-import prisma from "../config/database.js";
+
 
 class UserRepository {
-    async create(data){
+    async create(data, prisma){
         return prisma.user.create({data});
     }
 
-    async findAll() {
+    async findAll(prisma) {
         return prisma.user.findMany();
     } 
 
-    async findById(id){
+    async findById(id, prisma){
         return prisma.user.findUnique({ where: {id} });
     }
 
-    async findByEmail(email){
+    async findByEmail(email, prisma){
         return prisma.user.findUnique({ where: { email } });
     }
 
-    async update(id, data) {
+    async update(id, data, prisma) {
         return prisma.user.update({ where: { id}, data });
     }
 
-    async delete(id) {
+    async delete(id, prisma) {
         return prisma.user.delete({ where: { id } });
     }
 

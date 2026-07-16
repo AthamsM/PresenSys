@@ -2,21 +2,21 @@ import StudentRepository from '../repositories/studentRepository.js';
 import ClassRepository from '../repositories/classRepository.js';
 
 class StudentService {
-  async create(data) {
+  async create(data, prisma) {
     if (!data.name || !data.enrollment || !data.classId) {
       const error = new Error('Campos obrigatórios ausentes.');
       error.statusCode = 400;
       throw error;
     }
 
-    const classExist = await ClassRepository.findById(Number(data.classId));
+    const classExist = await ClassRepository.findById(Number(data.classId), prisma);
     if (!classExist) {
       const error = new Error('A turma informada não existe.');
       error.statusCode = 404;
       throw error;
     }
 
-    const enrollmentExist = await StudentRepository.findByEnrollment(data.enrollment);
+    const enrollmentExist = await StudentRepository.findByEnrollment(data.enrollment, prisma);
     if (enrollmentExist) {
       const error = new Error('Já existe um aluno com esta matrícula.');
       error.statusCode = 409;
@@ -26,16 +26,17 @@ class StudentService {
     return StudentRepository.create({
       name: data.name,
       enrollment: data.enrollment,
-      classId: Number(data.classId)
+      classId: Number(data.classId),
+      prisma
     });
   }
 
-  async findAll() {
-    return StudentRepository.findAll();
+  async findAll(prisma) {
+    return StudentRepository.findAll(prisma);
   }
 
-  async findById(id) {
-    const student = await StudentRepository.findById(Number(id));
+  async findById(id, prisma) {
+    const student = await StudentRepository.findById(Number(id), prisma);
     if (!student) {
       const error = new Error('Aluno não encontrado.');
       error.statusCode = 404;
@@ -44,14 +45,14 @@ class StudentService {
     return student;
   }
 
-  async update(id, data) {
-    await this.findById(id);
-    return StudentRepository.update(Number(id), data);
+  async update(id, data, prisma) {
+    await this.findById(id, prisma);
+    return StudentRepository.update(Number(id), data, prisma);
   }
 
-  async delete(id) {
-    await this.findById(id);
-    return StudentRepository.delete(Number(id));
+  async delete(id, prisma) {
+    await this.findById(id, prisma);
+    return StudentRepository.delete(Number(id), prisma);
   }
 }
 

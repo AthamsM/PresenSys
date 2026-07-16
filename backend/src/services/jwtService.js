@@ -5,13 +5,14 @@ class JwtService {
 
     #secretKey = crypto.randomBytes(32).toString("hex");
 
-    generateToken(data) {
+    generateToken(data, school) {
 
         const user = {
             id: data.id,
             name: data.name,
             email: data.email,
-            role: data.role
+            role: data.role,
+            school: school
         };
 
         const token = jwt.sign(user, this.#secretKey, {expiresIn: '12h'});
