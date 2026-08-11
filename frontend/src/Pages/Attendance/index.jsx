@@ -12,7 +12,7 @@ import { toast, Toaster } from "react-hot-toast";
 export default function AttendancePage() {
     const [students, setStudents] = useState([]);
     const [search, setSearch] = useState("");
-    const [nameClass, setNameClass] = useState("");
+    const [nameClass, setNameClass] = useState(""); // pegar nome da classe para passar na chamada
 
     //o ID da turma tá vindo pela url
     const [searchParams] = useSearchParams();
