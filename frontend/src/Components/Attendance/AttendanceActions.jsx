@@ -6,7 +6,7 @@ export function AttendanceActions({
         <div>
             <button
             onClick={onMarkAll}
-            className="mt-4 w-full rounded-xl bg-gray-100 py-4 font-medium hover:bg-gray-200">
+            className="mt-4 w-full rounded-xl bg-gray-300 py-4 font-medium hover:bg-gray-200">
                 Marcar todos como presentes
             </button>
 

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export function AttendanceHeader() {
+export function AttendanceHeader({nameClass}) {
   const navigate = useNavigate();
     return (
         <div>
@@ -15,7 +15,7 @@ export function AttendanceHeader() {
             </button>
 
             <h1 className="mt-4 text-4xl font-bold">
-                1º Ano A
+                {nameClass}
             </h1>
 
             <p className="text-gray-500">

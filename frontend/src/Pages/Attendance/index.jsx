@@ -6,12 +6,13 @@ import { AttendanceActions } from "../../Components/Attendance/AttendanceActions
 import { StudentCard } from "../../Components/Attendance/StudentCard";
 import { useSearchParams } from "react-router-dom";
 import API from "../../Controller/Api";
-import {toast, Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 
 export default function AttendancePage() {
     const [students, setStudents] = useState([]);
     const [search, setSearch] = useState("");
+    const [nameClass, setNameClass] = useState("");
 
     //o ID da turma tá vindo pela url
     const [searchParams] = useSearchParams();
@@ -34,7 +35,8 @@ export default function AttendancePage() {
                 present: false,
             }));
 
-           setStudents(students);
+            setStudents(students);
+            setNameClass(response.data.grade+" "+responde.data.name);
 
         } catch (error) {
             console.error(error);
@@ -43,8 +45,14 @@ export default function AttendancePage() {
 
     async function saveAttendance() {
         try {
+            const today = new Date();
+
+            const date =
+                `${today.getFullYear()}-` +
+                `${String(today.getMonth() + 1).padStart(2, "0")}-` +
+                `${String(today.getDate()).padStart(2, "0")}`;
             const data = {
-                date: new Date().toISOString().split("T")[0],
+                date,
                 attendance: students.map((student) => ({
                     studentId: student.id,
                     present: student.present,
@@ -52,9 +60,9 @@ export default function AttendancePage() {
 
             };
 
-            const response = await API.post("/attendances/", data); 
+            const response = await API.post("/attendances/", data);
 
-            toast.success (<b>Frequência salva com sucesso!!</b>, {id: "saveAttendance", duration: 2500, style: { borderRadius: "0.375rem"} });
+            toast.success(<b>Frequência salva com sucesso!!</b>, { id: "saveAttendance", duration: 2500, style: { borderRadius: "0.375rem" } });
 
         } catch (error) {
             console.error("Erro ao salvar frequência:", error);
@@ -62,13 +70,13 @@ export default function AttendancePage() {
     }
 
     function toggleAttendance(id) {
-        setStudents((currentStateStudents) => 
+        setStudents((currentStateStudents) =>
             currentStateStudents.map((student) =>
                 student.id === id
-                    ?   {
-                            ...student,
-                             present: !student.present,
-                        }   
+                    ? {
+                        ...student,
+                        present: !student.present,
+                    }
                     : student
             )
         );
@@ -85,8 +93,8 @@ export default function AttendancePage() {
 
     const filterStudents = students.filter((student) =>
         student.name
-        .toLowerCase()
-        .includes(search.toLowerCase())
+            .toLowerCase()
+            .includes(search.toLowerCase())
     );
 
     const totalStudents = students.length;
@@ -100,12 +108,12 @@ export default function AttendancePage() {
             ? 0
             : Math.round(
                 (totalPresent / totalStudents) * 100
-              );
-    
+            );
+
     return (
         <div className="max-w-3xl mx-auto p-6">
 
-            <AttendanceHeader />
+            <AttendanceHeader nameClass={className}/>
 
             <AttendanceStats
                 totalStudents={totalStudents}
@@ -122,7 +130,7 @@ export default function AttendancePage() {
                 onMarkAll={markAllPresent}
             />
 
-            <div className="mt-6 rounded-xl border bg-white">
+            <div className="mt-6 rounded-xl border bg-white h-110 sm:h-80 overflow-y-auto">
 
                 {filterStudents.map(
                     (student, index) => (
@@ -136,18 +144,18 @@ export default function AttendancePage() {
                 )}
 
             </div>
-            
+
             <button
                 onClick={saveAttendance}
                 className="mt-4 w-full rounded-xl bg-green-300 py-4 font-medium hover:bg-green-400">
                 Salvar chamada
             </button>
-            <div><Toaster/></div>
+            <div><Toaster /></div>
         </div>
-    );                        
-} 
+    );
+}
 
 
 
 
-    
+
