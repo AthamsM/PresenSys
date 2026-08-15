@@ -36,7 +36,7 @@ export default function AttendancePage() {
             }));
 
             setStudents(students);
-            setNameClass(response.data.grade+" "+responde.data.name);
+            setNameClass(response.data.grade + " " + response.data.name);
 
         } catch (error) {
             console.error(error);
@@ -113,7 +113,7 @@ export default function AttendancePage() {
     return (
         <div className="max-w-3xl mx-auto p-6">
 
-            <AttendanceHeader nameClass={className}/>
+            <AttendanceHeader nameClass={nameClass}/>
 
             <AttendanceStats
                 totalStudents={totalStudents}
