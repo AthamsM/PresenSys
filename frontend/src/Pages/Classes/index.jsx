@@ -34,7 +34,7 @@ export default function Classes(props){
       <div className={`gap-5 mt-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 overflow-y-auto`}>
         {
           classes.map((e,index)=>{
-            const classYear = e.grade.split("A");
+            const classYear = e.grade.split("º");
             if(props.filter == "0" || props.filter == classYear[0] || props.filter == null){
             return(
             <div key={index} className="border border-gray-200 shadow-sm shadow-gray-300 rounded-2xl  h-[200px]">
