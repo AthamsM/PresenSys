@@ -13,6 +13,7 @@ class AttendanceService {
       studentId: Number(item.studentId),
       date, 
       present: Boolean(item.present),
+      excusedAbsence: item.excusedAbsence || '',
     }));
 
     // O repositório utiliza Upsert garantindo que se já existir para o aluno na date, ele atualiza,

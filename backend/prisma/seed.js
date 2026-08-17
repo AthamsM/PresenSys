@@ -69,12 +69,19 @@ async function main() {
       continue;
     }
 
-    const attendance = students.map((student) => ({
-      studentId: student.id,
-      date,
-      // 90% de chance de presença
-      present: Math.random() > 0.10,
-    }));
+    const attendance = students.map((student) => {
+
+      const present = Math.random() > 0.10; // 90% de chance de presença
+      return {
+        studentId: student.id,
+        date,
+        // 90% de chance de presença
+        present: present,
+        excusedAbsence: present==false 
+          ? ((Math.random() > 0.5)? 'Justificada, dor de cabeça' : '') // 50% de chance de ser justificada
+          : '',
+      }
+    });
 
     await prisma.attendance.createMany({
       data: attendance,

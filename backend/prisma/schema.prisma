@@ -44,6 +44,7 @@ model Attendance {
   student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
   date       DateTime @db.Date
   present    Boolean
+  excusedAbsence String
 
   @@unique([studentId, date])
   @@map("attendance")
