@@ -2,11 +2,21 @@ import attendanceRepository from '../repositories/attendanceRepository.js';
 
 class ChartService {
 
-  // async foulsPerMonth(year) {
+  async foulsPerMonth(year) {
 
-  //   //const fouls = await ChartRepository.foulsPerMonth(new Date(year, 0, 1));
+    const fouls = await attendanceRepository.foulsPerMonth(year);
 
-  // }
+    if (!fouls) {
+
+      const error = new Error('nenhuma falta encontrada');
+      error.statusCode = 400;
+      throw error;
+
+    }
+
+    return fouls;
+
+  }
 
   async studentsMostFouls(year) {
 
@@ -38,19 +48,19 @@ class ChartService {
 
     return Object.values(mostFouls.reduce((acc, foul) => {
 
-        const key = foul.classes.id;
+      const key = foul.classes.id;
         
-        if (!acc[key]) {
+      if (!acc[key]) {
 
-          acc[key] = {class: foul.classes, fouls: 0};
+        acc[key] = {class: foul.classes, fouls: 0};
 
-        };
-        
-        acc[key].fouls += foul.fouls;
+      };
+      
+      acc[key].fouls += foul.fouls;
 
-        return acc;
+      return acc;
 
-      }));
+    }));
 
   }
 

@@ -14,6 +14,6 @@ router.use('/students', authVerification, studentRoutes);
 router.use('/attendances', authVerification, attendanceRoutes);
 router.use('/reports', authVerification, reportRoutes);
 router.use('/users', userRoutes);
-router.use('/charts', chartRoutes);
+router.use('/charts', authVerification, chartRoutes);
 
 export default router;

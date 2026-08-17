@@ -23,6 +23,22 @@ class AttendanceRepository {
     );
   }
 
+  async foulsPerMonth(year) {
+
+    const startDate = new Date(`${year}-01-01T00:00:00`);
+    const endDate = new Date(`${year}-12-31T23:59:59`);
+
+    return prisma.$queryRaw`
+    
+      SELECT EXTRACT(month FROM date)::int AS mnt, COUNT(*)::int AS fouls FROM "attendance" 
+      WHERE date >= ${startDate} AND date <= ${endDate} AND present = false 
+      GROUP BY mnt
+      ORDER BY mnt ASC;
+    
+    `;
+
+  }
+
   async studentsMostFouls(year) {
 
     const mostFouls = await prisma.attendance.groupBy({

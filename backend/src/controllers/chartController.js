@@ -2,18 +2,18 @@ import ChartService from '../services/chartService.js';
 
 class ChartController {
 
-  // async foulsPerMonth(req, res, next) {
+  async foulsPerMonth(req, res, next) {
 
-  //   try {
+    try {
 
-  //     const result = await ChartService.foulsPerMonth(req.params.year);
-  //     return res.status(200).json(result);
+      const result = await ChartService.foulsPerMonth(req.params.year);
+      return res.status(200).json(result);
 
-  //   } catch (error) {
-  //     next(error);
-  //   }
+    } catch (error) {
+      next(error);
+    }
 
-  // }
+  }
 
   async studentsMostFouls(req, res, next) {
 
