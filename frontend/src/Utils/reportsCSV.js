@@ -26,7 +26,7 @@ export function reportsCSV(dataJson, nameFile = 'alunos.csv') {
         rowCsv.join
         rowCsv.push(values.join(';'));
     }
-    rowCsv[0] = 'nome;matricula;serie;classe;faltas'   
+    rowCsv[0] = 'nome;matricula;serie;classe;faltas;faltas_justificadas'   
     
     // O prefixo \ufeff serve para forçar o Excel a ler com codificação UTF-8 corretamente (acentos como 1º Ano)
     const bodyCsv = '\ufeff' + rowCsv.join('\n');
