@@ -24,7 +24,8 @@ class RelatorioService {
           registration: item.registration,
           grade: item.grade,
           class: item.class,
-          foul: fouls.foul
+          foul: fouls.foul,
+          excusedAbsence: fouls.excusedAbsence
         };
       })
     );
@@ -36,7 +37,8 @@ class RelatorioService {
         registration: item.registration,
         grade: item.grade,
         class: item.class,
-        foul: item.foul
+        foul: item.foul,
+        excusedAbsence: item.excusedAbsence
       })),
       foulsStudent
     };
@@ -64,7 +66,8 @@ class RelatorioService {
           registration: item.registration,
           grade: item.grade,
           class: item.class,
-          foul: fouls.foul
+          foul: fouls.foul,
+          excusedAbsence: fouls.excusedAbsence
         };
       })
     );
@@ -76,7 +79,8 @@ class RelatorioService {
         registration: item.registration,
         grade: item.grade,
         class: item.class,
-        foul: item.foul
+        foul: item.foul,
+        excusedAbsence: item.excusedAbsence
       })),
       foulsStudent
     };
@@ -104,7 +108,8 @@ class RelatorioService {
           registration: item.registration,
           grade: item.grade,
           class: item.class,
-          foul: fouls.foul
+          foul: fouls.foul,
+          excusedAbsence: fouls.excusedAbsence
         };
       })
     );
@@ -116,7 +121,8 @@ class RelatorioService {
         registration: item.registration,
         grade: item.grade,
         class: item.class,
-        foul: item.foul
+        foul: item.foul,
+        excusedAbsence: item.excusedAbsence
       })),
       foulsStudent
     };
@@ -145,7 +151,8 @@ class RelatorioService {
           registration: item.registration,
           grade: item.grade,
           class: item.class,
-          foul: fouls.foul
+          foul: fouls.foul,
+          excusedAbsence: fouls.excusedAbsence
         };
       })
     );
@@ -157,7 +164,8 @@ class RelatorioService {
         registration: item.registration,
         grade: item.grade,
         class: item.class,
-        foul: item.foul
+        foul: item.foul,
+        excusedAbsence: item.excusedAbsence
       })),
       foulsStudent
     };
@@ -177,7 +185,8 @@ class RelatorioService {
       grade: values.grade,
       class: values.class,
       totalfoul: values.totalfoul,
-      foul: values.foul
+      foul: values.foul,
+      excusedAbsence: values.excusedAbsence
     });
   }
 }

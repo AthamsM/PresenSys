@@ -29,7 +29,8 @@ class ReportRepository {
             ...filterDate
           },
           select: {
-            id: true
+            id: true,
+            excusedAbsence: true,
           }
         }
       }
@@ -41,7 +42,8 @@ class ReportRepository {
       registration: student.enrollment,
       grade: student.class.grade,
       class: student.class.name,
-      foul: student.attendance.length
+      foul: student.attendance.length,
+      excusedAbsence: student.attendance.filter(a => a.excusedAbsence != "").length
     }));
   }
 
@@ -77,7 +79,8 @@ class ReportRepository {
             ...filterDate
           },
           select: {
-            id: true
+            id: true,
+            excusedAbsence: true
           }
         }
       }
@@ -89,7 +92,8 @@ class ReportRepository {
       registration: student.enrollment,
       grade: student.class.grade,
       class: student.class.name,
-      foul: student.attendance.length
+      foul: student.attendance.length,
+      excusedAbsence: student.attendance.filter(a => a.excusedAbsence != "").length
     }));
   }
 
@@ -125,7 +129,8 @@ async getFoulGrade(grade, startDate, endDate) {
             ...filterDate
           },
           select: {
-            id: true
+            id: true,
+            excusedAbsence: true
           }
         }
       }
@@ -137,7 +142,8 @@ async getFoulGrade(grade, startDate, endDate) {
       registration: student.enrollment,
       grade: student.class.grade,
       class: student.class.name,
-      foul: student.attendance.length
+      foul: student.attendance.length,
+      excusedAbsence: student.attendance.filter(a => a.excusedAbsence != "").length
     }));
   }
   async getFoulGradeInClass(grade, className, startDate, endDate) {
@@ -173,7 +179,8 @@ async getFoulGrade(grade, startDate, endDate) {
             ...filterDate
           },
           select: {
-            id: true
+            id: true,
+            excusedAbsence: true
           }
         }
       }
@@ -185,7 +192,8 @@ async getFoulGrade(grade, startDate, endDate) {
       registration: student.enrollment,
       grade: student.class.grade,
       class: student.class.name,
-      foul: student.attendance.length
+      foul: student.attendance.length,
+      excusedAbsence: student.attendance.filter(a => a.excusedAbsence != "").length
     }));
   }
 
@@ -219,7 +227,8 @@ async getFoulGrade(grade, startDate, endDate) {
           ...filterDate
         },
         select: {
-          date: true
+          date: true,
+          excusedAbsence: true
         },
         orderBy: {
           date: 'asc'
@@ -240,8 +249,9 @@ async getFoulGrade(grade, startDate, endDate) {
     class: student.class.name,
     totalFoul: student.attendance.length,
     foul: student.attendance.map(f => ({
-      date: f.date
-    }))
+      date: f.date,
+      justified: f.excusedAbsence
+    })),
   };
 }
 }
