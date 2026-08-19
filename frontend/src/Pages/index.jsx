@@ -13,7 +13,7 @@ import Dashboard from "./Dashboard";
 // #FFFFFC
 // #E5E7EB
 // #EBEBEB
-// #99A1Af
+// #99A1AF
 // #F9FBFC
 // #DBEAFE
 // #82B6E0

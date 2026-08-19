@@ -6,19 +6,19 @@ export default function Sidebar(props){
   const options = [
     {
             name: "Painel",
-            icon: "icons/dashboard.svg",
+            icon: "icons/chart.svg",
             active: false,
             route: "/dashboard"
         },
         {
-            name: "Turmas",
+            name: "Frequência",
             icon: "icons/class.svg",
             active: true,
             route: "/classes"
         },
         {
             name: "Relatórios",
-            icon: "icons/report.svg",
+            icon: "icons/report-menu.svg",
             active: false,
             route: "/reports"
         },

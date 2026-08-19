@@ -39,7 +39,7 @@ function Template( {children} ){
               <div className={` absolute h-screen w-screen opacity-50 bg-gray-700 z-1`} ></div>
             } 
             <Navbar alter={changeSide}/>
-            <div className={`ml-5 mt-5 mr-10 h-[300px]`}>
+            <div className={`m-5`}>
               {children} 
             </div>
             

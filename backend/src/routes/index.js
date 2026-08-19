@@ -4,6 +4,7 @@ import studentRoutes from './studentRoutes.js';
 import attendanceRoutes from './attendanceRoutes.js';
 import reportRoutes from './reportRoutes.js';
 import userRoutes from './userRoutes.js';
+import chartRoutes from './chartRoutes.js';
 import { authVerification } from '../middlewares/auth.js'
 
 const router = Router();
@@ -13,5 +14,6 @@ router.use('/students', authVerification, studentRoutes);
 router.use('/attendances', authVerification, attendanceRoutes);
 router.use('/reports', authVerification, reportRoutes);
 router.use('/users', userRoutes);
+router.use('/charts', authVerification, chartRoutes);
 
 export default router;
