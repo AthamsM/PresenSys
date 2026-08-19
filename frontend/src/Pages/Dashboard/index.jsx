@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import API from "../../Controller/Api";
 import { Bar } from "react-chartjs-2";
 import { Line } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
+  ArcElement,
   CategoryScale,
   LinearScale,
   BarElement,
@@ -18,6 +20,7 @@ import {
 } from "chart.js";
 
 ChartJS.register(
+  ArcElement,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -61,10 +64,11 @@ export default function Dashboard(){
   const year = new Date().getFullYear();
   const [studentsMostFouls, setStudentsMostFouls] = useState([]);
   const [foulsPerMonth, setFoulsPerMonth] = useState([]);
+  const [classesMostFouls, setClassesMostFouls] = useState([]);
   const labelsMonth = ["jan", "fev", "mar", "abr", "maio", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   const labelsMonthFull = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-  const calculateTotalStudents = (data)=>{
+  const calculateTotalStudents = (data) => {
 
     let total = 0;
     data.forEach(item => {
@@ -75,7 +79,7 @@ export default function Dashboard(){
 
   } 
 
-  const calculateTotalFols = (data)=>{
+  const calculateTotalFols = (data) => {
 
     let total = 0;
     data.forEach(item => {
@@ -109,9 +113,16 @@ export default function Dashboard(){
     return businessDays;
   }
 
+  function generateColor(id, transparency) {
+
+    const hue = 180 + ((id * 137.508) % 170);
+    return `hsl(${hue}, 60%, 50%, ${transparency})`;
+  
+  }
+
   useEffect(()=>{
 
-    API.get("/class ").then(response=>{
+    API.get("/class ").then(response => {
       
       setClasses(response.data);
       calculateTotalStudents(response.data);
@@ -139,7 +150,7 @@ export default function Dashboard(){
 
   useEffect(() => {
 
-    API.get(`/charts/students-most-fouls/${year}`).then(response=>{
+    API.get(`/charts/students-most-fouls/${year}`).then(response => {
       
       setStudentsMostFouls(response.data);
 
@@ -153,9 +164,23 @@ export default function Dashboard(){
 
   useEffect(() => {
 
-    API.get(`/charts/fouls-per-month/${year}`).then(response=>{
+    API.get(`/charts/fouls-per-month/${year}`).then(response => {
       
       setFoulsPerMonth(response.data);
+
+    }).catch(error=>{
+
+      console.log(error);
+
+    });
+
+  },[]);
+
+  useEffect(() => {
+
+    API.get(`/charts/classes-most-fouls/${year}`).then(response => {
+      
+      setClassesMostFouls(response.data);
 
     }).catch(error=>{
 
@@ -248,12 +273,56 @@ export default function Dashboard(){
                   datasets: [{
                     label: "Faltas",
                     data: studentsMostFouls.map(mostFouls => mostFouls.fouls),
-                    backgroundColor: "#155DDDEA",
+                    backgroundColor: studentsMostFouls.map(mostFouls => generateColor(mostFouls.fouls, 0.8)),
                     borderRadius: 6,
-//                    barThickness: 16,
                     borderWidth: 0,
                     barPercentage: 0.8,
                     categoryPercentage: 1,
+                  },]
+                }}
+              />
+            }
+
+          </div>
+
+          <div className="flex flex-col justify-start items-start bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
+
+            <h1 className="p-[0.5rem] w-full  text-center text-[1.1rem] font-bold text-[#263238]/90">Turmas com mais faltas durante o ano</h1>
+
+            {classesMostFouls &&
+
+              <Pie className="p-[1rem] max-h-[20rem]"
+                options= {{
+                  responsive: true, 
+                  maintainAspectRatio: true, 
+                  plugins: {
+                    legend: {
+                      position: "left", align: "center",
+                      labels: {font: {size:15, weight: "bold"}, color: "#263238"},
+                    }, 
+                    tooltip: {
+                      titleFont: {size: 15, weight: "bold"}, 
+                      bodyFont: {size: 14, weight: "bold"}, 
+                      callbacks: {
+                        title: (con) => {
+                          return (
+                            classesMostFouls[con[0].dataIndex].class.grade +
+                            " " +
+                            classesMostFouls[con[0].dataIndex].class.name
+                          );
+                        }
+                      }
+                    },
+                  }
+                }}
+                data={{
+                  labels: classesMostFouls.map(mostFouls => (mostFouls.class.grade + " " + mostFouls.class.name)),
+                  datasets: [{
+                    label: "Faltas",
+                    data: classesMostFouls.map(mostFouls => mostFouls.fouls),
+                    backgroundColor: classesMostFouls.map(mostFouls => generateColor(mostFouls.fouls, 0.5)),
+                    borderColor: classesMostFouls.map(mostFouls => generateColor(mostFouls.fouls, 0.8)),
+                    borderWidth: 2,
                   },]
                 }}
               />
