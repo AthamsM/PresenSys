@@ -60,7 +60,7 @@ class ChartService {
 
       return acc;
 
-    }));
+    }, {}));
 
   }
 

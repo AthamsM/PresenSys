@@ -66,7 +66,7 @@ class AttendanceRepository {
 
     const mostFouls = await prisma.attendance.groupBy({
 
-      by: 'studentId', 
+      by: "studentId", 
       where: {date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, present: false},
       _count: {studentId: true},
 
@@ -74,12 +74,14 @@ class AttendanceRepository {
 
     const students = await prisma.student.findMany({where: {id: {in: mostFouls.map(fouls => fouls.studentId)}}, include: {class: true}});
 
-    return mostFouls.map(fouls => ({
+    const totalFouls = mostFouls.map(fouls => ({
 
       classes: students.find(student => student.id === fouls.studentId).class,
       fouls: fouls._count.studentId,
 
     }));
+
+    return totalFouls.filter(total => total.classes.schoolYear == year);
 
   }
   
