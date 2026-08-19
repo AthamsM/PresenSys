@@ -53,7 +53,7 @@ function Report() {
           endDate: filter.endDate
         }
       });
-
+      console.log(data);
       setDatas(data.data);
       setStudentsFouls(data.foulsStudent);
     } catch (err) {
@@ -176,6 +176,12 @@ function Report() {
                     {e.foul} faltas
                   </span>
                 </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Faltas justificadas:</span>
+                  <span className="font-bold px-2.5 py-0.5 rounded-full text-xs">
+                    {e.excusedAbsence} faltas justificadas
+                  </span>
+                </div>
 
                 <div className="mt-[0.5rem]">
                   <Button disabled={e.foul == 0} onClick={() => { setStudent(e.id); setOpenModal(true); }} className="w-full bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Detalhes</Button>
@@ -191,6 +197,7 @@ function Report() {
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Turma</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Alunos</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Faltas</th>
+                <th className="py-4 px-3 bg-white font-bold" scope="col">Faltas justificadas</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Detalhes</th>
               </tr>
             </thead>
@@ -201,6 +208,7 @@ function Report() {
                   <td className="py-4 px-3 border-b border-gray-200">{e.class}</td>
                   <td className="py-4 px-3 border-b border-gray-200">{e.name}</td>
                   <td className="py-4 px-3 border-b border-gray-200">{e.foul}</td>
+                  <td className="py-4 px-3 border-b border-gray-200">{e.excusedAbsence}</td>
                   <td className="py-4 px-3 border-b border-gray-200">
                     <Button disabled={e.foul == 0} onClick={() => { setStudent(e.id); setOpenModal(true); }} className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 transition delay-50 duration-50 ease-in-out">Detalhes</Button>
                   </td>
@@ -245,7 +253,7 @@ function Report() {
 
                       <th>N°</th>
                       <th>Data</th>
-
+                      <th>Justificativa</th>
                     </tr>
 
                   </thead>
@@ -258,7 +266,7 @@ function Report() {
 
                         <td className="before:content-[counter(linha)]"></td>
                         <td>{formatDate(foul.date).split(",")[0]}</td>
-
+                        <td>{foul.justified ? foul.justified : "Não Justificada"}</td>
                       </tr>
 
                     </tbody>

@@ -17,6 +17,7 @@ class AttendanceRepository {
             studentId: reg.studentId,
             date: new Date(reg.date),
             present: reg.present,
+            excusedAbsence: reg.excusedAbsence || '',
           },
         })
       )
