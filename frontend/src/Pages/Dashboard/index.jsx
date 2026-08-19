@@ -196,11 +196,11 @@ export default function Dashboard(){
       
       <div className="grid gap-y-[1rem] divide-y-[0.138rem] divide-[#99A1AF]/10">
 
-        <h1 className="text-2xl font-bold text-[#023580]">Visão geral das turmas durante o mês</h1>
+        <h1 className="text-2xl font-bold text-[#023580]">Visão geral durante o mês</h1>
         
-        <div className="flex justify-around gap-x-[1rem] text-[#263238]/90 w-full overflow-y-hidden overflow-x-scroll md:overflow-hidden">
+        <div className="flex justify-around gap-x-[1rem] text-[#263238]/90 w-full overflow-y-hidden overflow-x-scroll md:overflow-hidden scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin snap-x">
           {
-            cards.map((e, index)=>(<Card image={e.image} title={e.title} value={e.value} key={index} className="bg-[#DBEAFE]/50 rounded-lg flex-none md:flex [--animation-duration:0.33s] animate-scale-in-center "/>))
+            cards.map((e, index)=>(<Card image={e.image} title={e.title} value={e.value} key={index} className="bg-[#DBEAFE]/50 rounded-lg flex-none md:flex scale-85 sm:scale-100  animate-scale-in-center [--animation-duration:0.33s] snap-center"/>))
           }
         </div>
 
@@ -208,27 +208,27 @@ export default function Dashboard(){
 
       <div className="grid gap-y-[1rem] divide-y-[0.138rem] divide-[#99A1AF]/10"> 
 
-        <h1 className="text-2xl font-bold text-[#023580]">Visão geral das turmas durante o ano</h1>
+        <h1 className="text-2xl font-bold text-[#023580]">Visão geral durante o ano</h1>
         
-        <div className="grid grid-cols-2 gap-[2rem]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem]">
 
-          <div className=" flex flex-col justify-start items-start bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
+          <div className="flex flex-col justify-start items-start bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
 
-            <h1 className="p-[0.5rem] w-full text-center text-[1.1rem] font-bold text-[#263238]/90">Faltas durante os meses do ano</h1>
+            <h1 className="p-[0.5rem] w-full text-center text-[0.99rem] sm:text-[1.1rem] font-bold text-[#263238]/90">Faltas durante os meses do ano</h1>
 
             {foulsPerMonth &&
 
-              <Line className="p-[1rem]"
+              <Line className="p-[1rem] max-h-[20rem]"
                 options= {{
                   responsive: true, 
-                  maintainAspectRatio: true, 
+                  maintainAspectRatio: false, 
                   plugins: {
                     legend: {display: false}, 
                     tooltip: {titleFont: {size: 15, weight: "bold"}, bodyFont: {size: 14, weight: "bold"}, callbacks: {title: (con) => {return labelsMonthFull[foulsPerMonth[con[0].dataIndex].mnt - 1]}}}
                   }, 
                   scales: { 
-                    x: { beginAtZero: true, ticks: {precision: 0, color: "#263238", font: {weight: "bold"}}, grid: {display: true, color: "#99A1AF"}}, 
-                    y: { ticks: {autoSkip: false, color: "#263238", font: {weight: "bold"}}, grid: {display: true, color: "#99A1AF"}},
+                    x: { beginAtZero: true, ticks: {precision: 0, color: "#263238", font: {size: 14, weight: "bold"}}, grid: {display: true, color: "#99A1AF"}}, 
+                    y: { ticks: {autoSkip: false, color: "#263238", font: {size: 14 ,weight: "bold"}}, grid: {display: true, color: "#99A1AF"}},
                   }
                 }}
                 data={{
@@ -250,22 +250,22 @@ export default function Dashboard(){
 
           <div className="flex flex-col justify-start items-start bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
 
-            <h1 className="p-[0.5rem] w-full text-center text-[1.1rem] font-bold text-[#263238]/90">Alunos com mais faltas durante o ano</h1>
+            <h1 className="p-[0.5rem] w-full text-center text-[0.99rem] sm:text-[1.1rem] font-bold text-[#263238]/90">Alunos com mais faltas durante o ano</h1>
 
             {studentsMostFouls &&
 
-              <Bar className="p-[1rem]"
+              <Bar className="p-[1rem] max-h-[20rem]"
                 options= {{
                   indexAxis: "y",
                   responsive: true, 
-                  maintainAspectRatio: true, 
+                  maintainAspectRatio: false, 
                   plugins: {
                     legend: {display: false}, 
-                    tooltip: {titleFont: {size: 15, weight: "bold"}, bodyFont: {size: 14, weight: "bold"}, callbacks: {title: (con) => {return studentsMostFouls[con[0].dataIndex].student.name}}}
+                    tooltip: {titleFont: {size: 15, weight: "bold"}, bodyFont: {size: 14, weight: "bold"}, callbacks: {title: (con) => {return studentsMostFouls[con[0].dataIndex].student.name}}},
                   }, 
                   scales: { 
                     x: { beginAtZero: true, ticks: {precision: 0, color: "#263238", font: {weight: "bold"}}, grid: {display: true, color: "#99A1AF"}}, 
-                    y: { ticks: {autoSkip: false, color: "#263238", font: {weight: "bold"}}, grid: {display: false}}
+                    y: { ticks: {autoSkip: false, color: "#263238", font: {size: 14 ,weight: "bold"}}, grid: {display: false}}
                   }
                 }}
                 data={{
@@ -277,7 +277,7 @@ export default function Dashboard(){
                     borderRadius: 6,
                     borderWidth: 0,
                     barPercentage: 0.8,
-                    categoryPercentage: 1,
+                    categoryPercentage: 0.8,
                   },]
                 }}
               />
@@ -287,7 +287,7 @@ export default function Dashboard(){
 
           <div className="flex flex-col justify-start items-start bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
 
-            <h1 className="p-[0.5rem] w-full  text-center text-[1.1rem] font-bold text-[#263238]/90">Turmas com mais faltas durante o ano</h1>
+            <h1 className="p-[0.5rem] w-full  text-center text-[0.975rem] sm:text-[1.1rem] font-bold text-[#263238]/90">Turmas com mais faltas durante o ano</h1>
 
             {classesMostFouls &&
 
@@ -298,7 +298,7 @@ export default function Dashboard(){
                   plugins: {
                     legend: {
                       position: "left", align: "center",
-                      labels: {font: {size:15, weight: "bold"}, color: "#263238"},
+                      labels: {font: {size:14, weight: "bold"}, color: "#263238"},
                     }, 
                     tooltip: {
                       titleFont: {size: 15, weight: "bold"}, 
