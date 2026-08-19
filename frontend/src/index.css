@@ -7,7 +7,7 @@
 
     @keyframes scale-in-center {
     0% {
-        transform: scale(0);
+        transform: scale(0.2);
         opacity: 1;
     }
     100% {
@@ -19,7 +19,7 @@
 }
 
 .animate-scale-in-center {
-	animation: scale-in-center 0.15s cubic-bezier(0.680, -0.550, 0.265, 1.550) both;
+	animation: scale-in-center var(--animation-duration, 0.15s) cubic-bezier(0.680, -0.550, 0.265, 1.550) both;
 }
 
 @font-face {
