@@ -44,20 +44,20 @@ class AttendanceRepository {
 
     const mostFouls = await prisma.attendance.groupBy({
 
-      by: 'studentId', 
+      by: "studentId", 
       where: {
         date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
         present: false
       },
       _count: {studentId: true},
-      orderBy: { _count: {studentId: 'desc'}},
+      orderBy: { _count: {studentId: "desc"}},
       take: 10,
 
     });
 
     const presences = await prisma.attendance.groupBy({
 
-      by: 'studentId', 
+      by: "studentId", 
       where: {
         studentId: {in: mostFouls.map(fouls => fouls.studentId)},
         date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
@@ -73,18 +73,32 @@ class AttendanceRepository {
 
       student: students.find(student => student.id === fouls.studentId),
       fouls: fouls._count.studentId,
-      attendance: presences.find(presence => presence.studentId === fouls.studentId)._count.studentId,
+      presences: presences.find(presence => presence.studentId === fouls.studentId)._count.studentId,
 
     }));
 
   }
 
-  async classesMostFouls(year) {
+  async classesFouls(year) {
 
     const mostFouls = await prisma.attendance.groupBy({
 
       by: "studentId", 
-      where: {date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, present: false},
+      where: {
+        date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
+        present: false
+      },
+      _count: {studentId: true},
+
+    });
+
+    const presences = await prisma.attendance.groupBy({
+
+      by: "studentId", 
+      where: {
+        date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
+        present: true,
+      },
       _count: {studentId: true},
 
     });
@@ -95,6 +109,7 @@ class AttendanceRepository {
 
       classes: students.find(student => student.id === fouls.studentId).class,
       fouls: fouls._count.studentId,
+      presences: presences.find(presence => presence.studentId === fouls.studentId)._count.studentId,
 
     }));
 

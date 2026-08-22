@@ -28,11 +28,11 @@ class ChartController {
 
   }
 
-  async classesMostFouls(req, res, next) {
+  async classesFouls(req, res, next) {
 
     try {
 
-      const result = await ChartService.classesMostFouls(req.params.year);
+      const result = await ChartService.classesFouls(req.params.year);
       return res.status(200).json(result);
 
     } catch (error) {

@@ -34,9 +34,9 @@ class ChartService {
 
   }
 
-  async classesMostFouls(year) {
+  async classesFouls(year) {
 
-    const mostFouls = await attendanceRepository.classesMostFouls(year);
+    const mostFouls = await attendanceRepository.classesFouls(year);
 
     if (!mostFouls) {
 
@@ -52,11 +52,12 @@ class ChartService {
         
       if (!acc[key]) {
 
-        acc[key] = {class: foul.classes, fouls: 0};
+        acc[key] = {class: foul.classes, fouls: 0, presences: 0};
 
       };
       
       acc[key].fouls += foul.fouls;
+      acc[key].presences += foul.presences;
 
       return acc;
 

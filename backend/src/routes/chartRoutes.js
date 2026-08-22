@@ -5,6 +5,6 @@ const router = Router();
 
 router.get('/fouls-per-month/:year', ChartController.foulsPerMonth);
 router.get('/students-most-fouls/:year', ChartController.studentsMostFouls);
-router.get('/classes-most-fouls/:year', ChartController.classesMostFouls);
+router.get('/classes-fouls/:year', ChartController.classesFouls);
 
 export default router;
