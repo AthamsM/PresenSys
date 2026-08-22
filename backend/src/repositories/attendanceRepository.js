@@ -31,8 +31,11 @@ class AttendanceRepository {
 
     return prisma.$queryRaw`
     
-      SELECT EXTRACT(month FROM date)::int AS mnt, COUNT(*)::int AS fouls FROM "attendance" 
-      WHERE date >= ${startDate} AND date <= ${endDate} AND present = false 
+      SELECT EXTRACT(month FROM date)::int AS mnt, 
+      COUNT(*) FILTER (WHERE present = true)::int AS presences,
+      COUNT(*) FILTER (WHERE present = false)::int AS fouls 
+      FROM "attendance" 
+      WHERE date >= ${startDate} AND date <= ${endDate}
       GROUP BY mnt
       ORDER BY mnt ASC;
     
@@ -86,7 +89,7 @@ class AttendanceRepository {
       by: "studentId", 
       where: {
         date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
-        present: false
+        present: false,
       },
       _count: {studentId: true},
 
@@ -103,13 +106,13 @@ class AttendanceRepository {
 
     });
 
-    const students = await prisma.student.findMany({where: {id: {in: mostFouls.map(fouls => fouls.studentId)}}, include: {class: true}});
+    const students = await prisma.student.findMany({include: {class: true}});
 
-    const totalFouls = mostFouls.map(fouls => ({
+    const totalFouls = students.map(student => ({
 
-      classes: students.find(student => student.id === fouls.studentId).class,
-      fouls: fouls._count.studentId,
-      presences: presences.find(presence => presence.studentId === fouls.studentId)._count.studentId,
+      classes: student.class,
+      fouls: mostFouls.find(fouls => fouls.studentId == student.id)?._count.studentId ?? 0,
+      presences: presences.find(presence => presence.studentId === student.id)?._count.studentId ?? 0,
 
     }));
 
