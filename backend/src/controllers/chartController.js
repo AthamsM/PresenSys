@@ -41,6 +41,18 @@ class ChartController {
 
   }
 
+  async presencesFouls(req, res, next) {
+
+    try {
+
+      const result = await ChartService.presencesFouls(req.params.year);
+      return res.status(200).json(result);
+
+    } catch (error) {
+      next(error);
+    }
+
+  }
 
 }
 

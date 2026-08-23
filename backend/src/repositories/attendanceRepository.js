@@ -119,6 +119,23 @@ class AttendanceRepository {
     return totalFouls.filter(total => total.classes.schoolYear == year);
 
   }
+
+  async presencesFouls(year) {
+
+    const startDate = new Date(`${year}-01-01T00:00:00`);
+    const endDate = new Date(`${year}-12-31T23:59:59`);
+
+    return prisma.$queryRaw`
+    
+      SELECT 
+      COUNT(*) FILTER (WHERE present = true)::int AS presences,
+      COUNT(*) FILTER (WHERE present = false)::int AS fouls 
+      FROM "attendance" 
+      WHERE date >= ${startDate} AND date <= ${endDate};
+    
+    `;
+
+  }
   
 }
 

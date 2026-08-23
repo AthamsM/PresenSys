@@ -65,6 +65,22 @@ class ChartService {
 
   }
 
+  async presencesFouls(year) {
+
+    const presencesFoul = await attendanceRepository.presencesFouls(year);
+
+    if (!presencesFoul) {
+
+      const error = new Error('nenhuma turma encontrada');
+      error.statusCode = 400;
+      throw error;
+
+    }
+
+    return presencesFoul;
+
+  }
+
 }
 
 export default new ChartService();
