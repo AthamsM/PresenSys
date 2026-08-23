@@ -207,13 +207,13 @@ export default function Dashboard(){
 
   return(
 
-    <div className="grid gap-y-[2rem]">
+    <div className="h-full grid gap-y-[2rem]">
       
       <div className="grid gap-y-[1rem] divide-y-[0.138rem] divide-[#99A1AF]/10">
 
-        <h1 className="text-2xl font-bold text-[#023580]">Visão geral durante o mês</h1>
+        <h1 className="text-2xl font-bold text-center sm:text-left">Visão geral durante o mês</h1>
         
-        <div className="flex justify-around gap-x-[1rem] text-[#263238]/90 w-full overflow-y-hidden overflow-x-scroll md:overflow-hidden scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin snap-x">
+        <div className="px-[1rem] pb-[0.5rem] flex justify-around gap-x-[1rem] text-[#263238]/90 w-full overflow-y-hidden overflow-x-scroll md:overflow-hidden scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin snap-x">
           {
             cards.map((e, index)=>(<Card image={e.image} title={e.title} value={e.value} key={index} className="bg-[#DBEAFE]/50 rounded-lg flex-none md:flex scale-85 sm:scale-100  animate-scale-in-center [--animation-duration:0.33s] snap-center"/>))
           }
@@ -223,9 +223,9 @@ export default function Dashboard(){
 
       <div className="grid gap-y-[1rem] divide-y-[0.138rem] divide-[#99A1AF]/10"> 
 
-        <h1 className="text-2xl font-bold text-[#023580]">Visão geral durante o ano</h1>
+        <h1 className="text-2xl font-bold text-center sm:text-left">Visão geral durante o ano</h1>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem]">
+        <div className="px-[0.5rem] pt-[0.7rem] max-h-[23.5rem] grid grid-cols-1 md:grid-cols-2 gap-[1rem] overflow-y-scroll scroll-px-4 scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin">
 
           <div className="flex flex-col justify-start items-start bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
 

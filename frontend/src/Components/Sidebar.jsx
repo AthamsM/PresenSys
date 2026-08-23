@@ -30,7 +30,7 @@ export default function Sidebar(props){
         // }
   ]
   return(
-    <aside className=" border-r border-gray-300 bg-white absolute w-60 h-screen sm:static z-2">
+    <aside className="w-60 border-r border-gray-300 bg-white absolute h-screen sm:static z-2">
 
       <div className="px-2 flex items-center border-b mb-2 border-gray-300 ">
         {/* <h1 className="font-more-sugar text-[#0A5DE4] text-[2rem] font-semibold">Presen</h1>
@@ -39,7 +39,7 @@ export default function Sidebar(props){
       </div>
 
       <h2 className="text-lg ml-2 text-gray-600 mb-2">Menu</h2>
-      <div className="">
+      <div>
         {
           options.map((e,index)=>(
             
