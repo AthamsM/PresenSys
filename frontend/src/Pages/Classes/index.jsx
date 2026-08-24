@@ -23,7 +23,7 @@ export default function Classes(props){
   },[]);
 
   return(
-    <div className="sm:mx-10 my-10">
+    <div>
       { props.filter == null && (
         <>
           <h1 className="text-2xl font-bold">Turmas</h1>

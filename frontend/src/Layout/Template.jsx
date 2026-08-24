@@ -6,7 +6,6 @@ function Template( {children} ){
 
   const [activateSide, setActivateSide] = useState(false)
   
-
   const changeSide = () => {
     setActivateSide(!activateSide);
     const width = window.innerWidth;
@@ -27,24 +26,21 @@ function Template( {children} ){
     
   }
   return(
-      <div className="h-screen bg-[#F9FBFC]">
-        <div className="flex grid-cols-2">
-          {
-            activateSide &&
-            <Sidebar/>
-          }
-          
-          <div className={`flex-1 `} onClick={(e)=>removeSide(e.target.id)}>
-            { backgroundGray &&
-              <div className={` absolute h-screen w-screen opacity-50 bg-gray-700 z-1`} ></div>
-            } 
-            <Navbar alter={changeSide}/>
-            <div className={`m-5`}>
-              {children} 
-            </div>
-            
+      <div className="h-screen bg-[#F9FBFC] flex grid-cols-2">
+
+        {activateSide && <Sidebar/> }
+        
+        <div className="flex-1" onClick={(e)=>removeSide(e.target.id)}>
+          { backgroundGray &&
+            <div className="absolute h-screen w-full opacity-50 bg-gray-700 z-1"></div>
+          } 
+          <Navbar alter={changeSide}/>
+          <div className="m-5">
+            {children} 
           </div>
-        </div>     
+          
+        </div> 
+
       </div>
   );
 }

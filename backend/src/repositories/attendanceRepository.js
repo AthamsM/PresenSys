@@ -31,8 +31,11 @@ class AttendanceRepository {
 
     return prisma.$queryRaw`
     
-      SELECT EXTRACT(month FROM date)::int AS mnt, COUNT(*)::int AS fouls FROM "attendance" 
-      WHERE date >= ${startDate} AND date <= ${endDate} AND present = false 
+      SELECT EXTRACT(month FROM date)::int AS mnt, 
+      COUNT(*) FILTER (WHERE present = true)::int AS presences,
+      COUNT(*) FILTER (WHERE present = false)::int AS fouls 
+      FROM "attendance" 
+      WHERE date >= ${startDate} AND date <= ${endDate}
       GROUP BY mnt
       ORDER BY mnt ASC;
     
@@ -44,11 +47,26 @@ class AttendanceRepository {
 
     const mostFouls = await prisma.attendance.groupBy({
 
-      by: 'studentId', 
-      where: {date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, present: false},
+      by: "studentId", 
+      where: {
+        date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
+        present: false
+      },
       _count: {studentId: true},
-      orderBy: { _count: {studentId: 'desc'}},
+      orderBy: { _count: {studentId: "desc"}},
       take: 10,
+
+    });
+
+    const presences = await prisma.attendance.groupBy({
+
+      by: "studentId", 
+      where: {
+        studentId: {in: mostFouls.map(fouls => fouls.studentId)},
+        date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
+        present: true,
+      },
+      _count: {studentId: true},
 
     });
 
@@ -58,31 +76,64 @@ class AttendanceRepository {
 
       student: students.find(student => student.id === fouls.studentId),
       fouls: fouls._count.studentId,
+      presences: presences.find(presence => presence.studentId === fouls.studentId)._count.studentId,
 
     }));
 
   }
 
-  async classesMostFouls(year) {
+  async classesFouls(year) {
 
     const mostFouls = await prisma.attendance.groupBy({
 
       by: "studentId", 
-      where: {date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, present: false},
+      where: {
+        date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
+        present: false,
+      },
       _count: {studentId: true},
 
     });
 
-    const students = await prisma.student.findMany({where: {id: {in: mostFouls.map(fouls => fouls.studentId)}}, include: {class: true}});
+    const presences = await prisma.attendance.groupBy({
 
-    const totalFouls = mostFouls.map(fouls => ({
+      by: "studentId", 
+      where: {
+        date : {gte: new Date(`${year}-01-01T00:00:00`), lte: new Date(`${year}-12-31T23:59:59`)}, 
+        present: true,
+      },
+      _count: {studentId: true},
 
-      classes: students.find(student => student.id === fouls.studentId).class,
-      fouls: fouls._count.studentId,
+    });
+
+    const students = await prisma.student.findMany({include: {class: true}});
+
+    const totalFouls = students.map(student => ({
+
+      classes: student.class,
+      fouls: mostFouls.find(fouls => fouls.studentId == student.id)?._count.studentId ?? 0,
+      presences: presences.find(presence => presence.studentId === student.id)?._count.studentId ?? 0,
 
     }));
 
     return totalFouls.filter(total => total.classes.schoolYear == year);
+
+  }
+
+  async presencesFouls(year) {
+
+    const startDate = new Date(`${year}-01-01T00:00:00`);
+    const endDate = new Date(`${year}-12-31T23:59:59`);
+
+    return prisma.$queryRaw`
+    
+      SELECT 
+      COUNT(*) FILTER (WHERE present = true)::int AS presences,
+      COUNT(*) FILTER (WHERE present = false)::int AS fouls 
+      FROM "attendance" 
+      WHERE date >= ${startDate} AND date <= ${endDate};
+    
+    `;
 
   }
   

@@ -1,10 +1,10 @@
-import Classes from "../Classes";
 import Card from "../../Components/Card";
 import { useEffect, useState } from "react";
 import API from "../../Controller/Api";
 import { Bar } from "react-chartjs-2";
-import { Line } from 'react-chartjs-2';
-import { Pie } from 'react-chartjs-2';
+import { Line } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -65,6 +65,7 @@ export default function Dashboard(){
   const [studentsMostFouls, setStudentsMostFouls] = useState([]);
   const [foulsPerMonth, setFoulsPerMonth] = useState([]);
   const [classesMostFouls, setClassesMostFouls] = useState([]);
+  const [presFouls, setPresFouls] = useState([]);
   const labelsMonth = ["jan", "fev", "mar", "abr", "maio", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   const labelsMonthFull = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -178,7 +179,7 @@ export default function Dashboard(){
 
   useEffect(() => {
 
-    API.get(`/charts/classes-most-fouls/${year}`).then(response => {
+    API.get(`/charts/classes-fouls/${year}`).then(response => {
       
       setClassesMostFouls(response.data);
 
@@ -190,15 +191,29 @@ export default function Dashboard(){
 
   },[]);
 
+  useEffect(() => {
+
+    API.get(`/charts/presences-fouls/${year}`).then(response => {
+      
+      setPresFouls(response.data[0]);
+
+    }).catch(error=>{
+
+      console.log(error);
+
+    });
+
+  },[]);
+
   return(
 
-    <div className="grid gap-y-[2rem]">
+    <div className="h-full grid gap-y-[2rem]">
       
       <div className="grid gap-y-[1rem] divide-y-[0.138rem] divide-[#99A1AF]/10">
 
-        <h1 className="text-2xl font-bold text-[#023580]">Visão geral durante o mês</h1>
+        <h1 className="text-2xl font-bold text-center sm:text-left">Visão geral durante o mês</h1>
         
-        <div className="flex justify-around gap-x-[1rem] text-[#263238]/90 w-full overflow-y-hidden overflow-x-scroll md:overflow-hidden scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin snap-x">
+        <div className="px-[1rem] pb-[0.5rem] flex justify-around gap-x-[1rem] text-[#263238]/90 w-full overflow-y-hidden overflow-x-scroll md:overflow-hidden scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin snap-x">
           {
             cards.map((e, index)=>(<Card image={e.image} title={e.title} value={e.value} key={index} className="bg-[#DBEAFE]/50 rounded-lg flex-none md:flex scale-85 sm:scale-100  animate-scale-in-center [--animation-duration:0.33s] snap-center"/>))
           }
@@ -208,9 +223,9 @@ export default function Dashboard(){
 
       <div className="grid gap-y-[1rem] divide-y-[0.138rem] divide-[#99A1AF]/10"> 
 
-        <h1 className="text-2xl font-bold text-[#023580]">Visão geral durante o ano</h1>
+        <h1 className="text-2xl font-bold text-center sm:text-left">Visão geral durante o ano</h1>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem]">
+        <div className="px-[0.5rem] pt-[0.7rem] max-h-[23.5rem] grid grid-cols-1 md:grid-cols-2 gap-[1rem] overflow-y-scroll scroll-px-4 scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin">
 
           <div className="flex flex-col justify-start items-start bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
 
@@ -235,12 +250,16 @@ export default function Dashboard(){
                   labels: foulsPerMonth.map(fouls => labelsMonth[fouls.mnt - 1]),
                   datasets: [{
                     fill: true,
-                    label: "Faltas",
+                    label: " Faltas",
                     data: foulsPerMonth.map(fouls => fouls.fouls),
-                    backgroundColor: "#155DDD90",
-                    borderColor: "#155DDD",
-                    borderRadius: 6,
-                    barThickness: 24,
+                    backgroundColor: "#1768F790",
+                    borderColor: "#1768F7",
+                    borderWidth: 4,
+                    pointRadius: 3,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: "#023580",
+                    pointBorderColor: "#023580"
+
                   },]
                 }}
               />
@@ -310,7 +329,8 @@ export default function Dashboard(){
                             " " +
                             classesMostFouls[con[0].dataIndex].class.name
                           );
-                        }
+                        },
+
                       }
                     },
                   }
@@ -322,6 +342,43 @@ export default function Dashboard(){
                     data: classesMostFouls.map(mostFouls => mostFouls.fouls),
                     backgroundColor: classesMostFouls.map(mostFouls => generateColor(mostFouls.fouls, 0.5)),
                     borderColor: classesMostFouls.map(mostFouls => generateColor(mostFouls.fouls, 0.8)),
+                    borderWidth: 2,
+                  },]
+                }}
+              />
+            }
+
+          </div>
+
+          <div className="flex flex-col justify-start items-start bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
+
+            <h1 className="p-[0.5rem] w-full  text-center text-[0.975rem] sm:text-[1.1rem] font-bold text-[#263238]/90">Taxa de presenças e faltas</h1>
+
+            {presFouls &&
+
+              <Doughnut className="p-[1rem] max-h-[20rem]"
+                options= {{
+                  responsive: true, 
+                  maintainAspectRatio: true, 
+                  plugins: {
+                    legend: {
+                      position: "left", align: "center",
+                      labels: {font: {size:14, weight: "bold"}, color: "#263238"},
+                    }, 
+                    tooltip: {
+                      titleFont: {size: 15, weight: "bold"}, 
+                      bodyFont: {size: 14, weight: "bold"}, 
+                      callbacks: {label: (con) => {return ` ${con.raw} %`;}
+                      }
+                    },
+                  }
+                }}
+                data={{
+                  labels: ["Presença", "Falta"],
+                  datasets: [{
+                    data: [((presFouls.presences / (presFouls.presences + presFouls.fouls)) * 100).toFixed(1), ((presFouls.fouls  / (presFouls.presences + presFouls.fouls)) * 100).toFixed(1)],
+                    backgroundColor: [generateColor(presFouls.presences, 0.5), generateColor(presFouls.fouls, 0.5)],
+                    borderColor: [generateColor(presFouls.presences, 0.8), generateColor(presFouls.fouls, 0.8)],
                     borderWidth: 2,
                   },]
                 }}

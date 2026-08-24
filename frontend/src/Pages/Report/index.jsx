@@ -103,7 +103,7 @@ function Report() {
   }
 
   return (
-    <div className="sm:mx-10 my-10">
+    <div>
 
       <h1 className="text-2xl font-bold">Relatórios</h1>
       <div className="flex justify-between items-center">

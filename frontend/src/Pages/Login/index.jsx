@@ -11,17 +11,16 @@ function Login (){
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [viewPass, setViewPass] = useState(false);
+    const [viewPass, setViewPass] = useState(true);
     const [buttonType, setButtonType] = useState("password");
 
     function handleViewPass (view){
 
-        setViewPass(!view)
-
-        setButtonType(viewPass ? "txt": "password")
+        setViewPass(!view);
+        setButtonType(viewPass ? "txt": "password");
         
     }
-
+    
     const submitLogin = async (data) => {
 
         try {
@@ -38,18 +37,16 @@ function Login (){
             const response = await API.post("/users/login", login);
 
             localStorage.setItem("token", response.data.token);
-            
-            navigate("/classes");
+            navigate("/dashboard");
             
         } catch (error) {
 
             toast.error(<b>E-mail ou senha inválidos !!</b>, {id: "loginError", duration: 2500, style: { borderRadius: "0.375rem"} });
-
             console.error(error);
             
         } finally {
 
-            setLoading(false)
+            setLoading(false);
 
         }
     }
@@ -85,7 +82,6 @@ function Login (){
                                 }
                             />
 
-
                         </div>
 
                         <div>
@@ -109,7 +105,6 @@ function Login (){
                                 }
                             />
                             
-
                         </div>
 
                     </div>
@@ -121,7 +116,6 @@ function Login (){
                             Entrar
                         </div>        
                                                
-                    
                     </Button>
                
                 </div>
@@ -132,7 +126,7 @@ function Login (){
 
         </main>
 
-    )
+    );
 
 }
 
