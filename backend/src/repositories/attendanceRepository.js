@@ -2,6 +2,23 @@ import prisma from '../config/database.js';
 
 class AttendanceRepository {
 
+  async existsByClassAndDate(classId, date) {
+    const startDate = new Date(`${date}T00:00:00`);
+    const endDate = new Date(`${date}T23:59:59`);
+    const attendance = await prisma.attendance.findFirst({
+        where: {
+            date: {
+              gte: startDate,
+              lte: endDate,
+            },
+            student: {
+              classId: classId,
+            },
+        },
+    });
+    return !!attendance;
+}
+
   async registerInBatch(register) {
     return prisma.$transaction(
       register.map((reg) =>
