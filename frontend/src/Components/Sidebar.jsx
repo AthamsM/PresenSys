@@ -22,6 +22,12 @@ export default function Sidebar(props){
             active: false,
             route: "/reports"
         },
+        {
+            name: "Sair",
+            icon: "icons/logout.svg",
+            active: false,
+            route: "/logout"
+        }
         // {
         //     name: "Configurações",
         //     icon: "icons/setting.svg",
@@ -30,7 +36,7 @@ export default function Sidebar(props){
         // }
   ]
   return(
-    <aside className="w-60 border-r border-gray-300 bg-white absolute h-screen sm:static z-2">
+    <aside className="fixed sm:sticky top-0 h-screen w-60 shrink-0 border-r border-gray-300 bg-white z-10">
 
       <div className="px-2 flex items-center border-b mb-2 border-gray-300 ">
         {/* <h1 className="font-more-sugar text-[#0A5DE4] text-[2rem] font-semibold">Presen</h1>
