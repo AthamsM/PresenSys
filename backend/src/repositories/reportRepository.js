@@ -43,7 +43,7 @@ class ReportRepository {
       grade: student.class.grade,
       class: student.class.name,
       foul: student.attendance.length,
-      excusedAbsence: student.attendance.filter(a => a.excusedAbsence != "").length
+      excusedAbsence: student.attendance.filter(a => typeof a.excusedAbsence === "string" && a.excusedAbsence.trim() != "").length
     }));
   }
 
@@ -93,7 +93,7 @@ class ReportRepository {
       grade: student.class.grade,
       class: student.class.name,
       foul: student.attendance.length,
-      excusedAbsence: student.attendance.filter(a => a.excusedAbsence != "").length
+      excusedAbsence: student.attendance.filter(a => typeof a.excusedAbsence === "string" && a.excusedAbsence.trim() != "").length
     }));
   }
 
@@ -143,7 +143,7 @@ async getFoulGrade(grade, startDate, endDate) {
       grade: student.class.grade,
       class: student.class.name,
       foul: student.attendance.length,
-      excusedAbsence: student.attendance.filter(a => a.excusedAbsence != "").length
+      excusedAbsence: student.attendance.filter(a => typeof a.excusedAbsence === "string" && a.excusedAbsence.trim() != "").length
     }));
   }
   async getFoulGradeInClass(grade, className, startDate, endDate) {
@@ -193,7 +193,7 @@ async getFoulGrade(grade, startDate, endDate) {
       grade: student.class.grade,
       class: student.class.name,
       foul: student.attendance.length,
-      excusedAbsence: student.attendance.filter(a => a.excusedAbsence != "").length
+      excusedAbsence: student.attendance.filter(a => typeof a.excusedAbsence === "string" && a.excusedAbsence.trim() != "").length
     }));
   }
 
@@ -250,8 +250,14 @@ async getFoulGrade(grade, startDate, endDate) {
     totalFoul: student.attendance.length,
     foul: student.attendance.map(f => ({
       date: f.date,
-      justified: f.excusedAbsence
-    })),
+      justification: typeof f.excusedAbsence === "string" && f.excusedAbsence.trim() !== "" ? f.excusedAbsence.trim() : null
+})),
+
+    excusedAbsence: student.attendance.filter(
+      f =>
+        typeof f.excusedAbsence === "string" &&
+        f.excusedAbsence.trim() !== ""
+    ).length
   };
 }
 }
