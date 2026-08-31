@@ -52,10 +52,10 @@ export function StudentCard({
                 {!student.present && (
                     <button
                         onClick={() => onJustify(student)}
-                        className={`px-3 py-1 rounded text-white text-sm ${
+                        className={`px-3 py-1 rounded text-black text-sm ${
                             student.justification
                                 ? "bg-blue-500 hover:bg-blue-600"
-                                : "bg-yellow-500 hover:bg-yellow-600"
+                                : "bg-gray-300 hover:bg-gray-200"
                         }`}
                     >
                         {student.justification

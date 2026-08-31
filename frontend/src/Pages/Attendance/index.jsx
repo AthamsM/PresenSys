@@ -7,6 +7,7 @@ import { StudentCard } from "../../Components/Attendance/StudentCard";
 import { useSearchParams } from "react-router-dom";
 import API from "../../Controller/Api";
 import { toast, Toaster } from "react-hot-toast";
+import Modal from "../../Components/Modal";
 
 
 export default function AttendancePage() {
@@ -32,70 +33,87 @@ export default function AttendancePage() {
         try {
 
             const response = await API.get(`/class/${classId}`);
+            const today = new Date();
+            const date =
+                `${today.getFullYear()}-` +
+                `${String(today.getMonth() + 1).padStart(2, "0")}-` +
+                `${String(today.getDate()).padStart(2, "0")}`;
+            const attendanceResponse = await API.get(`/attendances/class/${classId}/${date}`);
+            const attendances = attendanceResponse.data.attendance || [];
+            const students = response.data.students.map(student => {
+                const attendance = attendances.find(item => item.studentId === student.id);
+                return {
+                    id: student.id,
+                    name: student.name,
+                    present: attendance
+                        ? attendance.present
+                        : false,
+                    justification:
+                        attendance?.excusedAbsence || null,
+                };
 
-            const students = response.data.students.map(student => ({
-                id: student.id,
-                name: student.name,
-                present: false,
-                justification: null,
-            }));
-
+            });
+            
             setStudents(students);
             setNameClass(response.data.grade + " " + response.data.name);
 
         } catch (error) {
-            console.error(error);
+            console.error("Erro ao carregar alunos.", error);
         }
     }
 
     async function saveAttendance() {
         try {
             const today = new Date();
-
             const date =
                 `${today.getFullYear()}-` +
                 `${String(today.getMonth() + 1).padStart(2, "0")}-` +
                 `${String(today.getDate()).padStart(2, "0")}`;
-            const data = {
-                classId: id,
-                date,
-                attendance: students.map((student) => ({
-                    studentId: student.id,
-                    present: student.present,
-                    justification: student.justification,
-                })),
 
+            const checkResponse = await API.get(`/attendances/check/${id}/${date}`);   
+            const data = { 
+                classId: id, 
+                date, 
+                attendance: students.map((student) => ({ 
+                    studentId: student.id, 
+                    present: student.present, 
+                    justification: student.justification,
+                })), 
             };
-            
+
+
             await API.post("/attendances/", data);
             
-            toast.success(<b>Frequência salva com sucesso!!</b>, { id: "saveAttendance", duration: 2500, style: { borderRadius: "0.375rem" } });
-
-        } catch (error) {
-            console.error("Erro ao salvar frequência:", error);
-            if (error.response?.status === 409) {
-            toast.error("A chamada dessa turma já foi realizada hoje!");
+            if (checkResponse.data.alreadyTaken) {
+                toast.success(<b>Chamada já realizada hoje. Os dados foram atualizados com sucesso.</b>, { id: "saveAttendance", duration: 2500, style: { borderRadius: "0.375rem" }});
             } else {
+                toast.success(<b>Frequência salva com sucesso!</b>, { id: "saveAttendance", duration: 2500, style: { borderRadius: "0.375rem" }});
+            }   
+
+        } catch (error) { 
+            console.error("Erro ao salvar frequência:", error); 
             toast.error("Erro ao salvar a chamada.");
             }
         }
-    }
-
+        
     function toggleAttendance(id) {
-    setStudents(current =>
-        current.map(student =>
-            student.id === id
+        setStudents(current =>
+            current.map(student => 
+                student.id === id
+
                 ? {
                     ...student,
-                    present: !student.present,
+                    present:!student.present,
                     ...(student.present
                         ? {}
-                        : { justification: null })
+                        : {justification: null})
                 }
                 : student
-        )
-    );
-}
+                    
+            )
+        );
+    }
+    
     function openJustificationModal(student) {
     setSelectedStudent(student);
     setJustification(student.justification || "");
@@ -154,99 +172,94 @@ export default function AttendancePage() {
             );
 
     return (
-        <div className="max-w-3xl mx-auto p-6">
+    <div className="max-w-3xl mx-auto p-6">
 
-            <AttendanceHeader nameClass={nameClass}/>
+        <AttendanceHeader nameClass={nameClass}/>
 
-            <AttendanceStats
-                totalStudents={totalStudents}
-                totalPresent={totalPresent}
-                calculateAttendance={calculateAttendance}
-            />
+        <AttendanceStats
+            totalStudents={totalStudents}
+            totalPresent={totalPresent}
+            calculateAttendance={calculateAttendance}
+        />
 
-            <AttendanceSearch
-                value={search}
-                onChange={setSearch}
-            />
+        <AttendanceSearch
+            value={search}
+            onChange={setSearch}
+        />
 
-            <AttendanceActions
-                onMarkAll={markAllPresent}
-            />
+        <AttendanceActions
+            onMarkAll={markAllPresent}
+        />
 
-            <div className="mt-6 rounded-xl border bg-white h-110 sm:h-80 overflow-y-auto">
+        <div className="mt-6 rounded-xl border bg-white h-110 sm:h-80 overflow-y-auto">
 
-                {filterStudents.map(
-                    (student, index) => (
-                        <StudentCard
-                            key={student.id}
-                            student={student}
-                            index={index}
-                            onToggle={toggleAttendance}
-                            onJustify={openJustificationModal}
-                        />
-                    )
-                )}
-
-            </div>
-
-            <button
-                onClick={saveAttendance}
-                className="mt-4 w-full rounded-xl bg-green-300 py-4 font-medium hover:bg-green-400">
-                Salvar chamada
-            </button>
-            <div><Toaster /></div>
-
-
-            {showModal && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-xl p-6 w-96 shadow-lg">
-
-                        <h2 className="text-lg font-bold mb-4">
-                            Justificar Falta
-                        </h2>
-
-                        <p className="mb-2 text-sm text-gray-600">
-                            {selectedStudent?.name}
-                        </p>
-
-                        <textarea
-                            rows={4}
-                            value={justification}
-                            onChange={(e) =>
-                                setJustification(e.target.value)
-                            }
-                            placeholder="Digite a justificativa..."
-                            className="w-full border rounded-lg p-2 resize-none"
-                        />
-
-                        <div className="flex justify-end gap-2 mt-4">
-
-                            <button
-                                onClick={closeModal}
-                                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 transition-colors"
-                            >
-                                Cancelar
-                            </button>
-
-                            <button
-                                onClick={confirmAbsence}
-                                className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-800 transition-colors"
-                            >
-                                Confirmar
-                            </button>
-
-                        </div>
-
-                    </div>
-                </div>
+            {filterStudents.map(
+                (student, index) => (
+                    <StudentCard
+                        key={student.id}
+                        student={student}
+                        index={index}
+                        onToggle={toggleAttendance}
+                        onJustify={openJustificationModal}
+                    />
+                )
             )}
+
+        </div>
+
+        <button
+            onClick={saveAttendance}
+            className="mt-4 w-full rounded-xl bg-green-300 py-4 font-medium hover:bg-green-400"
+        >
+            Salvar chamada
+        </button>
+
         
+        <Toaster />
+
+        <Modal
+            open={showModal}
+            setOpen={setShowModal}
+            className="w-96"
+        > 
+             <h2 className="text-lg font-bold mb-4">
+                Justificar Falta
+            </h2>
+        
+            <p className="mb-2 text-sm text-gray-600">
+                {selectedStudent?.name}
+            </p>
+         
+            <textarea
+                rows={4}
+                value={justification}
+                onChange={(e) => setJustification(e.target.value)}
+                placeholder="Digite a justificativa..."
+                className="w-full border rounded-lg p-2 resize-none"
+            />
+                       
+            <div className="flex justify-end gap-2 mt-4">
+
+                <button
+                    onClick={closeModal}
+                        className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 transition-colors"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    onClick={confirmAbsence}
+                    className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-800 transition-colors"
+                >
+                    Confirmar
+                </button>
 
             </div>
-            );
+                
+        </Modal>
+
+    </div>
+    );
 }
 
-
-
-
-
+         
