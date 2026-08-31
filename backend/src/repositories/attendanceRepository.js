@@ -2,9 +2,27 @@ import prisma from '../config/database.js';
 
 class AttendanceRepository {
 
+  async existsByClassAndDate(classId, date) {
+    const startDate = new Date(`${date}T00:00:00`);
+    const endDate = new Date(`${date}T23:59:59`);
+    const attendance = await prisma.attendance.findFirst({
+        where: {
+            date: {
+              gte: startDate,
+              lte: endDate,
+            },
+            student: {
+              classId: classId,
+            },
+        },
+    });
+    return !!attendance;
+}
+
   async registerInBatch(register) {
+   
     return prisma.$transaction(
-      register.map((reg) =>
+      register.map((reg) => 
         prisma.attendance.upsert({
           where: {
             studentId_date: {
@@ -12,17 +30,44 @@ class AttendanceRepository {
               date: new Date(reg.date),
             },
           },
-          update: { present: reg.present },
+
+          update: { 
+            present: reg.present,
+            excusedAbsence: reg.excusedAbsence || '',
+          },
+
           create: {
             studentId: reg.studentId,
             date: new Date(reg.date),
-            present: reg.present,
+            present: reg.present, 
             excusedAbsence: reg.excusedAbsence || '',
           },
         })
       )
     );
   }
+
+  async getAttendanceByClassAndDate(classId, date) {
+    const startDate = new Date(`${date}T00:00:00`);
+    const endDate = new Date(`${date}T23:59:59`);
+
+    return prisma.attendance.findMany({
+      where: {
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+        student: {
+          classId: Number(classId),
+        },
+      },
+      select: {
+        studentId: true,
+        present: true,
+        excusedAbsence: true,
+      },
+    });
+}
 
   async foulsPerMonth(year) {
 

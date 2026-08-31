@@ -266,7 +266,7 @@ function Report() {
 
                         <td className="before:content-[counter(linha)]"></td>
                         <td>{formatDate(foul.date).split(",")[0]}</td>
-                        <td>{foul.justified ? foul.justified : "Não Justificada"}</td>
+                        <td>{foul.justification || "Não Justificada"}</td>
                       </tr>
 
                     </tbody>

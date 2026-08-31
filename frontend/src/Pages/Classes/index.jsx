@@ -8,20 +8,44 @@ export default function Classes(props){
 
   const navigate = useNavigate();
   const [classes, setClasses] = useState([]);
+  const [attendanceStatus, setAttendanceStatus] = useState({});
 
   useEffect(()=>{
 
-    API.get("/class").then((res)=>{
-      //console.log(res.data);
-      setClasses(res.data);
-    }).catch((err)=>{
-      
-      console.log(err);
-    });
+    async function loadClasses() {
+      try {
 
+        const res = await API.get("/class");
+        setClasses(res.data);
+        const today = new Date();
+        const date =
+          `${today.getFullYear()}-` +
+          `${String(today.getMonth() + 1).padStart(2, "0")}-` +
+          `${String(today.getDate()).padStart(2, "0")}`;
+        const status = {};
+        await Promise.all(
+          res.data.map(async (turma) => {
+            try {
+              const checkResponse = await API.get(`/attendances/check/${turma.id}/${date}`);
+              status[turma.id] = checkResponse.data.alreadyTaken;
+            } catch (error) {
+              console.error(`Erro ao verificar chamada da turma ${turma.id}:`, error);
+              status[turma.id] = false;
+            }
+          })
+        );
+
+        setAttendanceStatus(status);
+
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    loadClasses();
+
+  }, []);
   
-  },[]);
-
   return(
     <div>
       { props.filter == null && (
@@ -36,11 +60,16 @@ export default function Classes(props){
           classes.map((e,index)=>{
             const classYear = e.grade.split("º");
             if(props.filter == "0" || props.filter == classYear[0] || props.filter == null){
+            const alreadyTaken = attendanceStatus[e.id];
+
             return(
             <div key={index} className="border border-gray-200 shadow-sm shadow-gray-300 rounded-2xl  h-[200px]">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
                 <h2 className="text-xl font-bold">{e.grade} {e.name}</h2>
+              <div className="mt-2 h-5 text-sm font-semibold text-green-600">
+                {alreadyTaken && "Chamada realizada hoje"}
               </div>
+            </div>
               <div className="p-5 rounded-2xl">
                 <div className="flex justify-between mb-5">
                   <span className="text-sm flex">
@@ -48,15 +77,15 @@ export default function Classes(props){
                     {e._count.students} Alunos
                   </span>
                 </div>
+                
                 <Button className="bg-blue-600 hover:bg-blue-400 text-white p-2 w-full rounded-2xl font-bold" onClick={()=>navigate(`/attendance?id=${e.id}`)}>Abrir chamada</Button>
               </div>
             </div>
-            )}
-          })
-        }
+            );
+          }
+
+          })}
       </div>
     </div>
   );
-
-
 }

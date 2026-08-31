@@ -4,7 +4,7 @@ export function AttendanceHeader({nameClass}) {
   const navigate = useNavigate();
     return (
         <div>
-            <button className="flex items-center gap-2 text-gray-500"
+            <button className="flex items-center gap-2 text-gray-500 hover:text-blue-600 transition-colors duration-200"
               onClick={()=> navigate("/classes")}>
                 <img
                     src="icons/back-arrow.svg"
