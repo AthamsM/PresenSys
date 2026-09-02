@@ -34,8 +34,8 @@ class StudentService {
     return StudentRepository.findAll();
   }
 
-  async findById(id) {
-    const student = await StudentRepository.findById(Number(id));
+  async findByEnrollment(enrollment) {
+    const student = await StudentRepository.findByEnrollment(enrollment);
     if (!student) {
       const error = new Error('Aluno não encontrado.');
       error.statusCode = 404;

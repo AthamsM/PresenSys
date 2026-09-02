@@ -6,6 +6,7 @@ import Relatorios from "./Report";
 import Page404 from "./404"
 import Dashboard from "./Dashboard";
 import Logout from "../Controller/Logout";
+import Students from "./Students";
 
 // Cores
 //
@@ -64,6 +65,10 @@ const Pages = [
     {
         path : "/logout",
         component : <Logout/>
+    },
+    {
+      path : "/students",
+      component : <Template><Students/></Template>
     }
 ]
 

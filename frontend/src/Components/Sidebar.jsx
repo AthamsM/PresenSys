@@ -23,6 +23,12 @@ export default function Sidebar(props){
             route: "/reports"
         },
         {
+            name: "Aluno",
+            icon: "icons/user.svg",
+            active: false,
+            route: "/students"
+        },
+        {
             name: "Sair",
             icon: "icons/logout.svg",
             active: false,
