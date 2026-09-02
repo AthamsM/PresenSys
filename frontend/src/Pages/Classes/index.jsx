@@ -55,7 +55,7 @@ export default function Classes(props){
         </>
       )}
       
-      <div className={`gap-5 mt-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 overflow-y-auto`}>
+      <div className={`gap-5 mt-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 overflow-y-auto pb-24`}>
         {
           classes.map((e,index)=>{
             const classYear = e.grade.split("º");
@@ -63,7 +63,7 @@ export default function Classes(props){
             const alreadyTaken = attendanceStatus[e.id];
 
             return(
-            <div key={index} className="border border-gray-200 shadow-sm shadow-gray-300 rounded-2xl  h-[200px]">
+            <div key={index} className="border border-gray-200 shadow-sm shadow-gray-300 rounded-2xl overflow-hidden">
               <div className="bg-blue-100 p-5 rounded-t-2xl">
                 <h2 className="text-xl font-bold">{e.grade} {e.name}</h2>
               <div className="mt-2 h-5 text-sm font-semibold text-green-600">
