@@ -19,9 +19,9 @@ class StudentController {
     }
   }
 
-  async findById(req, res, next) {
+  async findByEnrollment(req, res, next) {
     try {
-      const student = await StudentService.findById(req.params.id);
+      const student = await StudentService.findByEnrollment(req.params.id);
       return res.status(200).json(student);
     } catch (error) {
       next(error);
