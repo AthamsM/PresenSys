@@ -53,7 +53,7 @@ function Login (){
 
     return(
 
-        <main className="h-screen w-screen flex items-center justify-center">
+        <main className="h-screen w-screen flex items-center justify-center bg-[#DBEAFE]/50">
 
             <div className="h-full w-full bg-[url(images/login-background.png)] bg-cover bg-center bg-no-repeat scale-110 blur-[0.25rem] fixed z-0"></div>
 
