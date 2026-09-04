@@ -22,6 +22,7 @@ export default function AttendancePage() {
     const [showModal, setShowModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [justification, setJustification] = useState("");
+    const [justificationType, setJustificationType] = useState("");
 
     useEffect(() => {
         if (id) {
@@ -115,32 +116,54 @@ export default function AttendancePage() {
     }
     
     function openJustificationModal(student) {
-    setSelectedStudent(student);
-    setJustification(student.justification || "");
-    setShowModal(true);
+        setSelectedStudent(student);
+        const current = student.justification || "";
+
+        if (current.startsWith("Atestado - ")) {
+            setJustificationType("Atestado");
+            setJustification(current.replace("Atestado - ", ""));
+        } else if (current.startsWith("Autorização - ")) {
+            setJustificationType("Autorização");
+            setJustification(current.replace("Autorização - ", ""));
+        } else {
+            setJustificationType("");
+            setJustification(current);
+        }
+
+        setShowModal(true);
     }
     
     function confirmAbsence() {
-    if (!selectedStudent) return;
+        if (!selectedStudent) return;
 
-    setStudents(current =>
-        current.map(student =>
-            student.id === selectedStudent.id
-                ? {
-                    ...student,
-                    justification: justification.trim() || null
-                }
-                : student
-        )
-    );
+        const text = justification.trim();
 
-    closeModal();
+        if (text && !justificationType) {
+            toast.error("Selecione se é Atestado ou Autorização!");
+            return;
+        }
+
+        const finalJustification = text ? `${justificationType} - ${text}` : null;
+
+        setStudents(current =>
+            current.map(student =>
+                student.id === selectedStudent.id
+                    ? {
+                        ...student,
+                        justification: finalJustification
+                    }
+                    : student
+            )
+        );
+
+        closeModal();
     }
     
     function closeModal() {
         setShowModal(false);
         setSelectedStudent(null);
         setJustification("");
+        setJustificationType("");
     }
 
     function markAllPresent() {
@@ -219,47 +242,125 @@ export default function AttendancePage() {
 
         <Modal
             open={showModal}
-            setOpen={setShowModal}
-            className="w-96"
+            setOpen={(open) => {
+                if (!open) closeModal();
+            }}
+            className="w-[92vw] max-w-md max-h-[90vh] overflow-y-auto p-4 sm:p-6 rounded-2xl"
         > 
-             <h2 className="text-lg font-bold mb-4">
-                Justificar Falta
-            </h2>
-        
-            <p className="mb-2 text-sm text-gray-600">
-                {selectedStudent?.name}
-            </p>
-         
-            <textarea
-                rows={4}
-                value={justification}
-                onChange={(e) => setJustification(e.target.value)}
-                placeholder="Digite a justificativa..."
-                className="w-full border rounded-lg p-2 resize-none"
-            />
-                       
-            <div className="flex justify-end gap-2 mt-4">
+            <div className="flex flex-col">
+                <div className="mb-4 sm:mb-5">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-900">
+                        Justificar falta
+                    </h2>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                        Adicione, altere ou remova a justificativa da falta.
+                    </p>
+                </div>
 
-                <button
-                    onClick={closeModal}
-                        className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 transition-colors"
-                >
-                    Cancelar
-                </button>
+                <div className="bg-gray-50 border border-gray-100 rounded-xl p-3.5 sm:p-4 mb-4 sm:mb-5 text-xs sm:text-sm">
+                    <div className="flex justify-between items-center gap-3">
+                        <span className="text-gray-500 shrink-0">Aluno</span>
+                        <span className="font-semibold text-gray-800 text-right truncate">
+                            {selectedStudent?.name}
+                        </span>
+                    </div>
+                </div>
 
-                <button
-                    onClick={confirmAbsence}
-                    className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-800 transition-colors"
-                >
-                    Confirmar
-                </button>
+                <div className="mb-4 sm:mb-5">
+                    <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-1.5 sm:mb-2">
+                        Justificativa
+                    </label>
 
+                    <textarea
+                        rows={3}
+                        value={justification}
+                        onChange={(e) => {
+                            setJustification(e.target.value);
+                            if (!e.target.value.trim()) {
+                                setJustificationType("");
+                            }
+                        }}
+                        placeholder="Digite o motivo (ex: consulta médica, dor de cabeça...)"
+                        className="w-full border border-gray-300 rounded-xl p-3 resize-none outline-none focus:border-[#155DDD] text-xs sm:text-sm"
+                    />
+
+                    <div className="mt-3">
+                        <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+                            Tipo de Comprovante:
+                        </label>
+
+                        <div className="grid grid-cols-2 gap-2">
+                            <label
+                                className={`flex items-center justify-center gap-2 p-2 sm:p-2.5 rounded-xl border text-xs sm:text-sm font-medium transition cursor-pointer select-none ${
+                                    !justification.trim()
+                                        ? "opacity-40 bg-gray-100 border-gray-200 cursor-not-allowed text-gray-400"
+                                        : justificationType === "Atestado"
+                                        ? "border-[#155DDD] bg-blue-50 text-[#155DDD] font-bold"
+                                        : "border-gray-200 hover:bg-gray-50 text-gray-700"
+                                }`}
+                            >
+                                <input
+                                    type="radio"
+                                    name="justificationType"
+                                    value="Atestado"
+                                    checked={justificationType === "Atestado"}
+                                    onChange={(e) => setJustificationType(e.target.value)}
+                                    disabled={!justification.trim()}
+                                    className="hidden"
+                                />
+                                <span>Atestado</span>
+                            </label>
+
+                            <label
+                                className={`flex items-center justify-center gap-2 p-2 sm:p-2.5 rounded-xl border text-xs sm:text-sm font-medium transition cursor-pointer select-none ${
+                                    !justification.trim()
+                                        ? "opacity-40 bg-gray-100 border-gray-200 cursor-not-allowed text-gray-400"
+                                        : justificationType === "Autorização"
+                                        ? "border-[#155DDD] bg-blue-50 text-[#155DDD] font-bold"
+                                        : "border-gray-200 hover:bg-gray-50 text-gray-700"
+                                }`}
+                            >
+                                <input
+                                    type="radio"
+                                    name="justificationType"
+                                    value="Autorização"
+                                    checked={justificationType === "Autorização"}
+                                    onChange={(e) => setJustificationType(e.target.value)}
+                                    disabled={!justification.trim()}
+                                    className="hidden"
+                                />
+                                <span>Autorização</span>
+                            </label>
+                        </div>
+
+                        <p className="text-[11px] sm:text-xs text-gray-400 mt-1.5 leading-relaxed">
+                            {!justification.trim()
+                                ? "Digite um motivo acima para liberar a escolha do tipo."
+                                : !justificationType
+                                ? "Selecione o tipo para concluir a justificativa."
+                                : `Será salvo como: "${justificationType} - ${justification.trim()}"`}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex gap-2 sm:gap-3">
+                    <button
+                        onClick={closeModal}
+                        className="flex-1 border border-gray-300 rounded-xl py-2 sm:py-2.5 font-semibold text-xs sm:text-sm text-gray-600 hover:bg-gray-50 transition"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        onClick={confirmAbsence}
+                        disabled={justification.trim().length > 0 && !justificationType}
+                        className="flex-1 bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-xs sm:text-sm text-white py-2 sm:py-2.5 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                    >
+                        Confirmar
+                    </button>
+                </div>
             </div>
-                
         </Modal>
 
     </div>
     );
 }
-
-         
