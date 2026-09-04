@@ -17,6 +17,7 @@ import Students from "./Students";
 // #EBEBEB
 // #99A1AF
 // #F9FBFC
+// #D1D5DC
 // #DBEAFE
 // #82B6E0
 // #90CAF9
@@ -27,6 +28,10 @@ import Students from "./Students";
 // #023580
 // #347D39
 // #3A8C40
+// #FF6363
+// #F53939
+// #FF1A19
+// #CD1A19
 // #C10007
 // #DB0008
 //
@@ -59,16 +64,16 @@ const Pages = [
         component : <Template><Relatorios/></Template>
     },
     {
-      path : "/dashboard",
-      component : <Template><Dashboard/></Template>
+        path : "/dashboard",
+        component : <Template><Dashboard/></Template>
     },
     {
         path : "/logout",
         component : <Logout/>
     },
     {
-      path : "/students",
-      component : <Template><Students/></Template>
+        path : "/students",
+        component : <Template><Students/></Template>
     }
 ]
 
