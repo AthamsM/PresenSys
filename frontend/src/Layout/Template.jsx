@@ -87,7 +87,7 @@ function Template({ children }) {
     const handleResize = () => {
 
       const width = window.innerWidth;
-      setActivateSide(width > 768);
+      setActivateSide(width > 1024);
 
     };
 
@@ -105,7 +105,7 @@ function Template({ children }) {
 
     setActivateSide(prev => !prev);
 
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1024) {
       setBackgroundGray(prev => !prev);
     }
 
@@ -113,7 +113,7 @@ function Template({ children }) {
 
   const removeSide = (id) => {
 
-    if (window.innerWidth <= 768 && id !== "sidebar") {
+    if (window.innerWidth <= 1024 && id !== "sidebar") {
 
       setActivateSide(false);
       setBackgroundGray(false);
@@ -124,13 +124,12 @@ function Template({ children }) {
 
   const handleSidebarNavigate = () => {
 
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1024) {
       setActivateSide(false);
       setBackgroundGray(false);
     }
 
   };
-
 
   return (
 
@@ -140,9 +139,7 @@ function Template({ children }) {
 
       <main className="flex-1 min-w-0 h-screen relative flex flex-col overflow-hidden" onClick={(e) => removeSide(e.target.id)}>
 
-        {backgroundGray && (
-          <div className="absolute inset-0 w-full h-full opacity-50 bg-gray-700 z-10"/>
-        )}
+        {backgroundGray && (<div className="absolute inset-0 w-full h-full opacity-50 bg-gray-700 z-10"/> )}
 
         <Navbar alter={changeSide} />
 

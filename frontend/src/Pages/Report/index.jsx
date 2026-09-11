@@ -110,14 +110,14 @@ function Report() {
         <p className="sm:text-base text-xs">Acompanhe faltas por meio de filtros</p>
 
         <div className="flex items-end px-2">
-          <Button disabled={datas.length === 0} onClick={generateReportsCSV} type="submit" className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-xs sm:text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Gerar CSV</Button>
+          <Button disabled={datas.length === 0} onClick={generateReportsCSV} type="submit" className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-lg font-bold text-xs sm:text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Gerar CSV</Button>
         </div>
       </div>
 
-      <div className=" bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl mt-5 p-5 w-full grid grid-cols-2 justify-start lg:grid-cols-5 gap-3">
+      <div className=" bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300 rounded-lg mt-5 p-5 w-full grid grid-cols-2 justify-start items-end lg:grid-cols-5 gap-3">
         <div className="flex flex-col gap-1">
           <h3>Ano</h3>
-          <select name="ano" id="ano" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-1 text-xs sm:text-base" onChange={(e) => setFilter({ ...filter, grade: e.target.value })}>
+          <select name="ano" id="ano" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-lg p-1 text-xs sm:text-base" onChange={(e) => setFilter({ ...filter, grade: e.target.value })}>
             <option value="">Todos</option>
             {classGrade.map((gradeClass, index) => (
               <option key={index} value={gradeClass}>
@@ -128,7 +128,7 @@ function Report() {
         </div>
         <div className="flex flex-col gap-1">
           <h3>Turma</h3>
-          <select name="turma" id="turma" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, class: e.target.value })}>
+          <select name="turma" id="turma" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-lg p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, class: e.target.value })}>
             <option value="">Todos</option>
             {className.map((nameClass, index) => (
               <option key={index} value={nameClass}>
@@ -139,25 +139,25 @@ function Report() {
         </div>
         <div className="flex flex-col gap-1">
           <h3>Data inicial</h3>
-          <input type="date" name="inicial" id="inicial" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, startDate: e.target.value })}>
+          <input type="date" name="inicial" id="inicial" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-lg p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, startDate: e.target.value })}>
           </input>
         </div>
         <div className="flex flex-col gap-1">
           <h3>Data final</h3>
-          <input type="date" name="final" id="final" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, endDate: e.target.value })}>
+          <input type="date" name="final" id="final" className="border border-gray-200 shadow-sm shadow-gray-300  rounded-lg p-1 text-xs sm:text-sm" onChange={(e) => setFilter({ ...filter, endDate: e.target.value })}>
           </input>
         </div>
         <div className="flex items-end justify-end lg:justify-start col-span-2 lg:col-span-1">
-          <Button onClick={findReports} disabled={loading} type="submit" className="p-[0.40rem] bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Buscar</Button>
+          <Button onClick={findReports} disabled={loading} type="submit" className="px-[0.40rem] py-[0.30rem] bg-[#155DDD] hover:bg-[#5b90EC] active:bg-[#133069] rounded-lg font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Buscar</Button>
         </div>
       </div>
 
       {datas.length !== 0 && (
-        <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl px-3 mt-5 h-[calc(100vh-330px)] overflow-y-auto">
+        <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300 rounded-lg px-3 mt-5 md:h-[calc(100vh-414px)] lg:h-[calc(100vh-250px)] overflow-y-auto scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin">
 
           <div className="py-3 block md:hidden space-y-3">
             {datas.map((e) => (
-              <div key={e.id} className="border border-gray-200  rounded-xl p-4 shadow-sm flex flex-col gap-1.5">
+              <div key={e.id} className="border border-gray-200  rounded-lg p-4 shadow-sm flex flex-col gap-1.5">
                 <div className="flex justify-between items-center border-b border-gray-300 pb-1.5 mb-1.5">
                   <span className="text-xs font-bold text-gray-500 uppercase">Aluno</span>
                   <span className="text-sm font-semibold text-gray-800">{e.name}</span>
@@ -172,19 +172,19 @@ function Report() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Faltas:</span>
-                  <span className="font-bold px-2.5 py-0.5 rounded-full text-xs">
+                  <span className="font-bold px-2.5 py-0.5 text-xs">
                     {e.foul} faltas
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Faltas justificadas:</span>
-                  <span className="font-bold px-2.5 py-0.5 rounded-full text-xs">
-                    {e.excusedAbsence} faltas justificadas
+                  <span className="text-gray-500">Justificadas:</span>
+                  <span className="font-bold px-2.5 py-0.5 text-xs">
+                    {e.excusedAbsence} faltas 
                   </span>
                 </div>
 
                 <div className="mt-[0.5rem]">
-                  <Button disabled={e.foul == 0} onClick={() => { setStudent(e.id); setOpenModal(true); }} className="w-full bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Detalhes</Button>
+                  <Button disabled={e.foul == 0} onClick={() => { setStudent(e.id); setOpenModal(true); }} className="w-full bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-lg font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#155DDD] transition delay-50 duration-50 ease-in-out">Detalhes</Button>
                 </div>
               </div>
             ))}
@@ -197,7 +197,7 @@ function Report() {
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Turma</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Alunos</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Faltas</th>
-                <th className="py-4 px-3 bg-white font-bold" scope="col">Faltas justificadas</th>
+                <th className="py-4 px-3 bg-white font-bold" scope="col">Justificadas</th>
                 <th className="py-4 px-3 bg-white font-bold" scope="col">Detalhes</th>
               </tr>
             </thead>
@@ -210,7 +210,7 @@ function Report() {
                   <td className="py-4 px-3 border-b border-gray-200">{e.foul}</td>
                   <td className="py-4 px-3 border-b border-gray-200">{e.excusedAbsence}</td>
                   <td className="py-4 px-3 border-b border-gray-200">
-                    <Button disabled={e.foul == 0} onClick={() => { setStudent(e.id); setOpenModal(true); }} className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 transition delay-50 duration-50 ease-in-out">Detalhes</Button>
+                    <Button disabled={e.foul == 0} onClick={() => { setStudent(e.id); setOpenModal(true); }} className=" bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-lg font-bold text-sm text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 transition delay-50 duration-50 ease-in-out">Detalhes</Button>
                   </td>
 
                 </tr>
@@ -218,7 +218,7 @@ function Report() {
             </tbody>
           </table>
 
-          <Modal open={openModal} setOpen={closeModal} className="bg-[#F9FBFC] animate-scale-in-center border border-gray-200 shadow-sm shadow-gray-300 rounded-xl">
+          <Modal open={openModal} setOpen={closeModal} className="bg-[#F9FBFC] animate-scale-in-center rounded-lg">
 
             <div className="min-w-[75vw] max-h-[82.5vw] lg:max-h-[33vw] lg:min-w-[30vw] flex flex-col gap-y-[0.5rem]">
 
@@ -228,13 +228,13 @@ function Report() {
 
                 <h1 className="font-bold text-[1.2rem] sm:text-[1.5rem]">Relatório de Faltas</h1>
 
-                <Button onClick={() => (setOpenModal(false))} className="py-[0.2rem] px-[0.4rem] bg-[#C10007] hover:bg-[#DB0008] active:bg-[#C10007] rounded-xl cursor-pointer transition delay-25 duration-25 ease-in-out">
-                  <img src="icons/x.svg" alt="x" className="w-[1.5rem]" />
+                <Button onClick={() => (setOpenModal(false))} className="py-[0.2rem] px-[0.2rem] bg-[#C10007] hover:bg-[#DB0008] active:bg-[#C10007] rounded-full cursor-pointer transition delay-25 duration-25 ease-in-out">
+                  <img src="icons/x.svg" alt="x" className="w-[1.4rem]" />
                 </Button>
 
               </div>
 
-              <div className="p-[0.5rem] flex flex-col items-start border-t-2 border-[#99A1Af]">
+              <div className="p-[0.5rem] flex flex-col items-start border-t-2 border-[#99A1Af]/30">
 
                 <h1>Nome: {selectedStudent?.name}</h1>
                 <h1>Turma: {selectedStudent?.grade} {selectedStudent?.class}</h1>
@@ -242,18 +242,19 @@ function Report() {
 
               </div>
 
-              <h1 className="flex justify-center border-y-2 border-[#99A1Af] text-[#263238] font-bold ">Dias faltados</h1>
+              <h1 className="flex justify-center border-y-2 border-[#99A1Af]/30 text-[#263238] font-bold ">Dias faltados</h1>
 
-              <div className="overflow-auto">
-                <table className="w-full text-center table-auto [counter-reset:linha] border-collapse border-[0.063rem] border-[#99A1Af]">
+              <div className="overflow-auto border-[0.063rem] border-b-0  border-[#99A1AF]/60 rounded-lg">
+                <table className="w-full text-center table-auto [counter-reset:linha] border-collapse /60">
 
                   <thead>
 
-                    <tr className="border-b-[0.063rem] border-[#99A1Af] text-[#263238]">
+                    <tr className="border-b-[0.063rem] border-[#99A1AF]/60 text-[#263238]">
 
                       <th>N°</th>
                       <th>Data</th>
                       <th>Justificativa</th>
+                      
                     </tr>
 
                   </thead>
@@ -262,11 +263,12 @@ function Report() {
 
                     <tbody key={foul.date}>
 
-                      <tr className="[counter-increment:linha] border-b-[0.063rem] border-[#99A1Af]">
+                      <tr className="[counter-increment:linha] border-b-[0.063rem] border-[#99A1AF]/60">
 
                         <td className="before:content-[counter(linha)]"></td>
                         <td>{formatDate(foul.date).split(",")[0]}</td>
                         <td>{foul.justification || "Não Justificada"}</td>
+
                       </tr>
 
                     </tbody>
@@ -279,7 +281,6 @@ function Report() {
             </div>
 
           </Modal>
-
 
         </div>
       )}
