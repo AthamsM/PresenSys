@@ -32,7 +32,7 @@ function Students() {
 
     async function findStudent() {
         if (!registration.trim()) {
-            toast.error("Informe a matrícula.");
+            toast.error(<b>Informe a matrícula</b>);
             return;
         }
 
@@ -59,7 +59,7 @@ function Students() {
             setStudent(null);
             setFouls([]);
             setHasSearched(false);
-            toast.error("Aluno não encontrado.");
+            toast.error(<b>Aluno não encontrado.</b>);
         } finally {
             setLoadingStudent(false);
         }
@@ -67,17 +67,17 @@ function Students() {
 
     async function findFouls() {
         if (!student) {
-            toast.error("Busque um aluno primeiro.");
+            toast.error(<b>Busque um aluno primeiro.</b>);
             return;
         }
 
         if (!filter.startDate || !filter.endDate) {
-            toast.error("Informe a data inicial e a data final.");
+            toast.error(<b>Informe a data inicial e a data final.</b>);
             return;
         }
 
         if (filter.startDate > filter.endDate) {
-            toast.error("A data inicial não pode ser maior que a data final.");
+            toast.error(<b>A data inicial não pode ser maior que a data final.</b>);
             return;
         }
 
@@ -97,7 +97,7 @@ function Students() {
         } catch (error) {
             console.error("Erro ao buscar faltas:", error);
             setFouls([]);
-            toast.error("Não foi possível buscar as faltas do aluno.");
+            toast.error(<b>Não foi possível buscar as faltas do aluno.</b>);
         } finally {
             setLoadingFouls(false);
         }
@@ -134,7 +134,7 @@ function Students() {
 
         // Validação de segurança: se escreveu texto, precisa ter tipo
         if (text && !justificationType) {
-            toast.error("Selecione se é Atestado ou Autorização!");
+            toast.error(<b>Selecione se é Atestado ou Autorização!</b>);
             return;
         }
 
@@ -173,13 +173,13 @@ function Students() {
             );
 
             if (finalJustification) {
-                toast.success("Falta justificada com sucesso!", {
+                toast.success(<b>Falta justificada com sucesso!</b>, {
                     id: "saveJustification",
                     duration: 2500,
                     style: { borderRadius: "0.375rem" },
                 });
             } else {
-                toast.success("Falta atualizada sem justificativa.", {
+                toast.success(<b>Falta atualizada sem justificativa.</b>, {
                     id: "saveJustification",
                     duration: 2500,
                     style: { borderRadius: "0.375rem" },
@@ -189,7 +189,7 @@ function Students() {
             closeCorrection();
         } catch (error) {
             console.error("Erro ao atualizar falta:", error);
-            toast.error("Não foi possível atualizar a falta.");
+            toast.error(<b>Não foi possível atualizar a falta.</b>);
         } finally {
             setSaving(false);
         }
@@ -205,7 +205,7 @@ function Students() {
     }
 
     return (
-        <div className="h-full overflow-y-auto scroll-px-4 scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin">
+        <div className="h-full pr-2 overflow-y-auto scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin">
             <Toaster />
 
             <div className="mb-6">
@@ -215,7 +215,7 @@ function Students() {
                 </p>
             </div>
 
-            <div className=" bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-5">
+            <div className=" bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-lg p-5">
                 <h2 className="font-bold text-lg mb-4">Buscar aluno</h2>
                 <div className="flex flex-row gap-3 ">
                     <div className="flex flex-col gap-1 flex-1 ">
@@ -228,18 +228,18 @@ function Students() {
                                 if (e.key === "Enter") findStudent();
                             }}
                             placeholder="Digite a matrícula do aluno"
-                            className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl p-2 outline-none focus:border-blue-500"
+                            className="border border-gray-200 shadow-sm shadow-gray-300  rounded-lg p-2 outline-none focus:border-blue-500"
                         />
                     </div>
 
                     <div className="flex items-end">
-                        <Button onClick={findStudent} disabled={loadingStudent} className="bg-[#155DDD] hover:bg-[#155DDD] border border-[#155DDD] active:bg-[#133069] rounded-xl font-bold text-[#EBEBEB] px-5 py-2 disabled:cursor-not-allowed disabled:opacity-40"> {loadingStudent ? "Busc..." : "Buscar"} </Button>
+                        <Button onClick={findStudent} disabled={loadingStudent} className="bg-[#155DDD] hover:bg-[#155DDD] border border-[#155DDD] active:bg-[#133069] rounded-lg font-bold text-[#EBEBEB] px-5 py-2 disabled:cursor-not-allowed disabled:opacity-40"> {loadingStudent ? "Busc..." : "Buscar"} </Button>
                     </div>
                 </div>
             </div>
 
             {student && (
-                <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl  p-5 mt-5">
+                <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-lg  p-5 mt-5">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
                             <p className="text-xs uppercase text-gray-500 font-bold">Aluno</p>
@@ -251,13 +251,13 @@ function Students() {
 
                         <div className="flex gap-8">
                             <div>
-                                <p className="text-xs uppercase text-gray-500 font-bold">Série</p>
-                                <p className="font-semibold">{student.gradeClass}</p>
+                                <p className="text-xs uppercase text-gray-500 font-bold text-center">Série</p>
+                                <p className="font-semibold text-center">{student.gradeClass}</p>
                             </div>
 
                             <div>
                                 <p className="text-xs uppercase text-gray-500 font-bold">Turma</p>
-                                <p className="font-semibold">{student.nameClass}</p>
+                                <p className="font-semibold text-center">{student.nameClass}</p>
                             </div>
                         </div>
                     </div>
@@ -265,7 +265,7 @@ function Students() {
             )}
 
             {student && (
-                <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-xl  p-3 mt-5">
+                <div className="bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300  rounded-lg  p-3 mt-5">
                     <h2 className="font-bold text-lg mb-4">Período da consulta</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 
@@ -276,7 +276,7 @@ function Students() {
                                     type="date"
                                     value={filter.startDate}
                                     onChange={(e) => handleFilterChange("startDate", e.target.value)}
-                                    className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl  p-2"
+                                    className="border border-gray-200 shadow-sm shadow-gray-300  rounded-lg  p-2"
                                 />
                             </div>
                             <div className="flex flex-col gap-1">
@@ -285,7 +285,7 @@ function Students() {
                                     type="date"
                                     value={filter.endDate}
                                     onChange={(e) => handleFilterChange("endDate", e.target.value)}
-                                    className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl  p-2"
+                                    className="border border-gray-200 shadow-sm shadow-gray-300  rounded-lg  p-2"
                                 />
                             </div>
                         </div>
@@ -294,7 +294,7 @@ function Students() {
                             <Button
                                 onClick={findFouls}
                                 disabled={loadingFouls}
-                                className="bg-[#155DDD] border-[#155DDD]hover:bg-[#155DDD] active:bg-[#133069] rounded-xl font-bold text-[#EBEBEB] px-5 py-2 disabled:cursor-not-allowed disabled:opacity-40"
+                                className="bg-[#155DDD] border-[#155DDD]hover:bg-[#155DDD] active:bg-[#133069] rounded-lg font-bold text-[#EBEBEB] px-5 py-2 disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 {loadingFouls ? "..." : "Consultar"}
                             </Button>
@@ -304,7 +304,7 @@ function Students() {
             )}
 
             {student && hasSearched && (
-                <div className="border border-gray-200 shadow-sm shadow-gray-300  rounded-xl overflow-hidden bg-white mt-5">
+                <div className="border border-gray-200 shadow-sm shadow-gray-300 rounded-lg overflow-hidden bg-white mt-5 scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin">
                     <div className="p-5 border-b border-gray-200">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div>
@@ -316,7 +316,7 @@ function Students() {
                                 </p>
                             </div>
 
-                            <div className="flex items-center justify-between gap-2 bg-gray-100 rounded-xl px-4 py-2.5 w-full sm:w-auto">
+                            <div className="flex items-center justify-between gap-2 bg-gray-100 rounded-lg px-4 py-2.5 w-full sm:w-auto">
                                 <p className="text-xs sm:text-sm text-gray-500">Total de faltas: </p>
                                 <p className="text-xs sm:text-sm text-gray-500">
                                     {fouls.length}
@@ -349,7 +349,7 @@ function Students() {
                                     return (
                                         <div
                                             key={indx}
-                                            className="border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col gap-2.5 bg-white"
+                                            className="border border-gray-200 rounded-lg p-4 shadow-sm flex flex-col gap-2.5 bg-white"
                                         >
                                             <div className="flex justify-between items-center border-b border-gray-100 pb-2">
                                                 <span className="text-xs font-bold text-gray-500 uppercase">Data</span>
@@ -360,7 +360,7 @@ function Students() {
 
                                             <div className="flex justify-between items-center text-sm">
                                                 <span className="text-gray-500">Situação:</span>
-                                                <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold">
+                                                <span className="inline-flex px-2.5 py-0.5 text-xs font-bold">
                                                     Falta
                                                 </span>
                                             </div>
@@ -377,7 +377,7 @@ function Students() {
                                             <div className="mt-2 pt-2 border-t border-gray-100">
                                                 <Button
                                                     onClick={() => openCorrection(foul)}
-                                                    className="w-full bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-white py-2"
+                                                    className="w-full bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-lg font-bold text-sm text-white py-2"
                                                 >
                                                     Corrigir
                                                 </Button>
@@ -394,7 +394,7 @@ function Students() {
                                             <th className="px-5 py-4">Data</th>
                                             <th className="px-5 py-4">Situação</th>
                                             <th className="px-5 py-4">Justificativa</th>
-                                            <th className="px-5 py-4 text-right">Ação</th>
+                                            <th className="px-5 py-4 text-center">Ação</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -407,7 +407,7 @@ function Students() {
                                                         {formatDate(foul.date)}
                                                     </td>
                                                     <td className="px-5 py-4">
-                                                        <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold">
+                                                        <span className="inline-flex px-2.5 py-0.5 text-xs font-bold">
                                                             Falta
                                                         </span>
                                                     </td>
@@ -418,10 +418,10 @@ function Students() {
                                                             <p className="text-gray-400 italic">Sem justificativa</p>
                                                         )}
                                                     </td>
-                                                    <td className="px-5 py-4 text-right">
+                                                    <td className="px-5 py-4 text-center">
                                                         <Button
                                                             onClick={() => openCorrection(foul)}
-                                                            className="bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-sm text-white px-4 py-2 transition duration-150"
+                                                            className="bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-lg font-bold text-sm text-white px-4 py-2 transition duration-150"
                                                         >
                                                             Corrigir
                                                         </Button>
@@ -456,7 +456,7 @@ function Students() {
                             </p>
                         </div>
 
-                        <div className="bg-gray-50 border border-gray-100 rounded-xl p-3.5 sm:p-4 space-y-2.5 sm:space-y-3 mb-4 sm:mb-5 text-xs sm:text-sm">
+                        <div className="bg-gray-50 border border-gray-100 rounded-lg p-3.5 sm:p-4 space-y-2.5 sm:space-y-3 mb-4 sm:mb-5 text-xs sm:text-sm">
                             <div className="flex justify-between items-center gap-3">
                                 <span className="text-gray-500 shrink-0">Aluno</span>
                                 <span className="font-semibold text-gray-800 text-right truncate">
@@ -473,7 +473,7 @@ function Students() {
 
                             <div className="flex justify-between items-center gap-3">
                                 <span className="text-gray-500">Situação</span>
-                                <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ">
+                                <span className="inline-flex px-2.5 py-0.5 text-xs font-bold ">
                                     Falta
                                 </span>
                             </div>
@@ -495,7 +495,7 @@ function Students() {
                                 }}
                                 placeholder="Digite o motivo (ex: consulta médica, dor de cabeça...)"
                                 disabled={saving}
-                                className="w-full border border-gray-300 rounded-xl p-3 resize-none outline-none focus:border-[#155DDD] focus:ring-1 focus:ring-[#155DDD] disabled:bg-gray-100 text-xs sm:text-sm"
+                                className="w-full border border-gray-300 rounded-lg p-3 resize-none outline-none focus:border-[#155DDD] focus:ring-1 focus:ring-[#155DDD] disabled:bg-gray-100 text-xs sm:text-sm"
                             />
 
                             <div className="mt-3">
@@ -505,7 +505,7 @@ function Students() {
 
                                 <div className="grid grid-cols-2 gap-2">
                                     <label
-                                        className={`flex items-center justify-center gap-2 p-2 sm:p-2.5 rounded-xl border text-xs sm:text-sm font-medium transition cursor-pointer select-none ${!justification.trim()
+                                        className={`flex items-center justify-center gap-2 p-2 sm:p-2.5 rounded-lg border text-xs sm:text-sm font-medium transition cursor-pointer select-none ${!justification.trim()
                                             ? "opacity-40 bg-gray-100 border-gray-200 cursor-not-allowed text-gray-400"
                                             : justificationType === "Atestado"
                                                 ? "border-[#155DDD] bg-blue-50 text-[#155DDD] font-bold"
@@ -525,7 +525,7 @@ function Students() {
                                     </label>
 
                                     <label
-                                        className={`flex items-center justify-center gap-2 p-2 sm:p-2.5 rounded-xl border text-xs sm:text-sm font-medium transition cursor-pointer select-none ${!justification.trim()
+                                        className={`flex items-center justify-center gap-2 p-2 sm:p-2.5 rounded-lg border text-xs sm:text-sm font-medium transition cursor-pointer select-none ${!justification.trim()
                                             ? "opacity-40 bg-gray-100 border-gray-200 cursor-not-allowed text-gray-400"
                                             : justificationType === "Autorização"
                                                 ? "border-[#155DDD] bg-blue-50 text-[#155DDD] font-bold"
@@ -559,7 +559,7 @@ function Students() {
                             <button
                                 onClick={closeCorrection}
                                 disabled={saving}
-                                className="flex-1 border border-gray-300 rounded-xl py-2 sm:py-2.5 font-semibold text-xs sm:text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-40 transition"
+                                className="flex-1 border border-gray-300 rounded-lg py-2 sm:py-2.5 font-semibold text-xs sm:text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-40 transition"
                             >
                                 Cancelar
                             </button>
@@ -568,7 +568,7 @@ function Students() {
                                 disabled={
                                     saving || (justification.trim().length > 0 && !justificationType)
                                 }
-                                className="flex-1 bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-xl font-bold text-xs sm:text-sm text-white py-2 sm:py-2.5 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                                className="flex-1 bg-[#155DDD] hover:bg-[#5b90ec] active:bg-[#133069] rounded-lg font-bold text-xs sm:text-sm text-white py-2 sm:py-2.5 disabled:opacity-40 disabled:cursor-not-allowed transition"
                             >
                                 {saving ? "Salvando..." : "Salvar"}
                             </Button>

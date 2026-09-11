@@ -59,6 +59,7 @@ export default function Dashboard(){
       "value":totalFouls==0 ? "100%" : ((100-(totalFouls/(totalStudents*getPreviousBusinessDays()))*100)).toFixed(1)+"%",
       "image":"icons/trend-up-blue.svg",
     }
+    
   ];
 
   const year = new Date().getFullYear();
@@ -211,11 +212,11 @@ export default function Dashboard(){
 
         <div className="shrink-0 divide-y-[0.138rem] divide-[#99A1AF]/10">
 
-          <h1 className="mb-4 text-[1.30rem] sm:text-2xl font-bold text-center sm:text-left">Visão geral durante o mês</h1>
+          <h1 className="mb-4 text-[1.2rem] sm:text-[1.3rem] font-bold text-center sm:text-left">Visão geral durante o mês</h1>
           
-          <div className="mb-4 pr-[1.1rem] pl-[0.5rem] flex justify-between gap-x-[1rem] text-[#263238]/90 w-full overflow-y-hidden overflow-x-auto xl:overflow-hidden scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin snap-x">
+          <div className="mb-[0.5rem] pr-[1.1rem] pl-[0.5rem] pb-[0.5rem] flex justify-between gap-x-[1rem] text-[#263238]/90 w-full overflow-y-hidden overflow-x-auto xl:overflow-hidden scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin snap-x">
             {
-              cards.map((e, index)=>(<Card image={e.image} title={e.title} value={e.value} key={index} className="xl:w-[16rem] xl:gap-x-[2rem] bg-[#DBEAFE]/50 rounded-lg flex-none md:flex scale-85 sm:scale-100 animate-scale-in-center [--animation-duration:0.33s] snap-center"/>))
+              cards.map((e, index)=>(<Card image={e.image} title={e.title} value={e.value} key={index} className="xl:w-[16rem] xl:gap-x-[2rem] bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300 rounded-lg flex-none md:flex scale-85 sm:scale-100 animate-scale-in-center [--animation-duration:0.33s] snap-center"/>))
             }
           </div>
 
@@ -223,15 +224,15 @@ export default function Dashboard(){
 
         <div className="flex flex-col flex-1 min-h-0 divide-y-[0.138rem] divide-[#99A1AF]/10"> 
 
-          <h1 className="mb-4 text-[1.30rem] sm:text-2xl font-bold text-center sm:text-left">Visão geral durante o ano</h1>
+          <h1 className="mb-4 text-[1.2rem] sm:text-[1.3rem] font-bold text-center sm:text-left">Visão geral durante o ano</h1>
           
-          <div className="flex-1 min-h-0 overflow-y-auto px-[0.5rem] grid grid-cols-1 xl:grid-cols-2 gap-[1.5rem] scroll-px-4 scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin">
+          <div className="flex-1 min-h-0 overflow-y-auto px-[0.5rem] pb-[0.5rem] grid grid-cols-1 2xl:grid-cols-2 gap-[1.5rem] scrollbar-thumb-[#155DDD]/80 scrollbar-track-[#99A1AF]/10 scrollbar-thin">
 
-            <div className="w-full bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
+            <div className="w-full bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/30"> 
 
-              <h1 className="p-[0.5rem] text-center text-[0.9rem] sm:text-[1.1rem] font-bold text-[#263238]/90">Faltas durante os meses do ano</h1>
+              <h1 className="p-[0.5rem] text-center text-[0.9rem] sm:text-[1rem] font-bold text-[#263238]/90">Faltas durante os meses do ano</h1>
 
-              <div className="h-[25rem] p-[1rem]">
+              <div className="h-[19rem] 2xl:h-[25rem] p-[1rem]">
                 {foulsPerMonth &&
 
                   <Line 
@@ -269,11 +270,11 @@ export default function Dashboard(){
 
             </div>
 
-            <div className="w-full bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
+            <div className="w-full bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/30"> 
 
-              <h1 className="p-[0.5rem] text-center text-[0.9rem] sm:text-[1.1rem] font-bold text-[#263238]/90">Alunos com mais faltas durante o ano</h1>
+              <h1 className="p-[0.5rem] text-center text-[0.9rem] sm:text-[1rem] font-bold text-[#263238]/90">Alunos com mais faltas durante o ano</h1>
 
-              <div className="h-[25rem] p-[1rem]">
+              <div className="h-[19rem] 2xl:h-[25rem] p-[1rem]">
                 {studentsMostFouls &&
 
                   <Bar 
@@ -308,11 +309,11 @@ export default function Dashboard(){
 
             </div>
 
-            <div className="w-full bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
+            <div className="w-full bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/30"> 
 
-              <h1 className="p-[0.5rem] text-center text-[0.9rem] sm:text-[1.1rem] font-bold text-[#263238]/90">Turmas com mais faltas durante o ano</h1>
+              <h1 className="p-[0.5rem] text-center text-[0.9rem] sm:text-[1rem] font-bold text-[#263238]/90">Turmas com mais faltas durante o ano</h1>
 
-              <div className="h-[38rem] sm:h-[25rem] p-[1rem]">
+              <div className="h-[38rem] sm:h-[19rem] 2xl:h-[25rem] p-[1rem]">
                 {classesMostFouls &&
 
                   <Pie 
@@ -344,7 +345,7 @@ export default function Dashboard(){
                       }
                     }}
                     data={{
-                      labels: classesMostFouls.map(mostFouls => (`${mostFouls.class.grade.split(" ")[0]} ${mostFouls.class.name} (${mostFouls.fouls} ${window.innerWidth <= 768 ? "F" : "faltas"})`)),
+                      labels: classesMostFouls.map(mostFouls => (`${mostFouls.class.grade.split(" ")[0]} ${mostFouls.class.name} (${mostFouls.fouls} ${window.innerWidth <= 1333 ? "F" : "faltas"})`)),
                       datasets: [{
                         label: "Faltas",
                         data: classesMostFouls.map(mostFouls => mostFouls.fouls),
@@ -359,11 +360,11 @@ export default function Dashboard(){
 
             </div>
 
-            <div className="w-full bg-[#DBEAFE]/50 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/80"> 
+            <div className="w-full bg-[#FFFFFC] border border-gray-200 shadow-sm shadow-gray-300 rounded-lg divide-y-[0.138rem] divide-[#99A1AF]/30"> 
 
-              <h1 className="p-[0.5rem] text-center text-[0.9rem] sm:text-[1.1rem] font-bold text-[#263238]/90">Taxa de presenças e faltas</h1>
+              <h1 className="p-[0.5rem] text-center text-[0.9rem] sm:text-[1rem] font-bold text-[#263238]/90">Taxa de presenças e faltas</h1>
 
-              <div className="h-[25rem]  p-[1rem]">
+              <div className="h-[19rem] 2xl:h-[25rem] p-[1rem]">
                 {presFouls &&
 
                   <Doughnut 

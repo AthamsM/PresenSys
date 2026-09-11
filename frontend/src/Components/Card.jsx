@@ -10,8 +10,8 @@ export default function Card(props){
 
       <div className="text-center">
 
-        <p className="text-sm">{props.title}</p>
-        <h1 className="text-lg font-semibold">{props.value}</h1>
+        <p className="text-[0.8rem]">{props.title}</p>
+        <h1 className="text-[1rem] font-semibold">{props.value}</h1>
         
       </div>
       
