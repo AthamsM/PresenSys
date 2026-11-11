@@ -161,15 +161,23 @@ function Students() {
             await API.post("/attendances/", data);
 
             setFouls((currentFouls) =>
-                currentFouls.map((foul) =>
-                    foul.id === selectedFoul.id
-                        ? {
+                currentFouls.map((foul) => {
+                    const foulDate = foul.date.toString().split("T")[0]; //confia nessa gamb
+                    const selectedDate = selectedFoul.date.toString().split("T")[0];
+
+                    if (
+                        foul.id === selectedFoul.id &&
+                        foulDate === selectedDate
+                    ) {
+                        return {
                             ...foul,
                             justification: finalJustification,
                             excusedAbsence: finalJustification,
-                        }
-                        : foul
-                )
+                        };
+                    }
+
+                    return foul;
+                })
             );
 
             if (finalJustification) {
