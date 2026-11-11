@@ -25,7 +25,7 @@ function Page404() {
             </div>
 
             <div>
-                <Button onClick={() => navigate("/classes")} className="bg-[#155DDD] hover:bg-[#90CAF9] active:bg-[#155DDD] rounded-md font-bold text-[1rem] text-[#EBEBEB] uppercase hover:text-[#263238] active:text-[#EBEBEB]">Voltar ao painel</Button>
+                <Button onClick={() => navigate("/dashboard")} className="bg-[#155DDD] hover:bg-[#90CAF9] active:bg-[#155DDD] rounded-lg font-bold text-[1rem] text-[#EBEBEB] uppercase hover:text-[#263238] active:text-[#EBEBEB]">Voltar ao painel</Button>
             </div>
 
         </div>

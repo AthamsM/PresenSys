@@ -57,11 +57,11 @@ function Login (){
 
             <div className="h-full w-full bg-[url(images/login-background.png)] bg-cover bg-center bg-no-repeat scale-110 blur-[0.25rem] fixed z-0"></div>
 
-            <form onSubmit={handleSubmit(submitLogin)} className="p-[2rem] lg:p-[3rem] flex flex-col lg:flex-row justify-center items-center gap-x-[4rem] bg-[#DBEAFE]/90 backdrop-blur-sm border border-[#DBEAFE]/50 shadow-sm shadow-[#DBEAFE]/50 rounded-4xl z-10">
+            <form onSubmit={handleSubmit(submitLogin)} className="p-[2rem] lg:p-[3rem] flex flex-col lg:flex-row justify-center items-center gap-x-[4rem] bg-[#DBEAFE]/90 backdrop-blur-sm border border-[#DBEAFE]/50 shadow-sm shadow-[#DBEAFE]/50 rounded-lg z-10">
 
                 <img src="images/logo.svg" alt="logo" className="w-[16rem] lg:w-[24rem]"/>
 
-                <div className="flex flex-col gap-y-[1.8rem] lg:gap-y-[4rem] px-[0.19rem] text-[#364153] text-[0.9rem]">
+                <div className="flex flex-col gap-y-[1.5rem] lg:gap-y-[3rem] px-[0.19rem] text-[#364153] text-[0.9rem]">
 
                     <div className="text-center">
                         <h1 className="hidden lg:block font-bold text-[2rem] lg:text-[3rem]">Bem-vindo(a)!</h1>
@@ -74,7 +74,7 @@ function Login (){
 
                             <h1 className="font-semibold mb-[1.5rem] text-left">E-mail</h1>
                             
-                            <Input {...register("email")} type="email" required placeholder="seu@email.com" className="w-full h-[2.5rem] px-[2.7rem] bg-[#FFFFFC] rounded-xl border-[#263238]/50 outline-[#263238] ring-[#263238]/80"
+                            <Input {...register("email")} type="email" required placeholder="seu@email.com" className="w-full h-[2.5rem] px-[2.7rem] bg-[#FFFFFC] rounded-lg border-[#263238]/50 outline-[#263238] ring-[#263238]/80"
                                 leftIcon={
 
                                     <img src="icons/email.svg" alt="email-icon" className="w-[1.8rem]"/>
@@ -88,7 +88,7 @@ function Login (){
 
                             <h1 className="font-semibold mb-[1.5rem] ">Senha</h1>
 
-                            <Input {...register("password")} type={buttonType} required placeholder="digite sua senha" className="w-full h-[2.5rem] px-[2.7rem] bg-[#FFFFFC] rounded-xl border-[#263238]/50 outline-[#263238] ring-[#263238]/80" 
+                            <Input {...register("password")} type={buttonType} required placeholder="digite sua senha" className="w-full h-[2.5rem] px-[2.7rem] bg-[#FFFFFC] rounded-lg border-[#263238]/50 outline-[#263238] ring-[#263238]/80" 
                                 
                                 leftIcon={
                                     <img src="icons/key.svg" alt="email-icon" className="w-[1.8rem]"/>
@@ -109,7 +109,7 @@ function Login (){
 
                     </div>
 
-                    <Button type="submit" disabled={loading} className="w-full mt-[0.5rem] lg:mt-0 bg-[#347D39] hover:bg-[#3A8C40] active:bg-[#347D39] border-2 border-[#364153]/20 rounded-2xl font-bold text-[1rem] text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#347D39] transition delay-50 duration-50 ease-in-out uppercase">
+                    <Button type="submit" disabled={loading} className="w-full mt-[0.5rem] lg:mt-0 bg-[#347D39] hover:bg-[#3A8C40] active:bg-[#347D39] border-2 border-[#364153]/20 rounded-lg font-bold text-[1rem] text-[#EBEBEB] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#347D39] transition delay-50 duration-50 ease-in-out uppercase">
                                 
                         <div className="flex justify-center items-center gap-x-[1rem]">
                             <img src="icons/right-to.svg" alt="email-icon" className="w-[1.6rem]"/>

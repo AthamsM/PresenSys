@@ -5,13 +5,11 @@ export function StudentCard({
     onJustify,
 }) {
     return (
-        <div className="flex items-center justify-between border-b px-4 py-4">
+        <div className="flex items-center justify-between px-2 py-2 text-[0.8rem] ">
 
             <div className="flex items-center gap-4">
 
-                <div
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 font-semibold"
-                >
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-200  font-semibold">
                     {index + 1}
                 </div>
 
@@ -23,21 +21,13 @@ export function StudentCard({
 
                     <div className="flex items-center gap-2">
 
-                        <span
-                            className={
-                                student.present
-                                    ? "text-green-600"
-                                    : "text-red-500"
-                            }
-                        >
-                            {student.present
-                                ? "Presente"
-                                : "Ausente"}
+                        <span className={`rounded-md px-[0.4rem] py-[0.12rem] text-xs font-bold ${student.present ? " bg-green-200 text-green-800" : "bg-red-200 text-xs font-bold text-red-800"}`}>
+                            {student.present ? "Presente" : "Ausente"}
                         </span>
 
                         {!student.present && student.justification && (
-                            <span className="inline-flex items-center rounded bg-green-100 border border-green-300 px-2.5 py-1 text-xs font-bold text-green-700">
-                                Falta justificada
+                            <span className="inline-flex items-center rounded-md px-[0.4rem] py-[0.12rem] bg-green-200 text-xs font-bold text-green-800">
+                                Justificada
                             </span>
                         )}
 
@@ -52,22 +42,21 @@ export function StudentCard({
                 {!student.present && (
                     <button
                         onClick={() => onJustify(student)}
-                        className={`px-3 py-1 rounded text-black text-sm ${
+                        className={`px-[0.8rem] py-[0.5rem] rounded-lg text-[#263238]/70 text-[0.85rem] font-bold cursor-pointer leading-none ${
                             student.justification
-                                ? "bg-blue-500 hover:bg-blue-600"
+                                ? "bg-blue-500 hover:bg-blue-600 text-[#FFFFFC]"
                                 : "bg-gray-300 hover:bg-gray-200"
                         }`}
                     >
                         {student.justification
-                            ? "Editar justificativa"
+                            ? "Editar"
                             : "Justificar"}
                     </button>
                 )}
 
                 <button
                     onClick={() => onToggle(student.id)}
-                    className={`
-                        relative h-8 w-14 rounded-full transition-all
+                    className={`relative h-[1.85rem] w-9 rounded-lg transition-all cursor-pointer
                         ${
                             student.present
                                 ? "bg-blue-500"
@@ -77,11 +66,11 @@ export function StudentCard({
                 >
                     <div
                         className={`
-                            absolute top-1 h-6 w-6 rounded-full bg-white transition-all
+                            absolute top-1 h-[1.3rem] w-2 rounded-lg bg-white transition-all
                             ${
                                 student.present
-                                    ? "translate-x-7"
-                                    : "translate-x-1"
+                                    ? "translate-x-[1.4rem]"
+                                    : "translate-x-[0.4rem]"
                             }
                         `}
                     />
